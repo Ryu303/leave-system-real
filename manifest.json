@@ -1,0 +1,20 @@
+{
+  "name": "FaWW Workspace",
+  "short_name": "FaWW",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#F3F4F6",
+  "theme_color": "#4F46E5",
+  "icons": [
+    {
+      "src": "로고 이미지 파일.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "로고 이미지 파일.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#4F46E5">
+    <link rel="manifest" href="manifest.json">
+    <title>FaWW Workspace</title>
+    
+    <!-- 파비콘 및 크롬 바로가기 아이콘 설정 -->
+    <link rel="icon" type="image/png" href="로고 이미지 파일.png">
+    <link rel="apple-touch-icon" href="로고 이미지 파일.png">
+
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+    <!-- 1. Firebase Auth 라이브러리 추가 -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    
+    <!-- Firebase Functions 라이브러리 추가 (카카오맵 백엔드 통신용) -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-functions.js"></script>
+    
+    <!-- Quill 에디터 (Rich Text) 라이브러리 추가 -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    
+    <!-- Flatpickr (모던 달력) 라이브러리 추가 -->
+    <link rel="stylesheet" id="flatpickr-theme" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>
+    
+    <!-- Material Symbols (모던 아이콘) 추가 -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block" rel="stylesheet" />
+
+    <!-- 카카오 지도 API (JS SDK) -->
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=49567b3deb7ec9afb54384571d730980&libraries=services"></script>
+</head>
+<body>
+    <div class="header">
+        <div class="header-titles">
+            <img id="header-logo" src="로고 이미지 파일.png" alt="FaWW 로고" class="header-logo" style="cursor: pointer;" title="스트레스가 쌓인다면 광클해보세요!">
+            <div class="header-text">
+                <h1>FaWW Workspace</h1>
+                <p>칸반 보드, 실시간 문서, 파일 드라이브</p>
+            </div>
+        </div>
+        <!-- 2. 로그인/로그아웃 버튼 및 사용자 정보 표시 영역 추가 -->
+        <div id="auth-section">
+            <div class="notification-container">
+                <button id="noti-btn" class="icon-btn" onclick="toggleNotificationPanel()" title="알림" style="position: relative;">
+                    <span class="material-symbols-rounded">notifications</span>
+                    <span id="noti-badge" class="notification-badge" style="display: none;"></span>
+                </button>
+                <div id="noti-panel" class="notification-drawer">
+                    <div class="drawer-header">
+                        <h3 style="display:flex; align-items:center; gap:4px; margin:0;"><span class="material-symbols-rounded" style="color:var(--primary);">notifications</span>알림 센터</h3>
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <button onclick="markAllNotificationsRead()" class="text-btn" style="font-size:0.75rem; padding:4px 8px; font-weight:700;">모두 읽음</button>
+                            <button onclick="toggleNotificationPanel()" class="drawer-close-btn" title="닫기" style="background:none; border:none; color:var(--text-muted); cursor:pointer; display:flex; align-items:center; padding:2px;"><span class="material-symbols-rounded" style="font-size:1.2rem;">close</span></button>
+                        </div>
+                    </div>
+                    <div id="noti-list" class="drawer-body">
+                        <div class="drawer-empty">
+                            <span class="material-symbols-rounded">notifications_off</span>
+                            알림이 없습니다.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button id="theme-toggle" onclick="toggleTheme()" class="icon-btn" title="다크 모드 전환"><span class="material-symbols-rounded">dark_mode</span></button>
+            <img id="user-avatar" src="" alt="프로필" style="display: none;" referrerpolicy="no-referrer">
+            <span id="user-info"></span>
+            <button id="login-btn" onclick="loginWithGoogle()">구글 로그인</button>
+            <button id="logout-btn" onclick="logout()" style="display: none;">로그아웃</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- 탭 메뉴 -->
+        <div class="tab-menu">
+            <button class="tab-btn active" onclick="switchTab('tab-tasks', this)"><span class="material-symbols-rounded" style="vertical-align:middle; margin-right:4px;">work</span> 업무 현황</button>
+            <button class="tab-btn" onclick="switchTab('tab-meeting-feed', this)"><span class="material-symbols-rounded" style="vertical-align:middle; margin-right:4px;">forum</span> 대표님 지시사항</button>
+            <button class="tab-btn" onclick="switchTab('tab-docs', this)"><span class="material-symbols-rounded" style="vertical-align:middle; margin-right:4px;">description</span> 문서 도구</button>
+            <button class="tab-btn" onclick="switchTab('tab-notice', this)"><span class="material-symbols-rounded" style="vertical-align:middle; margin-right:4px;">campaign</span> 공지사항</button>
+            <button class="tab-btn" onclick="switchTab('tab-trips', this)"><span class="material-symbols-rounded" style="vertical-align:middle; margin-right:4px;">flight_takeoff</span> 출장 관리</button>
+            <button class="tab-btn" onclick="switchTab('tab-calendar', this)"><span class="material-symbols-rounded" style="vertical-align:middle; margin-right:4px;">calendar_month</span> 일정 달력</button>
+            <button class="tab-btn" onclick="switchTab('tab-leaves', this)"><span class="material-symbols-rounded" style="vertical-align:middle; margin-right:4px;">beach_access</span> 휴가 결재</button>
+            <button id="tab-btn-admin" class="tab-btn" onclick="switchTab('tab-admin', this)" style="display: none;"><span class="material-symbols-rounded" style="vertical-align:middle; margin-right:4px;">admin_panel_settings</span> 사용자 관리</button>
+            <button class="tab-btn" onclick="switchTab('tab-members', this)"><span class="material-symbols-rounded" style="vertical-align:middle; margin-right:4px;">group</span> 조직도</button>
+            <button class="tab-btn" onclick="switchTab('tab-mypage', this)"><span class="material-symbols-rounded" style="vertical-align:middle; margin-right:4px;">person</span> 마이페이지</button>
+        </div>
+
+        <!-- 탭 1.5: 일정 달력 (독립 메뉴) -->
+        <div id="tab-calendar" class="tab-content" style="display: none;">
+            <div class="section calendar-section-full">
+                <div class="calendar-top-bar premium-top-bar">
+                    <div class="calendar-sub-menu-container">
+                        <div class="calendar-sub-menu">
+                            <button class="cal-filter-btn active" onclick="setCalendarFilter('all', this)">전체</button>
+                            <button class="cal-filter-btn" onclick="setCalendarFilter('task', this)">업무</button>
+                            <button class="cal-filter-btn" onclick="setCalendarFilter('schedule', this)">일정</button>
+                            <button class="cal-filter-btn" onclick="setCalendarFilter('trip', this)">출장</button>
+                            <button class="cal-filter-btn" onclick="setCalendarFilter('leave', this)">휴가</button>
+                            <button class="cal-filter-btn" onclick="setCalendarFilter('external', this)">연동 일정</button>
+                        </div>
+                    </div>
+                    
+                    <div class="calendar-navigation-controls">
+                        <button class="nav-arrow-btn" onclick="changeCalendarMonth(-1)"><span class="material-symbols-rounded">chevron_left</span></button>
+                        <div class="date-picker-group">
+                            <select id="calendar-year-select" class="calendar-select" onchange="jumpToSelectedDate()"></select>
+                            <select id="calendar-month-select" class="calendar-select" onchange="jumpToSelectedDate()"></select>
+                        </div>
+                        <button class="nav-arrow-btn" onclick="changeCalendarMonth(1)"><span class="material-symbols-rounded">chevron_right</span></button>
+                        
+                        <div class="divider-v"></div>
+                        
+                        <button onclick="linkGoogleCalendar()" id="btn-google-sync-tab" class="google-sync-premium">
+                            <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" style="width:18px; margin-right:8px;"> 구글 연동
+                        </button>
+                    </div>
+                </div>
+                <div id="calendar-grid-main" class="calendar-grid">
+                    <!-- 캘린더가 여기에 렌더링됩니다 -->
+                </div>
+            </div>
+        </div>
+
+        <!-- 탭 1: 업무 현황 (칸반 + 문서/파일) -->
+        <div id="tab-tasks" class="tab-content" style="display: block;">
+        
+        <!-- AI 비서 데일리 요약 브리핑 카드 -->
+        <div id="ai-briefing-container" style="display: none;">
+            <div class="briefing-card">
+                <div class="briefing-header" onclick="toggleBriefingContent()">
+                    <div class="briefing-title-group">
+                        <span class="material-symbols-rounded briefing-spark-icon">smart_toy</span>
+                        <h3>스마트 워크스페이스 AI 비서 브리핑</h3>
+                    </div>
+                    <span class="material-symbols-rounded briefing-toggle-icon" id="briefing-toggle-icon">expand_more</span>
+                </div>
+                <div class="briefing-body" id="briefing-body">
+                    <p id="briefing-text">오늘의 주요 일정을 분석하고 있습니다...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section kanban-section">
+            <div class="kanban-header">
+                <h2>칸반 보드 (업무 현황)</h2>
+                <div class="filter-group">
+                    <!-- 보기 모드 전환 버튼 -->
+                    <select id="viewMode" onchange="toggleViewMode()" class="search-input" style="background-color: var(--primary); color: white; border: none; font-weight: bold; cursor: pointer;">
+                        <option value="status">상태별 보기</option>
+                        <option value="timeline">일정별 보기</option>
+                        <option value="calendar">캘린더 보기</option>
+                        <option value="gantt">간트 차트</option>
+                    </select>
+                    <select id="dateFilter" onchange="filterTasks()" class="search-input">
+                        <option value="all">전체 기간</option>
+                        <option value="today">오늘까지</option>
+                        <option value="week">이번 주까지</option>
+                        <option value="month">이번 달까지</option>
+                    </select>
+                    <input type="text" id="searchAssignee" placeholder="담당자 검색..." oninput="filterTasks()" class="search-input">
+                </div>
+            </div>
+            
+            <!-- 전체 진행률 바 영역 -->
+            <div class="progress-section">
+                <div class="progress-header">
+                    <span class="progress-title">전체 업무 달성률</span>
+                    <span class="progress-text" id="progress-text">0%</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+            </div>
+
+            <div class="task-input-area">
+                <div style="flex: 2; position: relative; min-width: 200px;">
+                    <span class="material-symbols-rounded" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 1.2rem;">edit_square</span>
+                    <input type="text" id="taskInput" placeholder="새로운 업무를 입력하세요..." style="width: 100%; box-sizing: border-box; padding-left: 2.8rem;">
+                </div>
+                <div style="flex: 1; min-width: 200px; display: flex; flex-direction: column; gap: 0.4rem;">
+                    <div id="assignee-tags-container" style="display: flex; flex-wrap: wrap; gap: 4px; padding: 0.4rem; border: 1px solid var(--border-color); border-radius: 12px; background: var(--col-bg); min-height: 42px; align-items: center;">
+                        <span style="font-size: 0.8rem; color: var(--text-muted); margin-left: 0.4rem;">담당자:</span>
+                        <!-- 선택된 담당자들이 여기에 태그로 표시됩니다 -->
+                        <select id="assigneeInput" class="search-input" style="border: none; background: transparent; padding: 0.2rem 0.5rem; font-size: 0.9rem; flex: 1; min-width: 80px;" onchange="addAssigneeTag(this)">
+                            <option value="">+ 추가</option>
+                        </select>
+                    </div>
+                </div>
+                <select id="priorityInput" style="min-width: 140px;">
+                    <option value="low">중요도: 낮음</option>
+                    <option value="medium" selected>중요도: 보통</option>
+                    <option value="high">중요도: 높음</option>
+                </select>
+                <button onclick="addTask()" style="display:flex; align-items:center; justify-content:center; gap:6px; padding: 0.8rem 1.5rem; border-radius: 12px; font-size: 0.95rem;"><span class="material-symbols-rounded" style="font-size:1.2em;">add_task</span>추가</button>
+            </div>
+            
+            <!-- 1. 기존: 상태별 보기 보드 -->
+            <div class="kanban-board" id="board-status">
+                <div class="column" id="col-todo" ondrop="drop(event, 'todo')" ondragover="allowDrop(event)">
+                    <h3>해야 할 일 <span class="task-count" id="count-todo">0</span></h3>
+                    <div class="task-list" id="todo-list"></div>
+                </div>
+                <div class="column" id="col-doing" ondrop="drop(event, 'doing')" ondragover="allowDrop(event)">
+                    <h3>진행 중 <span class="task-count" id="count-doing">0</span></h3>
+                    <div class="task-list" id="doing-list"></div>
+                </div>
+                <div class="column" id="col-done" ondrop="drop(event, 'done')" ondragover="allowDrop(event)">
+                    <h3 style="display:flex; justify-content:space-between; align-items:center;">
+                        <span>완료 <span class="task-count" id="count-done">0</span></span>
+                        <div class="header-action-group" style="gap: 4px;">
+                            <button onclick="archiveAllDoneTasks()" title="완료된 작업을 모두 보관합니다" style="background:var(--col-bg); color:var(--text-main); border:1px solid var(--border-color); padding:0.2rem 0.5rem; font-size:0.75rem;"><span class="material-symbols-rounded" style="font-size:1.1em; vertical-align:middle;">inventory_2</span> 모두 보관</button>
+                            <button onclick="openArchiveModal()" title="보관함 열기" style="background:var(--col-bg); color:var(--text-main); border:1px solid var(--border-color); padding:0.2rem 0.5rem; font-size:0.75rem;"><span class="material-symbols-rounded" style="font-size:1.1em; vertical-align:middle;">folder_open</span> 보관함</button>
+                        </div>
+                    </h3>
+                    <div class="task-list" id="done-list"></div>
+                </div>
+            </div>
+
+            <!-- 2. 신규: 일정별 보기 보드 (기본 숨김) -->
+            <div class="kanban-board" id="board-timeline" style="display: none;">
+                <div class="column" style="border-top: 4px solid var(--danger);">
+                    <h3>이번 주 마감 (지연 포함) <span class="task-count" id="count-week">0</span></h3>
+                    <div class="task-list" id="week-list"></div>
+                </div>
+                <div class="column" style="border-top: 4px solid #F59E0B;">
+                    <h3>이번 달 마감 <span class="task-count" id="count-month">0</span></h3>
+                    <div class="task-list" id="month-list"></div>
+                </div>
+                <div class="column" style="border-top: 4px solid var(--primary);">
+                    <h3>나중 / 미정 <span class="task-count" id="count-later">0</span></h3>
+                    <div class="task-list" id="later-list"></div>
+                </div>
+            </div>
+
+            <!-- 3. 신규: 캘린더 보기 보드 (기본 숨김) -->
+            <div id="board-calendar" style="display: none; flex-direction: column; width: 100%;">
+                <div class="view-legend">
+                    <div class="legend-item"><span class="legend-color" style="background: var(--danger);"></span>높음</div>
+                    <div class="legend-item"><span class="legend-color" style="background: #F59E0B;"></span>보통</div>
+                    <div class="legend-item"><span class="legend-color" style="background: #10B981;"></span>낮음</div>
+                    <div class="legend-item"><span class="legend-color" style="background: #8B5CF6;"></span><span class="material-symbols-rounded" style="font-size:1.1em; margin-right:2px;">flight_takeoff</span>출장</div>
+                    <div class="legend-item"><span class="legend-color" style="background: #2DB400;"></span><span class="material-symbols-rounded" style="font-size:1.1em; margin-right:2px;">sync</span>외부 (네이버/구글)</div>
+                    <div class="legend-item"><span class="legend-color task-done-style"></span><span class="material-symbols-rounded" style="font-size:1.1em; margin-right:2px;">check_circle</span>완료됨</div>
+                </div>
+                <div class="calendar-controls">
+                    <div style="display:flex; gap:0.5rem;">
+                        <button onclick="changeMonth(-1)"><span class="material-symbols-rounded" style="vertical-align:middle;">chevron_left</span> 이전 달</button>
+                        <button onclick="changeMonth(1)">다음 달 <span class="material-symbols-rounded" style="vertical-align:middle;">chevron_right</span></button>
+                    </div>
+                    <h3 id="calendar-month-year"></h3>
+                    <button id="btn-google-sync" onclick="linkGoogleCalendar()" class="premium-btn" style="background: #fff; color: #4285F4; border: 1px solid #4285F4; padding: 0.5rem 1rem; font-size: 0.85rem;">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_\"G\"_Logo.svg" style="width:16px; margin-right:8px; vertical-align:middle;">
+                        구글 캘린더 연동
+                    </button>
+                </div>
+                <div class="calendar-grid" id="calendar-grid"></div>
+            </div>
+
+            <!-- 4. 신규: 간트 차트 보드 (기본 숨김) -->
+            <div id="board-gantt" class="gantt-container" style="display: none;">
+                <div class="view-legend" style="margin: 0 1rem 1rem 1rem;">
+                    <div class="legend-item"><span class="legend-color" style="background: var(--danger);"></span>높음</div>
+                    <div class="legend-item"><span class="legend-color" style="background: #F59E0B;"></span>보통</div>
+                    <div class="legend-item"><span class="legend-color" style="background: #10B981;"></span>낮음</div>
+                    <div class="legend-item"><span class="legend-color" style="background: #8B5CF6;"></span><span class="material-symbols-rounded" style="font-size:1.1em; margin-right:2px;">flight_takeoff</span>출장</div>
+                    <div class="legend-item"><span class="legend-color task-done-style"></span><span class="material-symbols-rounded" style="font-size:1.1em; margin-right:2px;">check_circle</span>완료됨</div>
+                </div>
+                <div class="calendar-controls" style="padding: 0 1rem; margin-bottom: 1rem;">
+                    <button onclick="changeGanttMonth(-1)"><span class="material-symbols-rounded" style="vertical-align:middle;">chevron_left</span> 이전 달</button>
+                    <h3 id="gantt-month-year"></h3>
+                    <button onclick="changeGanttMonth(1)">다음 달 <span class="material-symbols-rounded" style="vertical-align:middle;">chevron_right</span></button>
+                </div>
+                <div class="gantt-scroll-area">
+                    <div id="gantt-header" class="gantt-header"></div>
+                    <div id="gantt-body" class="gantt-body"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section daily-section" style="margin-top: 2rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; border-bottom:2px solid var(--bg-color); padding-bottom:0.75rem;">
+                <h2 style="margin:0; padding:0; border:none;"><span class="material-symbols-rounded" style="vertical-align:bottom; margin-right:6px; color:var(--primary);">event_repeat</span> 데일리 루틴 (반복 업무)</h2>
+                <div id="daily-progress-text" style="font-size: 0.85rem; font-weight: bold; color: var(--primary);">오늘 완료: 0/0 (0%)</div>
+            </div>
+            
+            <div style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem;">
+                <input type="text" id="dailyTaskInput" placeholder="매일 반복할 업무를 입력하세요..." class="search-input" style="flex: 1;">
+                <button onclick="addDailyTask()" style="padding: 0.6rem 1.2rem; display:flex; align-items:center; gap:4px;"><span class="material-symbols-rounded" style="font-size:1.1em;">add</span> 추가</button>
+            </div>
+
+            <div id="daily-task-list" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem;">
+                <!-- 데일리 업무 항목들이 여기에 렌더링됩니다 -->
+            </div>
+        </div>
+
+        <div class="section consumables-section" style="margin-top: 4rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; border-bottom:2px solid var(--bg-color); padding-bottom:0.75rem;">
+                <h2 style="margin:0; padding:0; border:none;"><span class="material-symbols-rounded" style="vertical-align:bottom; margin-right:6px; color:#10B981;">inventory</span> 소모품 재고관리</h2>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button id="addConsumableBtn" onclick="openAddConsumableModal()" style="display:flex; align-items:center; gap:4px; font-size:0.85rem;"><span class="material-symbols-rounded" style="font-size:1.2em;">add_box</span> 품목 추가</button>
+                    <button id="consumablesLogBtn" onclick="openConsumablesLogModal()" style="background-color: var(--col-bg); color: var(--text-main); border: 1px solid var(--border-color); box-shadow: none; display:flex; align-items:center; gap:4px; font-size:0.85rem;"><span class="material-symbols-rounded" style="font-size:1.2em;">history</span> 변경 이력</button>
+                </div>
+            </div>
+            
+            <div id="consumables-grid" class="consumables-grid">
+                <!-- 소모품 항목 카드들이 여기에 동적으로 렌더링됩니다 -->
+            </div>
+        </div>
+        
+        <div class="section files-section" id="drive-drop-zone" style="margin-top: 4rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; border-bottom:2px solid var(--bg-color); padding-bottom:0.75rem;">
+                <h2 style="margin:0; padding:0; border:none;"><span class="material-symbols-rounded" style="vertical-align:bottom; margin-right:6px;">folder_shared</span>공유 드라이브</h2>
+                <button onclick="createNewFolder()" style="display:flex; align-items:center; gap:4px; font-size:0.85rem;"><span class="material-symbols-rounded" style="font-size:1.2em;">create_new_folder</span> 새 폴더</button>
+            </div>
+            
+            <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:1rem; background-color:var(--col-bg); padding:0.5rem 0.8rem; border-radius:6px; border:1px solid var(--border-color);">
+                <button id="btn-go-up" onclick="goUpFolder()" style="background:transparent; color:var(--text-main); padding:0.2rem; border:none; box-shadow:none; cursor:pointer;" title="상위 폴더로 이동" disabled><span class="material-symbols-rounded">arrow_upward</span></button>
+                <span id="drive-breadcrumb" style="font-size:0.9rem; font-weight:bold; color:var(--primary); word-break:break-all;">공유 드라이브</span>
+            </div>
+
+            <div style="margin-bottom: 1rem; position: relative;">
+                <span class="material-symbols-rounded" style="position: absolute; left: 0.8rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 1.1rem;">search</span>
+                <input type="text" id="fileSearchInput" placeholder="파일 및 폴더 이름으로 검색..." class="search-input" style="width: 100%; box-sizing: border-box; padding-left: 2.5rem;" oninput="renderFiles()">
+            </div>
+
+            <div class="upload-area">
+                <input type="file" id="fileInput" class="file-input-hidden" onchange="updateFileName('fileInput', 'fileNameDisplay')">
+                <label for="fileInput" class="file-input-label"><span class="material-symbols-rounded" style="font-size:1.1em; vertical-align:middle; margin-right:4px;">upload_file</span> 파일 선택</label>
+                <span id="fileNameDisplay" class="file-name-display"></span>
+                <button onclick="uploadFile()" style="margin-left: auto;">업로드</button>
+            </div>
+            <p id="uploadStatus" class="status-msg"></p>
+            <ul id="fileList" class="file-list"></ul>
+        </div>
+        </div>
+
+        <!-- 탭 1.5: 전사 공지사항 -->
+        <div id="tab-notice" class="tab-content" style="display: none;">
+            <div class="section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--bg-color);">
+                    <h2 style="margin: 0; padding: 0; border: none;"><span class="material-symbols-rounded" style="vertical-align:bottom; margin-right:6px;">campaign</span>전사 공지사항</h2>
+                    <button id="addNoticeBtn" onclick="openNoticeModal()" style="display:flex; align-items:center; gap:4px;"><span class="material-symbols-rounded" style="font-size:1.2em;">edit_document</span> 새 공지 작성</button>
+                </div>
+                <div class="notice-list-header" style="display: flex; padding: 0.8rem 1rem; background-color: var(--col-bg); border-radius: 8px; font-weight: 600; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;">
+                    <div style="flex: 1;">제목</div>
+                    <div style="width: 100px; text-align: center;">작성자</div>
+                    <div style="width: 100px; text-align: center;">작성일</div>
+                    <div style="width: 60px; text-align: center;">조회수</div>
+                </div>
+                <div style="background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px;">
+                    <ul id="notice-list" style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column;">
+                        <!-- 공지사항 렌더링 영역 -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 탭 2: 출장 관리 -->
+        <div id="tab-trips" class="tab-content" style="display: none;">
+        <!-- 출장 업무 관리 섹션 -->
+        <div class="section business-trip-section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--bg-color); flex-wrap: wrap; gap: 1rem;">
+                <h2 style="margin: 0; padding: 0; border: none;"><span class="material-symbols-rounded" style="vertical-align:bottom; margin-right:6px;">flight_takeoff</span>출장 업무 관리</h2>
+                <div class="header-action-group">
+                    <button onclick="deleteSelectedTrips()" style="background-color: var(--danger); display:flex; align-items:center; gap:4px;"><span class="material-symbols-rounded" style="font-size:1.2em;">delete</span> 선택 삭제</button>
+                    <button onclick="openCommonCalendarModal()" style="background-color: var(--col-bg); color: var(--text-main); border: 1px solid var(--border-color); box-shadow: none; display:flex; align-items:center; gap:4px;"><span class="material-symbols-rounded" style="font-size:1.2em;">calendar_month</span> 전체 캘린더 보기</button>
+                    <button id="addTripBtn" onclick="openTripModal()" style="display:flex; align-items:center; gap:4px;"><span class="material-symbols-rounded" style="font-size:1.2em;">add</span> 새 출장 추가</button>
+                </div>
+            </div>
+            
+            <!-- 스마트 출장 동선 지도 섹션 -->
+            <div style="background-color: var(--col-bg); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid var(--border-color);">
+                <h3 style="margin-top: 0; margin-bottom: 1rem; color: var(--primary); display: flex; align-items: center; gap: 6px;"><span class="material-symbols-rounded">route</span> 스마트 동선 최적화 (지도)</h3>
+                <div style="font-size: 0.85rem; color: var(--text-muted); width: 100%; margin-bottom: 0.5rem;">💡 아래 목록에서 원하는 출장지의 <b>체크박스</b>를 직접 선택하거나, 담당자/기간을 입력해 자동 검색하세요.</div>
+                
+                <div class="map-controls-panel" style="background-color: var(--card-bg); border-radius: 8px; border: 1px solid var(--border-color); padding: 1rem; margin-bottom: 1rem;">
+                    <!-- 자동 검색 그룹 -->
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; margin-bottom: 0.8rem; padding-bottom: 0.8rem; border-bottom: 1px dashed var(--border-color);">
+                        <span style="font-weight: 600; color: var(--text-main); margin-right: 0.5rem; display: flex; align-items: center; font-size: 0.9rem;"><span class="material-symbols-rounded" style="font-size:1.1em; margin-right:4px;">search</span> 자동 검색</span>
+                        <input type="text" id="mapAssignee" placeholder="담당자 이름 (체크 시 무시)" class="search-input" style="flex: 1; min-width: 140px; padding: 0.5rem 0.8rem;">
+                        <input type="text" id="mapStartDate" class="date-select-btn" placeholder="시작일" style="width: 110px; padding: 0.5rem;">
+                        <span style="font-weight: bold; color: var(--text-muted);">~</span>
+                        <input type="text" id="mapEndDate" class="date-select-btn" placeholder="종료일" style="width: 110px; padding: 0.5rem;">
+                    </div>
+                    
+                    <!-- 동선 옵션 그룹 -->
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.8rem; align-items: center; justify-content: space-between;">
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.8rem; align-items: center;">
+                            <span style="font-weight: 600; color: var(--primary); margin-right: 0.5rem; display: flex; align-items: center; font-size: 0.9rem;"><span class="material-symbols-rounded" style="font-size:1.1em; margin-right:4px;">tune</span> 동선 옵션</span>
+                            
+                            <div style="display: flex; align-items: center; background-color: var(--col-bg); border-radius: 6px; border: 1px solid var(--border-color); padding: 2px;">
+                                <span style="font-size: 0.85rem; color: var(--text-muted); padding: 0 0.5rem; font-weight: 600;">팀(차량) 수</span>
+                                <input type="number" id="mapTeamCount" class="search-input" min="1" max="10" value="1" style="width: 50px; padding: 0.4rem; border: none; background: var(--card-bg); border-radius: 4px; text-align: center;" onchange="renderTeamSettings()">
+                            </div>
+
+                            <select id="mapRoutingStrategy" class="search-input" style="padding: 0.5rem 2rem 0.5rem 0.8rem; max-width: 220px; font-size: 0.85rem; font-weight: 500;">
+                                <option value="total_distance">1. 거리 우선 (전체 최적화)</option>
+                                <option value="sequential">2. 순차적 (가까운 곳 우선)</option>
+                                <option value="time">3. 시간 우선 (실시간 교통)</option>
+                            </select>
+
+                            <label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:var(--text-main); font-weight:600; cursor:pointer; background-color: var(--col-bg); padding: 0.5rem 0.8rem; border-radius: 6px; border: 1px solid var(--border-color);">
+                                <input type="checkbox" id="mapStartFromHQ" checked style="width:16px; height:16px; cursor:pointer;"> 본점 출발
+                            </label>
+                        </div>
+                        
+                        <button onclick="calculateOptimizedRoute()" style="background-color: #8B5CF6; display: flex; align-items: center; gap: 4px; padding: 0.6rem 1.2rem; white-space: nowrap;">
+                            <span class="material-symbols-rounded" style="font-size: 1.2em;">play_arrow</span> 동선 그리기
+                        </button>
+                    </div>
+                    
+                    <!-- 팀별 인원/성별 상세 설정 UI (동적 생성) -->
+                    <div id="mapTeamSettings" style="display:flex; flex-wrap:wrap; gap:0.5rem; width:100%; margin-top:0.8rem;"></div>
+                </div>
+                <div class="map-container-grid">
+                    <div style="position: relative; width: 100%; height: 400px; min-height: 400px; overflow: hidden; border-radius: 12px; border: 1px solid var(--border-color);">
+                        <div id="tripMap" class="trip-map-area" style="border: none; width: 100%; height: 100%; min-height: 100%;">
+                            <span style="color:var(--text-muted);">출장지를 체크하거나 검색 조건을 입력하고<br>동선 그리기를 누르세요.</span>
+                        </div>
+                        <!-- 터치 보호막 오버레이 -->
+                        <div id="map-touch-overlay" class="map-scroll-overlay" onclick="activateMobileMap()">
+                            <div style="background: rgba(15, 23, 42, 0.85); color: #FFFFFF; padding: 0.8rem 1.2rem; border-radius: 12px; font-size: 0.82rem; font-weight: 700; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; max-width: 80%; box-shadow: var(--shadow-lg);">
+                                <span class="material-symbols-rounded" style="font-size: 1.8rem; color: #8B5CF6;">touch_app</span>
+                                <span>터치하여 지도를 활성화하세요</span>
+                                <span style="font-size: 0.72rem; color: #94A3B8; font-weight: normal;">(활성화 시 지도 이동 및 줌이 가능해집니다)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tripRouteList" class="trip-route-list"></div>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 2rem; margin-bottom: 1rem; font-size: 1.1rem;"><span class="material-symbols-rounded" style="vertical-align:middle; margin-right:6px; color:var(--primary);">event_upcoming</span>예정된 출장</h3>
+            <div id="trip-list" class="trip-grid"></div>
+            
+            <h3 style="margin-top: 2.5rem; margin-bottom: 1rem; font-size: 1.1rem; color: var(--text-muted);"><span class="material-symbols-rounded" style="vertical-align:middle; margin-right:6px;">history</span>지난 출장 (보관함)</h3>
+            <div id="trip-list-past" class="trip-grid"></div>
+            
+            <!-- 실시간 사내 업무 메일 소통 요약 Feed (신규 추가) -->
+            <div class="section communication-section" style="margin-top: 3rem;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; border-bottom:2px solid var(--bg-color); padding-bottom:0.75rem;">
+                    <h2 style="margin:0; padding:0; border:none; display:flex; align-items:center; gap:6px;"><span class="material-symbols-rounded" style="vertical-align:middle; color:var(--primary);">forum</span> 실시간 사내 메일 소통 요약 Feed</h2>
+                    <span style="font-size:0.8rem; color:var(--text-muted); font-weight:600;">📧 지메일 라벨 연동 자동 요약 및 분류 (30분 주기 동기화)</span>
+                </div>
+                <div class="communication-feed-container">
+                    <ul id="communication-list" class="communication-list">
+                        <li class="comm-empty"><span class="material-symbols-rounded">mail_lock</span>수신된 일반 메일 소통 내역이 아직 없습니다.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- 탭 1.2: 대표님 지시사항 -->
+        <div id="tab-meeting-feed" class="tab-content" style="display: none;">
+            <div class="section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--bg-color);">
+                    <h2 style="margin: 0; padding: 0; border: none; display: flex; align-items: center; gap: 8px;">
+                        <span class="material-symbols-rounded" style="color: var(--primary);">forum</span>
+                        대표님 지시사항
+                    </h2>
+                    <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">📝 대표님 지시사항 실시간 공유</span>
+                </div>
+
+                <!-- 지시/안건 입력 창 -->
+                <div class="feed-write-card" style="background-color: var(--col-bg); border-radius: 16px; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 1rem;">
+                    <h3 style="margin: 0; font-size: 1rem; font-weight: 700; display: flex; align-items: center; gap: 6px;">
+                        <span class="material-symbols-rounded" style="color: var(--primary);">edit_document</span>
+                        새 지시사항 기록하기
+                    </h3>
+                    <textarea id="feedInput" placeholder="대표님 지시사항 등 팀원들과 즉시 공유해야 할 일들을 작성해 주세요. (등록 시 팀원들에게 실시간 알림이 발송됩니다)" style="width: 100%; height: 100px; padding: 0.8rem; border: 1px solid var(--border-color); border-radius: 12px; font-size: 0.95rem; resize: none; background-color: var(--card-bg); color: var(--text-main); font-family: inherit; line-height: 1.5; box-sizing: border-box; outline: none; transition: border-color 0.2s;" onfocus="this.style.borderColor='var(--primary)'" onblur="this.style.borderColor='var(--border-color)'"></textarea>
+                    <div style="display: flex; justify-content: flex-end;">
+                        <button onclick="addMeetingFeed()" style="display: flex; align-items: center; gap: 6px; padding: 0.75rem 1.8rem; border-radius: 12px; font-weight: bold; font-size: 0.95rem; background: linear-gradient(135deg, var(--primary), #6366f1); box-shadow: var(--shadow-sm);">
+                            <span class="material-symbols-rounded">send</span> 등록하기
+                        </button>
+                    </div>
+                </div>
+
+                <div class="feed-filter-bar">
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;" id="feedFilterButtons">
+                        <button class="cal-filter-btn active" id="feed-filter-all" onclick="setFeedFilter('all', this)" style="padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">전체 보기</button>
+                        <button class="cal-filter-btn" id="feed-filter-unread" onclick="setFeedFilter('unread', this)" style="padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">내가 미확인</button>
+                        <button class="cal-filter-btn" id="feed-filter-read" onclick="setFeedFilter('read', this)" style="padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">내가 확인 완료</button>
+                    </div>
+                    <div style="position: relative; min-width: 240px; flex: 1; max-width: 320px;">
+                        <span class="material-symbols-rounded" style="position: absolute; left: 0.8rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 1.1rem;">search</span>
+                        <input type="text" id="feedSearchInput" placeholder="피드 내용 검색..." class="search-input" style="width: 100%; box-sizing: border-box; padding-left: 2.5rem;" oninput="renderMeetingFeedUI()">
+                    </div>
+                </div>
+
+                <!-- 피드 카드 목록 -->
+                <div id="feed-list-container" style="display: flex; flex-direction: column; gap: 1.2rem;">
+                    <div style="text-align: center; padding: 3rem; color: var(--text-muted); font-style: italic;">
+                        등록된 피드가 없습니다. 첫 글을 등록해 보세요!
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 탭 3: 휴가 결재 -->
+        <div id="tab-leaves" class="tab-content" style="display: none;">
+        <!-- 휴가 신청 및 관리 섹션 -->
+        <div class="section leave-section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--bg-color); flex-wrap: wrap; gap: 1rem;">
+                <h2 style="margin: 0; padding: 0; border: none;"><span class="material-symbols-rounded" style="vertical-align:bottom; margin-right:6px;">beach_access</span>휴가 결재 및 관리</h2>
+                <button onclick="openCommonCalendarModal()" style="background-color: var(--col-bg); color: var(--text-main); border: 1px solid var(--border-color); box-shadow: none; display:flex; align-items:center; gap:4px;"><span class="material-symbols-rounded" style="font-size:1.2em;">calendar_month</span> 전체 캘린더 보기</button>
+            </div>
+            
+            <div style="display: flex; gap: 2rem; flex-wrap: wrap; margin-bottom: 2rem;">
+                <!-- 좌측: 내 휴가 현황 및 신청 -->
+                <div style="flex: 1; min-width: 300px; background-color: var(--col-bg); padding: 1.5rem; border-radius: 12px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 1.5rem; font-size: 1.1rem; font-weight: 600;">
+                        <span>잔여 연차: <strong id="leave-remain" style="color: var(--primary); font-size: 1.5rem;">0</strong> 일</span>
+                        <span>사용 연차: <strong id="leave-used" style="color: var(--danger); font-size: 1.5rem;">0</strong> 일</span>
+                    </div>
+                    <hr style="border: 0; border-top: 1px dashed var(--border-color); margin: 1.5rem 0;">
+                    <h3 style="font-size: 1rem; margin-top: 0; margin-bottom: 1rem;">새 휴가 신청</h3>
+                    <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                        <label style="font-size: 0.9rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                            <input type="checkbox" id="leaveIsRange" onchange="toggleLeaveRange()"> 여러 날짜(기간) 한 번에 신청
+                        </label>
+                        <div style="display: flex; gap: 0.5rem; align-items: center;">
+                        <input type="text" id="leaveStartDate" class="date-select-btn" placeholder="시작일" style="flex: 1; padding: 0.6rem;">
+                            <span id="leaveRangeTilde" style="display: none; font-weight: bold; color: var(--text-muted);">~</span>
+                        <input type="text" id="leaveEndDate" class="date-select-btn" placeholder="종료일" style="display: none; flex: 1; padding: 0.6rem;">
+                        </div>
+                        <select id="leaveType" class="search-input" style="padding: 0.6rem;">
+                            <option value="1">연차 (1일)</option>
+                            <option value="0.5am">오전 반차 (0.5일)</option>
+                            <option value="0.5pm">오후 반차 (0.5일)</option>
+                        </select>
+                        <button id="applyLeaveBtn" onclick="applyLeave()" style="width: 100%; margin-top: 0.5rem;">신청하기</button>
+                    </div>
+                </div>
+
+                <!-- 우측: 내 휴가 내역 -->
+                <div style="flex: 1; min-width: 300px; background-color: var(--col-bg); padding: 1.5rem; border-radius: 12px;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 1rem;">
+                        <h3 style="font-size: 1rem; margin: 0;">내 휴가 내역</h3>
+                        <span style="font-size: 0.75rem; color: var(--danger); font-weight: 600;">※ 휴가 취소는 담당자 보고 후 진행해주세요.</span>
+                    </div>
+                    <ul id="leave-history-list" class="user-list" style="max-height: 280px; overflow-y: auto;">
+                        <li style="justify-content: center; color: var(--text-muted); font-size: 0.9rem;">휴가 내역이 없습니다.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- 탭 4: 사용자 관리 (관리자 전용) -->
+        <div id="tab-admin" class="tab-content" style="display: none;">
+        <div class="section" id="admin-panel">
+            <h2>사용자 관리 (관리자 전용)</h2>
+            <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 300px;">
+                    <h3 style="font-size: 1rem; color: var(--text-muted); margin-bottom: 1rem;">대기 중인 사용자</h3>
+                    <ul id="user-approval-list" class="user-list"></ul>
+                </div>
+                <div style="flex: 1; min-width: 300px;">
+                    <h3 style="font-size: 1rem; color: var(--primary); margin-bottom: 1rem;">워크스페이스 멤버</h3>
+                    <ul id="user-member-list" class="user-list"></ul>
+                </div>
+            </div>
+            
+            <hr style="border: 0; border-top: 2px dashed var(--border-color); margin: 2rem 0;">
+            
+            <!-- 휴가 결재 대기 목록 (신규 추가) -->
+            <div style="margin-bottom: 2rem;">
+                <h3 style="font-size: 1.1rem; color: #F59E0B; margin: 0 0 1rem 0; display:flex; align-items:center;"><span class="material-symbols-rounded" style="font-size:1.2em; margin-right:6px;">fact_check</span> 휴가 결재 대기 목록</h3>
+                <ul id="admin-pending-leaves-list" class="user-list"></ul>
+            </div>
+
+            <!-- 팀원 연차 현황 (관리자 전용) -->
+            <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h3 style="font-size: 1.1rem; color: var(--danger); margin: 0; display:flex; align-items:center;"><span class="material-symbols-rounded" style="font-size:1.2em; margin-right:6px;">admin_panel_settings</span> 팀원 연차 전체 현황</h3>
+                    <button onclick="downloadLeaveCSV()" style="background-color: #10B981; font-size: 0.8rem; padding: 0.4rem 0.8rem;">엑셀 다운로드</button>
+                </div>
+                <div id="admin-leave-list" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
+                    <!-- 멤버별 남은 연차 박스가 JS로 렌더링됩니다 -->
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- 탭 4.5: 조직도 및 팀원 목록 -->
+        <div id="tab-members" class="tab-content" style="display: none;">
+            <div class="section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--bg-color);">
+                    <h2 style="margin: 0; padding: 0; border: none;"><span class="material-symbols-rounded" style="vertical-align:bottom; margin-right:6px;">group</span>조직도 및 팀원 목록</h2>
+                    <span id="org-admin-guide" style="font-size: 0.85rem; color: var(--primary); font-weight: bold; display: none;">💡 관리자 모드: 팀원을 드래그하여 부서를 이동하세요.</span>
+                </div>
+                
+                <div class="org-board">
+                    <div class="org-column org-col-ceo" style="border-top: 4px solid var(--danger);">
+                        <h3>대표</h3>
+                        <div class="org-list" id="list-ceo" ondrop="dropMember(event, 'ceo')" ondragover="allowDrop(event)"></div>
+                    </div>
+                    <div class="org-column" style="border-top: 4px solid #F59E0B;">
+                        <h3>헬스케어 (팀장)</h3>
+                        <div class="org-list" id="list-health_leader" ondrop="dropMember(event, 'health_leader')" ondragover="allowDrop(event)"></div>
+                    </div>
+                    <div class="org-column" style="border-top: 4px solid #10B981;">
+                        <h3>헬스케어 (팀원)</h3>
+                        <div class="org-list" id="list-health_member" ondrop="dropMember(event, 'health_member')" ondragover="allowDrop(event)"></div>
+                    </div>
+                    <div class="org-column" style="border-top: 4px solid #8B5CF6;">
+                        <h3>마케팅부</h3>
+                        <div class="org-list" id="list-marketing" ondrop="dropMember(event, 'marketing')" ondragover="allowDrop(event)"></div>
+                    </div>
+                    <div class="org-column" style="border-top: 4px solid #3B82F6;">
+                        <h3>입찰사무원</h3>
+                        <div class="org-list" id="list-bidding" ondrop="dropMember(event, 'bidding')" ondragover="allowDrop(event)"></div>
+                    </div>
+                    <div class="org-column org-col-unassigned" style="border-top: 4px solid var(--border-color); opacity: 0.8;">
+                        <h3 style="color: var(--text-muted);">미지정 (신규가입)</h3>
+                        <div class="org-list" id="list-unassigned" ondrop="dropMember(event, 'unassigned')" ondragover="allowDrop(event)"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 탭 5: 마이페이지 -->
+        <div id="tab-mypage" class="tab-content" style="display: none;">
+            <div class="section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--bg-color);">
+                    <h2 style="margin: 0; padding: 0; border: none;"><span class="material-symbols-rounded" style="vertical-align:bottom; margin-right:6px;">person</span>내 업무 및 일정 (마이페이지)</h2>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; align-items: start;">
+                    <div style="background-color: var(--card-bg); border: 1px solid var(--border-color); padding: 1.2rem; border-radius: 12px; box-shadow: var(--shadow-sm);">
+                        <h3 style="font-size: 1.05rem; margin-top: 0; margin-bottom: 1rem; color: var(--primary); display: flex; align-items: center; gap: 6px;"><span class="material-symbols-rounded">work</span> 내 업무</h3>
+                        <ul id="mypage-tasks" class="user-list" style="max-height: 280px; overflow-y: auto; padding-right: 4px;"></ul>
+                    </div>
+                    <div style="background-color: var(--card-bg); border: 1px solid var(--border-color); padding: 1.2rem; border-radius: 12px; box-shadow: var(--shadow-sm);">
+                        <h3 style="font-size: 1.05rem; margin-top: 0; margin-bottom: 1rem; color: #8B5CF6; display: flex; align-items: center; gap: 6px;"><span class="material-symbols-rounded">flight_takeoff</span> 내 출장 일정</h3>
+                        <ul id="mypage-trips" class="user-list" style="max-height: 280px; overflow-y: auto; padding-right: 4px;"></ul>
+                    </div>
+                    <div style="background-color: var(--card-bg); border: 1px solid var(--border-color); padding: 1.2rem; border-radius: 12px; box-shadow: var(--shadow-sm);">
+                        <h3 style="font-size: 1.05rem; margin-top: 0; margin-bottom: 1rem; color: #10B981; display: flex; align-items: center; gap: 6px;"><span class="material-symbols-rounded">beach_access</span> 내 휴가 결재</h3>
+                        <div class="calendar-controls" style="margin-bottom: 0.8rem;">
+                            <button onclick="changeMyPageMonth(-1)" style="padding: 0.3rem; font-size: 0.8rem;"><span class="material-symbols-rounded" style="vertical-align:middle;">chevron_left</span></button>
+                            <h4 id="mypage-calendar-month-year" style="margin: 0; font-size: 1.05rem; font-weight: bold; color: var(--text-main);"></h4>
+                            <button onclick="changeMyPageMonth(1)" style="padding: 0.3rem; font-size: 0.8rem;"><span class="material-symbols-rounded" style="vertical-align:middle;">chevron_right</span></button>
+                        </div>
+                        <div class="calendar-grid" id="mypage-calendar-grid"></div>
+                        <hr style="border: 0; border-top: 1px dashed var(--border-color); margin: 1rem 0;">
+                        <ul id="mypage-leaves-list" class="user-list" style="max-height: 150px; overflow-y: auto; padding-right: 4px;"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 탭 6: 문서 도구 (PDF 워터마크) -->
+        <div id="tab-docs" class="tab-content" style="display: none;">
+            <div class="section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--bg-color);">
+                    <h2 style="margin: 0; padding: 0; border: none; display: flex; align-items: center; gap: 10px;">
+                        <span class="material-symbols-rounded" style="color: var(--primary);">auto_fix_high</span>
+                        문서 자동화 도구
+                    </h2>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="background: #eef2ff; color: #4f46e5; font-weight: 700; padding: 6px 12px; border-radius: 10px; font-size: 0.75rem; border: 1px solid rgba(79, 70, 229, 0.1);">PREMIUM v1.2</span>
+                    </div>
+                </div>
+
+                <div class="pdf-tool-container">
+                    <!-- 설정 패널 (좌측) -->
+                    <div class="pdf-settings-panel">
+                        <h3 style="margin: 0 0 1.5rem 0; font-size: 1.1rem; font-weight: 700; color: #1e1b4b; display: flex; align-items: center; gap: 8px;">
+                            <span class="material-symbols-rounded" style="color: #6366f1; font-size: 1.3rem;">tune</span>
+                            워터마크 상세 설정
+                        </h3>
+                        
+                        <div class="form-group">
+                            <label>출력 텍스트 <span class="material-symbols-rounded" style="font-size: 1rem; color: var(--primary);">edit_note</span></label>
+                            <input type="text" id="pdf-watermark-text" value="이름 010-xxxx-xxxx" class="premium-input" style="width: 100%; padding: 0.8rem; border: 1.5px solid #e2e8f0; border-radius: 12px; font-size: 0.9rem;">
+                        </div>
+                        
+                        <div class="settings-grid" style="margin-top: 1.2rem;">
+                            <div class="form-group">
+                                <label>글자 크기 <span id="val-font-size" style="color: #6366f1;">14</span></label>
+                                <input type="range" id="pdf-font-size" class="premium-slider" min="10" max="80" value="14" oninput="document.getElementById('val-font-size').textContent=this.value">
+                            </div>
+                            <div class="form-group">
+                                <label>투명도 <span id="val-opacity" style="color: #6366f1;">0.20</span></label>
+                                <input type="range" id="pdf-opacity" class="premium-slider" min="0.01" max="1.0" step="0.01" value="0.20" oninput="document.getElementById('val-opacity').textContent=this.value">
+                            </div>
+                            <div class="form-group">
+                                <label>기울기 <span id="val-rotation" style="color: #6366f1;">30</span>°</label>
+                                <input type="range" id="pdf-rotation" class="premium-slider" min="-180" max="180" value="30" oninput="document.getElementById('val-rotation').textContent=this.value">
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 1.2rem;">
+                            <div style="display: flex; align-items: center; gap: 10px; background: #f8fafc; padding: 0.8rem; border-radius: 12px; border: 1px solid #e2e8f0; cursor: pointer;" onclick="const chk=document.getElementById('pdf-tile-mode'); chk.checked=!chk.checked; if(window.toggleTileMode) toggleTileMode(chk.checked);">
+                                <input type="checkbox" id="pdf-tile-mode" checked style="width: 16px; height: 16px; accent-color: #6366f1;">
+                                <span style="font-size: 0.85rem; font-weight: 700; color: #475569;">반복 바둑판 배열</span>
+                            </div>
+                        </div>
+
+                        <div id="tile-settings" style="display: block; margin-top: 1rem; padding: 1rem; background: #f8fafc; border-radius: 15px; border: 1px dashed #cbd5e1;">
+                            <div class="settings-grid">
+                                <div class="form-group" style="margin:0;">
+                                    <label>가로 간격 <span id="val-spacing-x">300</span></label>
+                                    <input type="range" id="pdf-spacing-x" class="premium-slider" min="50" max="500" value="300" oninput="document.getElementById('val-spacing-x').textContent=this.value">
+                                </div>
+                                <div class="form-group" style="margin:0;">
+                                    <label>세로 간격 <span id="val-spacing-y">400</span></label>
+                                    <input type="range" id="pdf-spacing-y" class="premium-slider" min="50" max="800" value="400" oninput="document.getElementById('val-spacing-y').textContent=this.value">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 업로드 패널 (우측) -->
+                    <div class="pdf-upload-panel">
+                        <div class="upload-zone" id="pdf-upload-zone">
+                            <div class="upload-icon-wrapper">
+                                <span class="material-symbols-rounded">picture_as_pdf</span>
+                            </div>
+                            <h4 style="margin:0; font-size: 1rem; font-weight: 700; color: #1e1b4b;">파일 드롭 스테이션</h4>
+                            <p style="margin: 4px 0 0 0; font-size: 0.8rem; color: #64748b; text-align: center;">PDF 파일을 여기로 끌어다 놓으세요</p>
+                            <input type="file" id="pdf-file-input" accept=".pdf" style="display: none;">
+                            <div id="selected-file-info" style="display: none; margin-top: 10px; font-weight: 700; color: #6366f1; font-size: 0.8rem;"></div>
+                        </div>
+
+                        <button class="process-btn" id="btn-process-pdf" disabled>
+                            <span class="material-symbols-rounded">download_for_offline</span>
+                            적용 및 다운로드
+                        </button>
+                    </div>
+                </div>
+
+                <!-- AI 기획서 비서 (AI Meeting-to-Proposal Assistant) -->
+                <div class="section" style="margin-top: 3rem; padding-top: 2rem; border-top: 2px solid var(--bg-color);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <h2 style="margin: 0; padding: 0; border: none; display: flex; align-items: center; gap: 10px;">
+                            <span class="material-symbols-rounded" style="color: var(--primary);">smart_toy</span>
+                            스마트 AI 회의록 기획 비서
+                        </h2>
+                    </div>
+
+                    <!-- 모바일 전용 AI 비서 서브 탭 스위치 -->
+                    <div id="proposal-mobile-tabs" class="proposal-mobile-tabs-container">
+                        <button class="mobile-tab-btn active" onclick="switchProposalMobileTab('input')" id="p-tab-btn-input">
+                            <span class="material-symbols-rounded" style="font-size: 1.15rem;">edit_note</span> 작성 입력
+                        </button>
+                        <button class="mobile-tab-btn" onclick="switchProposalMobileTab('result')" id="p-tab-btn-result">
+                            <span class="material-symbols-rounded" style="font-size: 1.15rem;">auto_awesome</span> 기획서 결과
+                        </button>
+                    </div>
+
+                    <div class="pdf-tool-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                        <!-- 입력 패널 (좌측) -->
+                        <div class="pdf-settings-panel" id="proposal-input-panel" style="display: flex; flex-direction: column; gap: 1.2rem;">
+                            <h3 style="margin: 0; font-size: 1.1rem; font-weight: 700; color: #1e1b4b; display: flex; align-items: center; gap: 8px;">
+                                <span class="material-symbols-rounded" style="color: #6366f1; font-size: 1.3rem;">description</span>
+                                회의 및 아이디어 입력
+                            </h3>
+                            
+                            <div class="form-group">
+                                <label style="font-weight: 600; font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; gap: 4px;">러프한 메모/회의록 입력 <span class="material-symbols-rounded" style="font-size: 1rem; color: var(--primary);">edit_note</span></label>
+                                <textarea id="proposalRawInput" class="premium-input" style="width: 100%; height: 200px; padding: 0.8rem; border: 1.5px solid #e2e8f0; border-radius: 12px; font-size: 0.9rem; resize: none; font-family: inherit; line-height: 1.5;" placeholder="회의에서 나눈 이야기나 파편화된 아이디어를 입력하세요. 예: '여름 텀블러 이벤트, 7월 한달간, 20대 타겟, SNS 홍보 기획...'"></textarea>
+                            </div>
+                            
+                            <div class="settings-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                <div class="form-group">
+                                    <label style="font-weight: 600; font-size: 0.85rem; color: var(--text-muted);">템플릿 유형</label>
+                                    <select id="proposalTemplate" class="premium-input" style="width: 100%; padding: 0.8rem; border: 1.5px solid #e2e8f0; border-radius: 12px; font-size: 0.9rem; font-weight: bold; cursor: pointer;">
+                                        <option value="business">📈 신규 사업 기획서</option>
+                                        <option value="marketing">📣 마케팅/캠페인 전략</option>
+                                        <option value="event">🎈 이벤트/행사 기획안</option>
+                                        <option value="problem">🔧 문제해결 제안서</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-weight: 600; font-size: 0.85rem; color: var(--text-muted);">어조/스타일</label>
+                                    <select id="proposalTone" class="premium-input" style="width: 100%; padding: 0.8rem; border: 1.5px solid #e2e8f0; border-radius: 12px; font-size: 0.9rem; font-weight: bold; cursor: pointer;">
+                                        <option value="professional">💼 전문적이고 격조 높은</option>
+                                        <option value="persuasive">🗣 설득력 있고 논리적인</option>
+                                        <option value="creative">💡 친근하고 창의적인</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="margin-top: 0.5rem;">
+                                <label style="font-weight: 600; font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; justify-content: space-between;">
+                                    <span>OpenAI API Key <small style="color:var(--text-muted); font-weight:normal;">(브라우저 저장)</small></span>
+                                    <span class="material-symbols-rounded" style="font-size: 1.15rem; color: #6366f1;">vpn_key</span>
+                                </label>
+                                <input type="password" id="proposalApiKeyInput" class="premium-input" style="width: 100%; padding: 0.8rem; border: 1.5px solid #e2e8f0; border-radius: 12px; font-size: 0.9rem;" placeholder="sk-..." onchange="saveProposalApiKey(this.value)">
+                            </div>
+                            
+                            <button class="process-btn" id="btn-generate-proposal" onclick="generateAiProposal()" style="margin-top: 0.5rem; background: linear-gradient(135deg, #4F46E5, #8B5CF6); color: white; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: bold;">
+                                <span class="material-symbols-rounded">neurology</span>
+                                AI 기획서 초안 생성
+                            </button>
+                        </div>
+
+                        <!-- 결과 패널 (우측) -->
+                        <div class="pdf-settings-panel" id="proposal-result-panel" style="display: flex; flex-direction: column; gap: 1.2rem; min-height: 480px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 0.8rem;">
+                                <h3 style="margin: 0; font-size: 1.1rem; font-weight: 700; color: #1e1b4b; display: flex; align-items: center; gap: 8px;">
+                                    <span class="material-symbols-rounded" style="color: #6366f1; font-size: 1.3rem;">auto_awesome</span>
+                                    생성된 기획서 초안
+                                </h3>
+                                <div style="display: flex; gap: 6px;">
+                                    <button class="text-btn" onclick="copyProposalText()" style="padding: 4px 8px; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; gap: 4px; background: transparent; border: 1px solid var(--border-color); border-radius: 8px; cursor: pointer; color: var(--text-main);" title="클립보드 복사"><span class="material-symbols-rounded" style="font-size: 1rem;">content_copy</span> 복사</button>
+                                    <button class="text-btn" onclick="downloadProposalAsFile()" style="padding: 4px 8px; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; gap: 4px; background: transparent; border: 1px solid var(--border-color); border-radius: 8px; cursor: pointer; color: var(--text-main);" title="파일로 다운로드"><span class="material-symbols-rounded" style="font-size: 1rem;">download</span> 다운로드</button>
+                                    <button class="text-btn" onclick="saveProposalToDatabase()" style="padding: 4px 8px; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; gap: 4px; background: transparent; border: 1px solid var(--border-color); border-radius: 8px; cursor: pointer; color: var(--text-main);" title="보관함 저장"><span class="material-symbols-rounded" style="font-size: 1rem;">bookmark</span> 저장</button>
+                                </div>
+                            </div>
+                            
+                            <div id="proposalOutputContainer" style="flex: 1; background: var(--col-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem; overflow-y: auto; max-height: 400px; font-size: 0.9rem; line-height: 1.7; color: var(--text-main); word-break: break-all; white-space: pre-wrap;">
+                                <span style="color: var(--text-muted); font-style: italic;">좌측에 회의 내용을 입력하고 'AI 기획서 초안 생성' 버튼을 클릭하면 전문적인 기획서가 이곳에 생성됩니다.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 저장된 기획서 히스토리 보관함 -->
+                    <div style="margin-top: 2rem; background: rgba(79, 70, 229, 0.03); border: 1px dashed rgba(79, 70, 229, 0.2); padding: 1.2rem; border-radius: 16px;">
+                        <h4 style="margin: 0 0 1rem 0; font-size: 0.95rem; font-weight: bold; color: var(--primary); display: flex; align-items: center; gap: 6px;">
+                            <span class="material-symbols-rounded">history</span>
+                            기획서 저장 보관함 히스토리
+                        </h4>
+                        <div id="proposalHistoryList" style="display: flex; flex-wrap: wrap; gap: 8px;">
+                            <span style="color: var(--text-muted); font-size: 0.82rem; font-style: italic;">저장된 기획서가 없습니다. 기획서 생성 후 '저장'을 누르면 이곳에 보관됩니다.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 모달 창 (기본적으로 숨김) -->
+    <div id="taskModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="text" id="modalTitleInput" class="search-input" style="font-size: 1.15rem; font-weight: bold; flex: 1; margin-right: 1rem; padding: 0.5rem 0.8rem;" placeholder="업무 제목을 입력하세요">
+                <button class="close-btn" onclick="closeModal()" title="닫기"><span class="material-symbols-rounded">close</span></button>
+            </div>
+            <div class="modal-body">
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.5rem;">일정 분류</label>
+                    <select id="modalTaskType" class="search-input" style="width: 100%; box-sizing: border-box; padding: 0.6rem 0.8rem; font-weight: bold; border-radius: 8px;">
+                        <option value="task">업무 (칸반 보드에 표시)</option>
+                        <option value="schedule">일정 (달력에만 표시)</option>
+                        <option value="external">외부 연동 일정 (구글 캘린더)</option>
+                    </select>
+                </div>
+                <div class="modal-date-picker">
+                    <div class="date-input-group">
+                        <label for="modalStartDate">시작일</label>
+                        <input type="text" id="modalStartDate" class="date-select-btn" placeholder="시작일" style="width: 100%; box-sizing: border-box;">
+                    </div>
+                    <div class="date-input-group">
+                        <label for="modalDueDate">마감일</label>
+                        <input type="text" id="modalDueDate" class="date-select-btn" placeholder="마감일" style="width: 100%; box-sizing: border-box;">
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.5rem;">담당자</label>
+                    <div id="modal-assignee-tags-container" style="display: flex; flex-wrap: wrap; gap: 4px; padding: 0.4rem; border: 1px solid var(--border-color); border-radius: 12px; background: var(--col-bg); min-height: 42px; align-items: center;">
+                        <select id="modalAssigneeInput" class="search-input" style="border: none; background: transparent; padding: 0.2rem 0.5rem; font-size: 0.9rem; flex: 1; min-width: 80px;" onchange="addModalAssigneeTag(this)">
+                            <option value="">+ 추가</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 모바일용 업무 상태 이동 칩 그룹 -->
+                <div style="margin-bottom: 1rem;" id="modalStatusContainer">
+                    <label style="display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.5rem;">업무 상태 (모바일 터치 이동)</label>
+                    <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                        <button type="button" class="status-chip" onclick="setModalTaskStatus('todo')" id="status-chip-todo" style="flex: 1; padding: 8px 6px; font-size: 0.78rem; border-radius: 10px; border: 1.5px solid var(--border-color); background: var(--col-bg); color: var(--text-main); font-weight: bold; cursor: pointer; transition: all 0.2s; outline: none; box-shadow: none;">할 일</button>
+                        <button type="button" class="status-chip" onclick="setModalTaskStatus('doing')" id="status-chip-doing" style="flex: 1; padding: 8px 6px; font-size: 0.78rem; border-radius: 10px; border: 1.5px solid var(--border-color); background: var(--col-bg); color: var(--text-main); font-weight: bold; cursor: pointer; transition: all 0.2s; outline: none; box-shadow: none;">진행 중</button>
+                        <button type="button" class="status-chip" onclick="setModalTaskStatus('review')" id="status-chip-review" style="flex: 1; padding: 8px 6px; font-size: 0.78rem; border-radius: 10px; border: 1.5px solid var(--border-color); background: var(--col-bg); color: var(--text-main); font-weight: bold; cursor: pointer; transition: all 0.2s; outline: none; box-shadow: none;">검토 중</button>
+                        <button type="button" class="status-chip" onclick="setModalTaskStatus('done')" id="status-chip-done" style="flex: 1; padding: 8px 6px; font-size: 0.78rem; border-radius: 10px; border: 1.5px solid var(--border-color); background: var(--col-bg); color: var(--text-main); font-weight: bold; cursor: pointer; transition: all 0.2s; outline: none; box-shadow: none;">완료</button>
+                    </div>
+                </div>
+
+                <textarea id="modalDescription" placeholder="업무에 대한 상세 설명을 작성하세요..."></textarea>
+            </div>
+            <div class="modal-footer" style="display: flex; justify-content: space-between; align-items: center;">
+                <span id="taskAuthorDisplay" style="font-size: 0.75rem; color: var(--border-color); font-weight: 500;"></span>
+                <div style="display:flex; gap:0.5rem;">
+                    <button id="modalDeleteBtn" onclick="deleteCurrentTask()" style="background-color: var(--danger); display:none;">삭제</button>
+                    <button onclick="saveDescription()">저장</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 보관함 모달 -->
+    <div id="archiveModal" class="modal-overlay" style="display: none; z-index: 1010;">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h3 style="margin: 0; display:flex; align-items:center;"><span class="material-symbols-rounded" style="margin-right:6px;">inventory_2</span> 완료된 작업 보관함</h3>
+                <button class="close-btn" onclick="closeArchiveModal()" title="닫기"><span class="material-symbols-rounded">close</span></button>
+            </div>
+            <div class="modal-body" style="padding-top: 0.5rem;">
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">최근에 보관된 작업 목록입니다.</p>
+                <ul id="archived-task-list" class="user-list" style="max-height: 400px; overflow-y: auto;">
+                    <!-- JS로 채워짐 -->
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 출장 추가/수정 모달 -->
+    <div id="tripModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h3 id="tripModalTitle">출장 업무 상세</h3>
+                <button class="close-btn" onclick="closeTripModal()" title="닫기"><span class="material-symbols-rounded">close</span></button>
+            </div>
+            <div class="modal-body" style="display: flex; flex-direction: column; gap: 0.8rem;">
+                <div style="display: flex; gap: 0.8rem;">
+                    <input type="text" id="tripName" placeholder="출장명 (예: 부산 지사 방문)" class="search-input" style="flex: 2;">
+                    <input type="text" id="tripDate" class="date-select-btn" placeholder="출장일 선택" style="flex: 1;">
+                </div>
+                <div style="display: flex; gap: 0.8rem;">
+                    <select id="tripAssignee" class="search-input" style="flex: 1;">
+                        <option value="">출장자 이름 (선택)</option>
+                    </select>
+                    <input type="text" id="tripContact" placeholder="현장 담당자 연락처" class="search-input" style="flex: 1;">
+                </div>
+                <input type="text" id="tripAddress" placeholder="출장지 주소" class="search-input" style="width: 100%; box-sizing: border-box;">
+                
+                <!-- 출장지 요구 사항 (인원, 성별) -->
+                <div style="display: flex; gap: 0.8rem; align-items: center; background-color: var(--col-bg); padding: 0.8rem; border-radius: 8px; border: 1px solid var(--border-color); margin-top: 0.2rem; flex-wrap: wrap;">
+                    <label style="font-size:0.85rem; font-weight:600; color:var(--text-main); white-space:nowrap;"><span class="material-symbols-rounded" style="font-size:1.1em; margin-right:4px;">group</span>필요 인원</label>
+                    <input type="number" id="tripRequiredPersonnel" min="1" value="1" class="search-input" style="width: 60px; padding: 0.4rem; text-align: center;">
+                    <label style="font-size:0.85rem; font-weight:600; color:var(--text-main); white-space:nowrap; margin-left:0.5rem;"><span class="material-symbols-rounded" style="font-size:1.1em; margin-right:4px;">wc</span>필요 성별</label>
+                    <select id="tripRequiredGender" class="search-input" style="flex:1; padding: 0.4rem;">
+                        <option value="any">무관 (일반)</option>
+                        <option value="male">👨‍💼 남성 필수</option>
+                        <option value="female">👩‍💼 여성 필수</option>
+                    </select>
+                </div>
+
+                <!-- 여기어때/카카오맵 숙소 연동 UI -->
+                <div style="border-top: 1px dashed var(--border-color); margin-top: 0.5rem; padding-top: 1rem;">
+                    <label style="font-size: 0.9rem; font-weight: 600; display:flex; align-items:center; gap:4px; color:#E63946;">
+                        <span class="material-symbols-rounded">hotel</span> 숙소 검색 및 예약
+                    </label>
+                    <div style="display: flex; gap: 0.8rem; margin-top: 0.5rem;">
+                        <select id="tripRoomType" class="search-input" style="flex: 1;">
+                            <option value="single">1인실 (싱글/더블)</option>
+                            <option value="twin">2인실 (트윈룸)</option>
+                        </select>
+                        <button onclick="searchAccommodation()" style="background-color: #E63946; color: white; border: none; flex: 1; display:flex; align-items:center; justify-content:center; gap:4px;">
+                            <span class="material-symbols-rounded" style="font-size:1.1em;">search</span> 근처 숙소 찾기
+                        </button>
+                    </div>
+                    <input type="hidden" id="tripBookedHotel" value="">
+                    <div id="accommodationResults" style="display: none; margin-top: 1rem; flex-direction: column; gap: 0.5rem;"></div>
+                </div>
+
+                <label style="font-size: 0.9rem; font-weight: 600; margin-top: 0.5rem;">당일 타임 테이블 (파일 첨부)</label>
+                <input type="file" id="tripScheduleFile" class="file-input-hidden" onchange="updateFileName('tripScheduleFile', 'currentScheduleFile')">
+                <label for="tripScheduleFile" class="file-input-label">파일 첨부</label>
+                <div id="currentScheduleFile" style="font-size: 0.8rem; color: var(--primary); margin-top: 0.2rem;"></div>
+                
+                <label style="font-size: 0.9rem; font-weight: 600; margin-top: 0.5rem;">만족도 조사 QR (이미지 파일 첨부)</label>
+                <input type="file" id="tripQrFile" class="file-input-hidden" accept="image/*" onchange="updateFileName('tripQrFile', 'currentQrFile')">
+                <label for="tripQrFile" class="file-input-label">이미지 첨부</label>
+                <div id="currentQrFile" style="font-size: 0.8rem; color: var(--primary); margin-top: 0.2rem;"></div>
+            </div>
+            <div class="modal-footer" style="display: flex; justify-content: space-between; align-items: center;">
+                <span id="tripAuthorDisplay" style="font-size: 0.75rem; color: var(--border-color); font-weight: 500;"></span>
+                <div style="display:flex; gap:0.5rem;">
+                    <button id="tripModalDeleteBtn" onclick="deleteCurrentTrip()" style="background-color: var(--danger); display:none;">삭제</button>
+                    <button onclick="saveTrip()">저장</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 공지사항 작성/보기 모달 -->
+    <div id="noticeModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content" style="max-width: 650px;">
+            <div class="modal-header" style="flex-direction: column; align-items: flex-start; gap: 10px;">
+                <div style="display: flex; width: 100%; align-items: center;">
+                    <input type="text" id="noticeTitleInput" class="search-input" style="font-size: 1.15rem; font-weight: bold; flex: 1; margin-right: 1rem; padding: 0.5rem 0.8rem;" placeholder="공지사항 제목">
+                    <button class="close-btn" onclick="closeNoticeModal()" title="닫기"><span class="material-symbols-rounded">close</span></button>
+                </div>
+                <label id="noticeImportantLabel" style="display: flex; align-items: center; gap: 6px; font-size: 0.9rem; font-weight: 600; color: var(--danger); cursor: pointer; padding: 4px 8px; background: #fff1f2; border-radius: 8px; border: 1px solid #fecdd3;">
+                    <input type="checkbox" id="noticeImportantInput" style="width: 16px; height: 16px; accent-color: var(--danger);">
+                    📌 중요 공지로 상단 고정
+                </label>
+            </div>
+            <div class="modal-body">
+                <div id="noticeInfo" style="display: none; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px dashed var(--border-color);">
+                    <span id="noticeAuthorDate"></span>
+                    <span id="noticeViews"></span>
+                </div>
+                <textarea id="noticeContentInput" placeholder="공지 내용을 자세히 작성하세요..." style="width: 100%; height: 300px; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 6px; resize: vertical; outline: none; font-family: inherit; box-sizing: border-box;"></textarea>
+                
+                <div id="noticeLikeSection" style="display: none; justify-content: center; margin-top: 1rem;">
+                    <button id="noticeLikeBtn" onclick="toggleNoticeLike()" style="background-color: var(--col-bg); color: var(--text-main); border: 1px solid var(--border-color); display: flex; align-items: center; gap: 6px; padding: 0.5rem 1.2rem; border-radius: 20px; font-weight: bold; transition: all 0.2s;">
+                        <span class="material-symbols-rounded" id="noticeLikeIcon" style="font-size: 1.2rem;">favorite</span>
+                        공감 <span id="noticeLikeCount">0</span>
+                    </button>
+                </div>
+
+                <!-- 댓글 섹션 (추가) -->
+                <div id="noticeCommentSection" style="margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1.2rem; display: none;">
+                    <h4 style="font-size: 0.95rem; margin-top:0; margin-bottom: 1rem; display: flex; align-items: center; gap: 6px; color: var(--text-main);">
+                        <span class="material-symbols-rounded" style="font-size: 1.2rem; color: var(--primary);">comment</span> 
+                        댓글 <span id="noticeCommentCount" style="color: var(--primary); font-weight: 800;">0</span>
+                    </h4>
+                    <div id="noticeCommentList" style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.2rem; max-height: 250px; overflow-y: auto; padding-right: 5px;">
+                        <!-- 댓글 목록 동적 생성 -->
+                    </div>
+                    
+                    <div id="replyIndicator" style="display: none; align-items: center; justify-content: space-between; background-color: #F3F4F6; padding: 6px 12px; border-radius: 8px; margin-bottom: 8px; font-size: 0.85rem; color: var(--text-main);">
+                        <span><strong id="replyToName">OOO</strong>님에게 답글 작성 중...</span>
+                        <button onclick="cancelReply()" style="background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 0;"><span class="material-symbols-rounded" style="font-size: 1.1rem; vertical-align: middle;">close</span></button>
+                    </div>
+                    
+                    <div style="display: flex; gap: 0.6rem; background-color: var(--col-bg); padding: 0.6rem; border-radius: 12px; border: 1px solid var(--border-color);">
+                        <input type="text" id="noticeCommentInput" class="search-input" style="flex: 1; padding: 0.6rem; border: none; background: transparent;" placeholder="따뜻한 댓글을 남겨주세요..." onkeypress="if(event.isComposing) return; if(event.key === 'Enter') saveComment()">
+                        <button onclick="saveComment()" style="padding: 0.6rem 1.2rem; flex-shrink: 0; border-radius: 8px;">등록</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="display: flex; justify-content: space-between; align-items: center;">
+                <button id="noticeDeleteBtn" onclick="deleteNotice()" style="background-color: var(--danger); display: none;">삭제</button>
+                <div style="margin-left: auto; display: flex; gap: 0.5rem;">
+                    <button id="noticeEditBtn" onclick="enableNoticeEdit()" style="background-color: var(--primary); display: none; display: flex; align-items: center; gap: 4px;">
+                        <span class="material-symbols-rounded" style="font-size: 1.1rem;">edit</span> 수정하기
+                    </button>
+                    <button id="noticeSaveBtn" onclick="saveNotice()" style="display: none;">저장</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 개인정보 수정 모달 -->
+    <div id="profileModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h3 style="margin: 0; display:flex; align-items:center;"><span class="material-symbols-rounded" style="margin-right:6px;">manage_accounts</span> 개인정보 수정</h3>
+                <button class="close-btn" onclick="closeProfileModal()" title="닫기"><span class="material-symbols-rounded">close</span></button>
+            </div>
+            <div class="modal-body" style="display: flex; flex-direction: column; gap: 1rem; padding-top: 0.5rem;">
+                <div>
+                    <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 0.4rem;">이름 (표시명)</label>
+                    <input type="text" id="profileNameInput" class="search-input" style="width: 100%; box-sizing: border-box; padding: 0.6rem;">
+                </div>
+                <div>
+                    <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 0.4rem;">소속 부서</label>
+                    <select id="profileDeptInput" class="search-input" style="width: 100%; box-sizing: border-box; padding: 0.6rem;">
+                        <option value="unassigned">미지정</option>
+                        <option value="ceo">대표</option>
+                        <option value="health_leader">헬스케어 (팀장)</option>
+                        <option value="health_member">헬스케어 (팀원)</option>
+                        <option value="marketing">마케팅부</option>
+                        <option value="bidding">입찰사무원</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer" style="margin-top: 1.5rem;">
+                <button onclick="saveProfile()" style="width: 100%;">저장하기</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 같은 날짜 출장 목록 선택 모달 -->
+    <div id="tripGroupModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content" style="max-width: 450px;">
+            <div class="modal-header">
+                <h3 id="tripGroupTitle">출장 목록</h3>
+                <button class="close-btn" onclick="closeTripGroupModal()" title="닫기"><span class="material-symbols-rounded">close</span></button>
+            </div>
+            <div class="modal-body">
+                <ul id="tripGroupList" class="user-list"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 휴가 상세/취소 모달 (신규 추가) -->
+    <div id="leaveDetailModal" class="modal-overlay" style="display: none; z-index: 1010;">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h3 id="leaveDetailTitle" style="margin: 0; display:flex; align-items:center;"><span class="material-symbols-rounded" style="margin-right:6px;">beach_access</span> 휴가 상세</h3>
+                <button class="close-btn" onclick="closeLeaveDetailModal()" title="닫기"><span class="material-symbols-rounded">close</span></button>
+            </div>
+            <div class="modal-body" id="leaveDetailBody" style="display: flex; flex-direction: column; gap: 1rem; padding-top: 0.5rem;">
+                <!-- JS로 내용이 채워집니다. -->
+            </div>
+            <div class="modal-footer" style="margin-top: 1.5rem; display: flex; gap: 0.5rem; justify-content: flex-end;">
+                <button id="leaveDetailConfirmBtn" onclick="closeLeaveDetailModal()" style="background-color: var(--col-bg); color: var(--text-main); border: 1px solid var(--border-color); box-shadow: none;">확인</button>
+                <button id="leaveDetailCancelBtn" onclick="" style="background-color: var(--danger); display: none;">휴가 취소</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 이스터에그 미니게임 (업무 잡기) 모달 -->
+    <div id="miniGameModal" class="modal-overlay" style="display: none; z-index: 10000;">
+        <div class="modal-content" style="max-width: 400px; text-align: center; background-color: var(--card-bg);">
+            <div class="modal-header" style="justify-content: center; flex-direction: column; gap: 10px; border-bottom: 2px dashed var(--border-color); padding-bottom: 1rem; margin-bottom: 0;">
+                <h2 style="margin: 0; color: var(--primary); font-size: 1.5rem; border: none; padding: 0;">🎮 업무 중 휴식! 🎮</h2>
+                <p style="margin: 0; font-size: 0.9rem; color: var(--text-muted);">스트레스 타파! 튀어나오는 업무를 잡으세요!</p>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 1.5rem; margin-top: 1rem; padding: 0 1rem; font-size: 1.1rem;">
+                <span style="color: var(--danger);">⏰ 시간: <span id="gameTime">30</span>초</span>
+                <span style="color: var(--primary);">💯 점수: <span id="gameScore">0</span>점</span>
+            </div>
+            <div class="game-grid" id="gameGrid">
+                <div class="game-hole"><div class="game-mole" onclick="whackMole(this)"><span class="material-symbols-rounded">work</span></div></div>
+                <div class="game-hole"><div class="game-mole" onclick="whackMole(this)"><span class="material-symbols-rounded">work</span></div></div>
+                <div class="game-hole"><div class="game-mole" onclick="whackMole(this)"><span class="material-symbols-rounded">work</span></div></div>
+                <div class="game-hole"><div class="game-mole" onclick="whackMole(this)"><span class="material-symbols-rounded">work</span></div></div>
+                <div class="game-hole"><div class="game-mole" onclick="whackMole(this)"><span class="material-symbols-rounded">work</span></div></div>
+                <div class="game-hole"><div class="game-mole" onclick="whackMole(this)"><span class="material-symbols-rounded">work</span></div></div>
+                <div class="game-hole"><div class="game-mole" onclick="whackMole(this)"><span class="material-symbols-rounded">work</span></div></div>
+                <div class="game-hole"><div class="game-mole" onclick="whackMole(this)"><span class="material-symbols-rounded">work</span></div></div>
+                <div class="game-hole"><div class="game-mole" onclick="whackMole(this)"><span class="material-symbols-rounded">work</span></div></div>
+            </div>
+            <button onclick="closeGame()" style="margin-top: 1.5rem; width: 100%; background-color: var(--col-bg); color: var(--text-main); border: 1px solid var(--border-color); box-shadow: none;">게임 종료</button>
+        </div>
+    </div>
+
+    <!-- 통합 캘린더 팝업 (어디서든 일정 확인) -->
+    <div id="commonCalendarModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content" style="max-width: 900px; width: 95%;">
+            <div class="modal-header">
+                <div style="display:flex; align-items:center; gap:1rem;">
+                    <h3 style="margin: 0; display:flex; align-items:center;"><span class="material-symbols-rounded" style="margin-right:6px;">calendar_month</span> 통합 캘린더</h3>
+                    <button onclick="linkGoogleCalendar()" id="btn-google-sync-modal" style="background-color: #4285F4; font-size: 0.8rem; padding: 0.4rem 0.8rem; display:flex; align-items:center; gap:4px;"><img src="https://www.google.com/images/icons/product/calendar-32.png" style="width:16px; height:16px;"> Google 캘린더 연동</button>
+                </div>
+                <button class="close-btn" onclick="closeCommonCalendarModal()" title="닫기"><span class="material-symbols-rounded">close</span></button>
+            </div>
+            <div class="modal-body" style="padding-top: 0.5rem;">
+                <div class="view-legend" style="margin-bottom: 1rem; padding: 0.6rem 1rem;">
+                    <div class="legend-item"><span class="legend-color" style="background: var(--danger);"></span>높음</div>
+                    <div class="legend-item"><span class="legend-color" style="background: #F59E0B;"></span>보통</div>
+                    <div class="legend-item"><span class="legend-color" style="background: #10B981;"></span>낮음</div>
+                    <div class="legend-item"><span class="legend-color" style="background: #8B5CF6;"></span><span class="material-symbols-rounded" style="font-size:1.1em; margin-right:2px;">flight_takeoff</span>출장 / <span class="material-symbols-rounded" style="font-size:1.1em; margin-right:2px;">beach_access</span>휴가</div>
+                    <div class="legend-item"><span class="legend-color task-done-style"></span><span class="material-symbols-rounded" style="font-size:1.1em; margin-right:2px;">check_circle</span>완료됨</div>
+                </div>
+                <div class="calendar-controls" style="margin-bottom: 1rem;">
+                    <button onclick="changeModalMonth(-1)"><span class="material-symbols-rounded" style="vertical-align:middle;">chevron_left</span> 이전 달</button>
+                    <h3 id="modal-calendar-month-year"></h3>
+                    <button onclick="changeModalMonth(1)">다음 달 <span class="material-symbols-rounded" style="vertical-align:middle;">chevron_right</span></button>
+                </div>
+                <div class="calendar-grid" id="modal-calendar-grid"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 소모품 추가/수정 모달 -->
+    <div id="consumableModal" class="modal-overlay" style="display: none; z-index: 1010;">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h3 id="consumableModalTitle">소모품 품목 추가</h3>
+                <button class="close-btn" onclick="closeConsumableModal()" title="닫기"><span class="material-symbols-rounded">close</span></button>
+            </div>
+            <div class="modal-body" style="display: flex; flex-direction: column; gap: 1rem; padding-top: 0.5rem;">
+                <div>
+                    <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 0.4rem;">품목 이름</label>
+                    <input type="text" id="consumableNameInput" class="search-input" style="width: 100%; box-sizing: border-box; padding: 0.6rem;" placeholder="예: 페이스커버">
+                </div>
+                <div>
+                    <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 0.4rem;">현재 재고</label>
+                    <input type="number" id="consumableStockInput" class="search-input" style="width: 100%; box-sizing: border-box; padding: 0.6rem;" min="0" value="0">
+                </div>
+                <div>
+                    <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 0.4rem;">단위 (기본값: 개)</label>
+                    <input type="text" id="consumableUnitInput" class="search-input" style="width: 100%; box-sizing: border-box; padding: 0.6rem;" placeholder="예: 개, 박스, 롤, 팩" value="개">
+                </div>
+                <div>
+                    <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 0.4rem;">경고 기준 수량 (이 값 이하일 때 부족으로 표시)</label>
+                    <input type="number" id="consumableThresholdInput" class="search-input" style="width: 100%; box-sizing: border-box; padding: 0.6rem;" min="0" value="10">
+                </div>
+            </div>
+            <div class="modal-footer" style="margin-top: 1.5rem; display: flex; gap: 0.5rem; justify-content: flex-end;">
+                <button id="consumableDeleteBtn" onclick="deleteConsumable()" style="background-color: var(--danger); display: none;">삭제</button>
+                <button onclick="saveConsumable()">저장하기</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 소모품 변경 이력 모달 -->
+    <div id="consumablesLogModal" class="modal-overlay" style="display: none; z-index: 1010;">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h3 style="margin: 0; display:flex; align-items:center;"><span class="material-symbols-rounded" style="margin-right:6px;">history</span> 재고 변경 이력</h3>
+                <button class="close-btn" onclick="closeConsumablesLogModal()" title="닫기"><span class="material-symbols-rounded">close</span></button>
+            </div>
+            <div class="modal-body" style="padding-top: 0.5rem;">
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">소모품 재고의 최근 변경 내역입니다.</p>
+                <ul id="consumables-log-list" class="user-list" style="max-height: 400px; overflow-y: auto; padding: 0; list-style: none;">
+                    <!-- JS로 채워짐 -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 세련된 공통 알림/확인/프롬프트 모달 -->
+    <div id="alertModal" class="modal-overlay" style="display: none; z-index: 9999;">
+        <div class="modal-content" style="max-width: 360px; text-align: center; padding: 2rem 1.5rem;">
+            <p id="alertMessage" style="font-size: 1rem; margin-bottom: 1.5rem; white-space: pre-wrap; line-height: 1.5; color: var(--text-main); font-weight: 600; margin-top: 0;"></p>
+            <input type="text" id="alertInput" class="search-input" style="display: none; width: 100%; box-sizing: border-box; margin-bottom: 1.5rem;" placeholder="입력해주세요...">
+            <div style="display: flex; gap: 0.5rem; justify-content: center;">
+                <button id="alertCancelBtn" style="display: none; background-color: var(--col-bg); color: var(--text-main); border: 1px solid var(--border-color); box-shadow: none;">취소</button>
+                <button id="alertConfirmBtn" style="flex: 1;">확인</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 인앱 토스트 알림 컨테이너 -->
+    <div id="toast-container" class="toast-container"></div>
+    
+    <!-- 실시간 사내 채팅 (미니 메신저) -->
+    <button id="chat-toggle-btn" class="chat-toggle-btn" onclick="toggleChatListWindow()" title="사내 메신저">
+        <span class="material-symbols-rounded">chat</span>
+        <div id="chat-global-badge" class="chat-toggle-badge" style="display: none;"></div>
+    </button>
+
+    <!-- 1. 채팅 목록 창(신규 추가) -->
+    <div id="chat-list-window" class="chat-window" style="display: none;">
+        <div class="chat-header">
+            <div style="display:flex; align-items:center; gap:8px;"><span class="material-symbols-rounded">forum</span><span style="font-weight:600;">채팅 목록</span></div>
+            <button class="close-btn" onclick="document.getElementById('chat-list-window').style.display='none'"><span class="material-symbols-rounded">close</span></button>
+        </div>
+        <div class="chat-body" id="chat-list-body" style="padding: 0; display: flex; flex-direction: column;">
+            <!-- 자바스크립트로 리스트 생성됩니다 -->
+        </div>
+    </div>
+
+    <!-- 2. 전체 채팅창 -->
+    <div id="chat-window" class="chat-window" style="display: none;">
+        <div class="chat-header">
+            <div style="display:flex; align-items:center; gap:4px;">
+                <button class="close-btn" onclick="backToChatList()" title="목록으로" style="margin-right:4px;"><span class="material-symbols-rounded">arrow_back</span></button>
+                <span class="material-symbols-rounded" style="margin-right:2px;">groups</span><span style="font-weight:600;">전체 채팅방</span>
+            </div>
+            <button class="close-btn" onclick="document.getElementById('chat-window').style.display='none'"><span class="material-symbols-rounded">close</span></button>
+        </div>
+        <div class="chat-body" id="chat-messages"></div>
+        <div class="chat-footer">
+            <input type="text" id="chat-input" placeholder="메시지를 입력하세요..." onkeypress="handleChatEnter(event)">
+            <button onclick="sendChatMessage()"><span class="material-symbols-rounded" style="font-size: 1.2rem;">send</span></button>
+        </div>
+    </div>
+    
+    <!-- 3. 1:1 개인 채팅창 -->
+    <div id="private-chat-window" class="chat-window" style="display: none;">
+        <div class="chat-header">
+            <div style="display:flex; align-items:center; gap:4px;">
+                <button class="close-btn" onclick="backToChatList()" title="목록으로" style="margin-right:4px;"><span class="material-symbols-rounded">arrow_back</span></button>
+                <span class="material-symbols-rounded" style="margin-right:2px;">person</span><span id="private-chat-title" style="font-weight:600;">1:1 채팅</span>
+            </div>
+            <button class="close-btn" onclick="closePrivateChat()"><span class="material-symbols-rounded">close</span></button>
+        </div>
+        <div class="chat-body" id="private-chat-messages"></div>
+        <div class="chat-footer">
+            <input type="text" id="private-chat-input" placeholder="메시지를 입력하세요..." onkeypress="handlePrivateChatEnter(event)">
+            <button onclick="sendPrivateMessage()"><span class="material-symbols-rounded" style="font-size: 1.2rem;">send</span></button>
+        </div>
+    </div>
+
+    <!-- 일별 상세 일정 팝업창 추가 -->
+    <div id="day-detail-overlay" class="modal-overlay" style="display: none;" onclick="closeDayDetail()">
+        <div class="day-detail-panel" onclick="event.stopPropagation()">
+            <div class="bottom-sheet-handle"></div>
+            <div class="day-detail-header">
+                <div class="day-detail-title">
+                    <span id="selected-date-text">2026년 05월 16일</span>
+                    <span id="selected-day-label">토요일</span>
+                </div>
+                <button class="close-btn" onclick="closeDayDetail()">
+                    <span class="material-symbols-rounded">close</span>
+                </button>
+            </div>
+            <div class="day-detail-actions">
+                <button onclick="addScheduleFromCalendar('task')" class="cal-add-btn task-btn">
+                    <span class="material-symbols-rounded">add_task</span> 일정 추가
+                </button>
+                <button onclick="addScheduleFromCalendar('trip')" class="cal-add-btn trip-btn">
+                    <span class="material-symbols-rounded">flight_takeoff</span> 출장 추가
+                </button>
+            </div>
+            <div id="day-detail-list" class="day-detail-list">
+                <!-- 여기에 일별 일정이 동적으로 생성됩니다 -->
+            </div>
+            <div class="day-detail-footer">
+                <p>일정을 클릭하면 상세 내용을 확인하거나 수정할 수 있습니다.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="kanban.js"></script>
+    <script src="map.js"></script>
+    <script src="services.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
