@@ -78,19 +78,22 @@ function loginWithGoogle() {
         });
     } else if (isMobile) {
         // 3. 일반 모바일 브라우저 환경 (Safari, Chrome 등)
-        // 모바일 브라우저의 3자 쿠키/저장소 제한(ITP)으로 인해 signInWithRedirect가 실패하는 경우가 매우 많습니다.
-        // 이를 우회하기 위해 터치 클릭 이벤트 컨텍스트 내에서 signInWithPopup을 우선적으로 시도합니다.
+        // GitHub Pages와 같은 크로스 도메인 환경에서는 signInWithRedirect 사용 시 
+        // 브라우저의 3자 쿠키/저장소 차단 정책(ITP)으로 인해 '초기 상태 누락(missing initial state)' 에러가 항상 발생합니다.
+        // 따라서 모바일 환경에서는 안전하게 signInWithPopup 방식만 사용하고, 팝업 차단 발생 시 차단 해제 방법을 안내합니다.
         auth.signInWithPopup(provider).then((result) => {
             console.log("모바일 팝업 로그인 성공:", result.user.displayName);
         }).catch(async (error) => {
-            console.error("모바일 팝업 로그인 실패, 리다이렉트 폴백 시도:", error);
+            console.error("모바일 팝업 로그인 실패:", error);
             
-            // 팝업이 차단되거나 환경상 불가능한 경우에만 리다이렉트 방식으로 안전하게 폴백(Fallback)합니다.
-            if (error.code === 'auth/popup-blocked' || error.code === 'auth/operation-not-supported-in-this-environment') {
-                auth.signInWithRedirect(provider).catch(async (redirectError) => {
-                    console.error("Redirect 폴백 시작 에러:", redirectError);
-                    await customAlert('로그인 시작에 실패했습니다. (' + redirectError.message + ')');
-                });
+            // 팝업이 차단되었거나 사용자가 팝업창을 닫은 경우 가이드 안내
+            if (error.code === 'auth/popup-blocked' || error.code === 'auth/popup-closed-by-user' || error.code === 'auth/operation-not-supported-in-this-environment') {
+                await customAlert(
+                    '🔐 로그인 팝업창이 차단되어 있습니다.\n\n' +
+                    '안전한 로그인을 위해 브라우저 설정에서 [팝업 차단]을 해제해 주세요!\n\n' +
+                    '■ 아이폰 (Safari): [설정] > [Safari] > [팝업 차단] 비활성화(OFF)\n' +
+                    '■ 안드로이드 (Chrome): Chrome [설정] > [사이트 설정] > [팝업 및 리다이렉트] 허용'
+                );
             } else {
                 await customAlert('로그인에 실패했습니다. (' + error.message + ')');
             }
