@@ -1,3 +1,13 @@
+// 모바일/PWA 환경 디버깅을 위한 전역 에러 핸들러 (실제 폰에서 에러 메시지 팝업 노출)
+window.addEventListener('error', function(event) {
+    alert('[Global Error]\n' + event.message + '\nFile: ' + event.filename + '\nLine: ' + event.lineno);
+});
+window.addEventListener('unhandledrejection', function(event) {
+    const reason = event.reason;
+    const msg = reason ? (reason.message || JSON.stringify(reason)) : '알 수 없는 비동기 에러';
+    alert('[Promise Rejection]\n' + msg);
+});
+
 // Firebase Auth 세션 유지 설정 (LOCAL) 및 리다이렉트 로그인 결과 처리
 if (typeof auth !== 'undefined') {
     auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
@@ -6,14 +16,19 @@ if (typeof auth !== 'undefined') {
         })
         .catch((error) => {
             console.error("[Auth] Error setting persistence:", error);
+            alert("세션 유지 설정 실패: " + error.message);
         });
 
     auth.getRedirectResult().then((result) => {
         if (result && result.user) {
             console.log("리다이렉트 로그인 성공:", result.user.displayName);
+            alert("리다이렉트 로그인 성공: " + result.user.displayName);
+        } else {
+            console.log("리다이렉트 결과 없음 (일반 로드 또는 세션 만료)");
         }
     }).catch(async (error) => {
         console.error("리다이렉트 로그인 에러:", error);
+        alert("리다이렉트 결과 처리 중 에러 발생:\nCode: " + error.code + "\nMsg: " + error.message);
         if (error.code === 'auth/unauthorized-domain') {
             await customAlert('승인되지 않은 도메인입니다. Firebase 콘솔 설정을 확인하세요.');
         } else {
@@ -203,6 +218,8 @@ auth.onAuthStateChanged(async (user) => {
                     approved: isSystemAdmin, // 최고관리자 UID인 경우 자동 승인
                     leaveTotal: 15,
                     department: 'unassigned'
+                }).catch((error) => {
+                    alert("[DB 프로필 등록 에러] " + error.message);
                 });
                 return;
             }
@@ -224,6 +241,8 @@ auth.onAuthStateChanged(async (user) => {
             } else {
                 if (document.getElementById('tab-btn-admin')) document.getElementById('tab-btn-admin').style.display = 'none';
             }
+        }, (dbError) => {
+            alert("[DB 프로필 읽기 에러] " + dbError.message);
         });
         // 공용 외부 일정 리스너 추가 (팀 전체 공유용)
         db.ref('external_events').on('value', (snapshot) => {
@@ -233,6 +252,8 @@ auth.onAuthStateChanged(async (user) => {
             AppStore.setExternalEvents(externalEvents);
             if (typeof renderTabCalendar === 'function') renderTabCalendar();
             if (typeof renderTasks === 'function') renderTasks();
+        }, (dbError) => {
+            console.error("외부일정 DB 읽기 에러:", dbError);
         });
     } else {
         // 로그아웃 시 로컬 상태만 초기화 (자동 파기는 logout 함수에서 명시적으로 처리)
