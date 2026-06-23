@@ -23,23 +23,69 @@ if (typeof auth !== 'undefined') {
 }
 
 /**
- * 구글 로그인 실행 (PWA 모드/모바일은 리다이렉트, PC는 팝업)
+ * 구글 로그인 실행 (PWA 모드/모바일/PC 환경 맞춤형 인증 흐름)
  */
 function loginWithGoogle() {
+    const ua = navigator.userAgent.toLowerCase();
+    const isKakao = /kakaotalk/i.test(ua);
+    const isLine = /line/i.test(ua);
+    const isOtherInApp = /instagram|fb_iab|fban|fbav|twitter|snapchat/i.test(ua);
+    const isInApp = isKakao || isLine || isOtherInApp;
+
+    // 1. 카카오톡/라인 등 앱 내장 브라우저(WebView) 예외 처리
+    if (isInApp) {
+        if (isKakao) {
+            // 카카오톡 외부 브라우저(Safari/Chrome) 강제 이동 시도
+            window.location.href = 'kakaotalk://web/openExternal?url=' + encodeURIComponent(window.location.href);
+        } else if (isLine) {
+            // 라인 외부 브라우저 이동 처리
+            const currentUrl = new URL(window.location.href);
+            currentUrl.searchParams.set('openExternalBrowser', '1');
+            window.location.href = currentUrl.toString();
+        }
+        
+        customAlert(
+            '보안 정책에 따라 앱 내장 브라우저(카카오톡, 라인, 인스타그램 등)에서는 구글 로그인이 제한됩니다.\n\n' +
+            '화면 우측 상단의 메뉴 버튼(점 3개 또는 더보기)을 눌러 [다른 브라우저로 열기] 또는 [Safari/Chrome에서 열기]를 선택한 후 다시 시도해 주세요!'
+        );
+        return;
+    }
+
     const isStandalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-    if (isStandalone || isMobile) {
-        // PWA Standalone 혹은 모바일 환경은 Popup 브라우징 세션이 분리되므로 Redirect 방식 필수 사용
+    if (isStandalone) {
+        // 2. 홈 화면 PWA 앱(Standalone) 환경
+        // Standalone 환경은 팝업창 생성이 제한되거나 창이 분리되므로 Redirect 방식을 기본 사용합니다.
         auth.signInWithRedirect(provider).catch(async (error) => {
-            console.error("Redirect 로그인 시작 에러:", error);
+            console.error("PWA Redirect 로그인 시작 에러:", error);
             await customAlert('로그인 시작에 실패했습니다. (' + error.message + ')');
         });
-    } else {
+    } else if (isMobile) {
+        // 3. 일반 모바일 브라우저 환경 (Safari, Chrome 등)
+        // 모바일 브라우저의 3자 쿠키/저장소 제한(ITP)으로 인해 signInWithRedirect가 실패하는 경우가 매우 많습니다.
+        // 이를 우회하기 위해 터치 클릭 이벤트 컨텍스트 내에서 signInWithPopup을 우선적으로 시도합니다.
         auth.signInWithPopup(provider).then((result) => {
-            console.log("로그인 성공:", result.user.displayName);
+            console.log("모바일 팝업 로그인 성공:", result.user.displayName);
         }).catch(async (error) => {
-            console.error("로그인 에러:", error);
+            console.error("모바일 팝업 로그인 실패, 리다이렉트 폴백 시도:", error);
+            
+            // 팝업이 차단되거나 환경상 불가능한 경우에만 리다이렉트 방식으로 안전하게 폴백(Fallback)합니다.
+            if (error.code === 'auth/popup-blocked' || error.code === 'auth/operation-not-supported-in-this-environment') {
+                auth.signInWithRedirect(provider).catch(async (redirectError) => {
+                    console.error("Redirect 폴백 시작 에러:", redirectError);
+                    await customAlert('로그인 시작에 실패했습니다. (' + redirectError.message + ')');
+                });
+            } else {
+                await customAlert('로그인에 실패했습니다. (' + error.message + ')');
+            }
+        });
+    } else {
+        // 4. PC 데스크톱 환경
+        auth.signInWithPopup(provider).then((result) => {
+            console.log("PC 로그인 성공:", result.user.displayName);
+        }).catch(async (error) => {
+            console.error("PC 로그인 에러:", error);
             if (error.code === 'auth/unauthorized-domain' || error.message.includes('disallowed_useragent')) {
                 await customAlert('보안 정책에 따라 앱 내장 브라우저에서는 로그인이 제한됩니다.\n\n우측 상단 메뉴(점 3개)를 눌러 [다른 브라우저로 열기] 또는 [Chrome에서 열기]를 선택해 주세요!');
             } else {
