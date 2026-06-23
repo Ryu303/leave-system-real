@@ -8,6 +8,26 @@ window.addEventListener('unhandledrejection', function(event) {
     alert('[Promise Rejection]\n' + msg);
 });
 
+// 이전의 실패한 리다이렉트 로그인 시도 잔재(오염된 세션 상태)가 남아 로그인을 무한 방해하는 현상 방지
+try {
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && key.includes('pendingRedirect')) {
+            localStorage.removeItem(key);
+            console.log("[Auth Clean] Removed corrupted localStorage key:", key);
+        }
+    }
+    for (let i = 0; i < sessionStorage.length; i++) {
+        const key = sessionStorage.key(i);
+        if (key && key.includes('pendingRedirect')) {
+            sessionStorage.removeItem(key);
+            console.log("[Auth Clean] Removed corrupted sessionStorage key:", key);
+        }
+    }
+} catch (e) {
+    console.error("임시 세션 데이터 정리 실패:", e);
+}
+
 // Firebase Auth 세션 유지 설정 (LOCAL) 및 리다이렉트 로그인 결과 처리
 if (typeof auth !== 'undefined') {
     auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
