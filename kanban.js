@@ -54,8 +54,8 @@ async function addTask() {
     }
 }
 
-document.getElementById('taskInput').addEventListener('keypress', function (e) { if (e.isComposing) return; if (e.key === 'Enter') addTask(); });
-document.getElementById('assigneeInput').addEventListener('keypress', function (e) { if (e.isComposing) return; if (e.key === 'Enter') addTask(); });
+document.getElementById('taskInput').addEventListener('keydown', function (e) { if (e.isComposing) return; if (e.key === 'Enter') addTask(); });
+document.getElementById('assigneeInput').addEventListener('keydown', function (e) { if (e.isComposing) return; if (e.key === 'Enter') addTask(); });
 
 async function deleteTask(id) {
     if (!(await checkAuth('승인된 사용자만 삭제할 수 있습니다.'))) return;
@@ -1271,7 +1271,7 @@ db.ref(`tasks/dailyRoutine/logs/${todayStr}`).on('value', (s) => {
 });
 
 // 엔터키 처리
-document.getElementById('dailyTaskInput')?.addEventListener('keypress', function (e) {
+document.getElementById('dailyTaskInput')?.addEventListener('keydown', function (e) {
     if (e.isComposing) return;
     if (e.key === 'Enter') addDailyTask();
 });

@@ -1026,7 +1026,7 @@
                     </div>
                     
                     <div style="display: flex; gap: 0.6rem; background-color: var(--col-bg); padding: 0.6rem; border-radius: 12px; border: 1px solid var(--border-color);">
-                        <input type="text" id="noticeCommentInput" class="search-input" style="flex: 1; padding: 0.6rem; border: none; background: transparent;" placeholder="따뜻한 댓글을 남겨주세요..." onkeypress="if(event.isComposing) return; if(event.key === 'Enter') saveComment()">
+                        <input type="text" id="noticeCommentInput" class="search-input" style="flex: 1; padding: 0.6rem; border: none; background: transparent;" placeholder="따뜻한 댓글을 남겨주세요..." onkeydown="if(event.isComposing) return; if(event.key === 'Enter') saveComment()">
                         <button onclick="saveComment()" style="padding: 0.6rem 1.2rem; flex-shrink: 0; border-radius: 8px;">등록</button>
                     </div>
                 </div>
@@ -1248,7 +1248,7 @@
         </div>
         <div class="chat-body" id="chat-messages"></div>
         <div class="chat-footer">
-            <input type="text" id="chat-input" placeholder="메시지를 입력하세요..." onkeypress="handleChatEnter(event)">
+            <input type="text" id="chat-input" placeholder="메시지를 입력하세요..." onkeydown="handleChatEnter(event)">
             <button onclick="sendChatMessage()"><span class="material-symbols-rounded" style="font-size: 1.2rem;">send</span></button>
         </div>
     </div>
@@ -1264,7 +1264,7 @@
         </div>
         <div class="chat-body" id="private-chat-messages"></div>
         <div class="chat-footer">
-            <input type="text" id="private-chat-input" placeholder="메시지를 입력하세요..." onkeypress="handlePrivateChatEnter(event)">
+            <input type="text" id="private-chat-input" placeholder="메시지를 입력하세요..." onkeydown="handlePrivateChatEnter(event)">
             <button onclick="sendPrivateMessage()"><span class="material-symbols-rounded" style="font-size: 1.2rem;">send</span></button>
         </div>
     </div>

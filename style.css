@@ -994,7 +994,7 @@ select option {
     font-size: 1.2rem;
     font-weight: 800;
     margin-bottom: 8px;
-    color: var(--text-color);
+    color: var(--text-main);
 }
 
 [data-theme='dark'] .calendar-day.today {
@@ -1016,7 +1016,7 @@ select option {
     font-weight: 700;
     font-size: 1.1rem;
     margin-bottom: 8px;
-    color: var(--text-color);
+    color: var(--text-main);
 }
 
 .calendar-task {
@@ -1184,7 +1184,7 @@ select option {
 .day-item-title {
     font-weight: 600;
     font-size: 0.95rem;
-    color: var(--text-color);
+    color: var(--text-main);
 }
 
 .day-item-meta {
@@ -1266,7 +1266,7 @@ select option {
     border: none;
     font-size: 1.1rem;
     font-weight: 700;
-    color: var(--text-color);
+    color: var(--text-main);
     cursor: pointer;
     padding: 4px 8px;
     border-radius: 6px;
@@ -1289,7 +1289,7 @@ select option {
     justify-content: center;
     cursor: pointer;
     transition: all 0.2s;
-    color: var(--text-color);
+    color: var(--text-main);
 }
 
 .nav-arrow-btn:hover {
@@ -1350,7 +1350,7 @@ select option {
 
 .cal-filter-btn:hover {
     background-color: var(--border-color);
-    color: var(--text-color);
+    color: var(--text-main);
 }
 
 .cal-filter-btn.active {
@@ -1447,7 +1447,7 @@ select option {
     font-size: 1.2rem;
     font-weight: 800;
     margin-bottom: 8px;
-    color: var(--text-color);
+    color: var(--text-main);
 }
 
 /* ==================== 
