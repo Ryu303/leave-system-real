@@ -1143,7 +1143,7 @@ function openPrivateChat(targetUid, targetName) {
     });
 }
 function closePrivateChat() { document.getElementById('private-chat-window').style.display = 'none'; if (currentPrivateChatRef) currentPrivateChatRef.off(); currentPrivateChatTargetUid = null; }
-function handlePrivateChatEnter(event) { if (event.isComposing) return; if (event.key === 'Enter') { event.preventDefault(); sendPrivateMessage(); } }
+function handlePrivateChatEnter(event) { if (event.key === 'Enter') { event.preventDefault(); if (event.isComposing) return; sendPrivateMessage(); } }
 async function sendPrivateMessage() {
     const currentUserProfile = AppStore.getCurrentUser();
     const text = document.getElementById('private-chat-input').value.trim(); if (!text || !currentPrivateChatTargetUid) return;
@@ -1193,7 +1193,7 @@ function renderChatList() {
     });
     updateChatBadges(); // 렌더링 즉시 배지 상태 점검
 }
-function handleChatEnter(event) { if (event.isComposing) return; if (event.key === 'Enter') { event.preventDefault(); sendChatMessage(); } }
+function handleChatEnter(event) { if (event.key === 'Enter') { event.preventDefault(); if (event.isComposing) return; sendChatMessage(); } }
 async function sendChatMessage() {
     const currentUserProfile = AppStore.getCurrentUser();
     const text = document.getElementById('chat-input').value.trim(); if (!text) return;

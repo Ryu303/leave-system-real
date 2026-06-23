@@ -1026,7 +1026,7 @@
                     </div>
                     
                     <div style="display: flex; gap: 0.6rem; background-color: var(--col-bg); padding: 0.6rem; border-radius: 12px; border: 1px solid var(--border-color);">
-                        <input type="text" id="noticeCommentInput" class="search-input" style="flex: 1; padding: 0.6rem; border: none; background: transparent;" placeholder="따뜻한 댓글을 남겨주세요..." onkeydown="if(event.isComposing) return; if(event.key === 'Enter') saveComment()">
+                        <input type="text" id="noticeCommentInput" class="search-input" style="flex: 1; padding: 0.6rem; border: none; background: transparent;" placeholder="따뜻한 댓글을 남겨주세요..." onkeydown="if(event.key === 'Enter') { event.preventDefault(); if(event.isComposing) return; saveComment(); }">
                         <button onclick="saveComment()" style="padding: 0.6rem 1.2rem; flex-shrink: 0; border-radius: 8px;">등록</button>
                     </div>
                 </div>
