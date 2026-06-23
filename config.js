@@ -154,16 +154,11 @@ const getTodayStr = () => {
 // ----------------------------------------------------
 // Firebase 설정
 // ----------------------------------------------------
-const currentHost = window.location.hostname;
-// 로컬 테스트(localhost, 127.0.0.1, 192.168.x.x 등) 환경이 아닐 경우
-// 현재 도메인을 authDomain으로 사용하여 Safari ITP 및 Chrome Storage Partitioning(3자 쿠키 차단)을 완벽히 우회합니다.
-const dynamicAuthDomain = (currentHost === 'localhost' || currentHost === '127.0.0.1' || /^192\.168\./.test(currentHost) || currentHost === '') 
-    ? "coworking-tool.firebaseapp.com" 
-    : currentHost;
-
+// 주의: GitHub Pages(ryu303.github.io) 호스팅 환경은 /__/auth/* 경로를 처리할 수 없으므로,
+// authDomain은 반드시 원래의 firebaseapp.com 도메인으로 고정해야 합니다.
 const firebaseConfig = {
     apiKey: "AIzaSyBOIugED48GlLzHytc6p4XDbrJVzouA4Q8",
-    authDomain: dynamicAuthDomain,
+    authDomain: "coworking-tool.firebaseapp.com",
     projectId: "coworking-tool",
     storageBucket: "coworking-tool.firebasestorage.app",
     messagingSenderId: "614190014572",

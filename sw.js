@@ -1,4 +1,4 @@
-const CACHE_NAME = 'faww-workspace-v92';
+const CACHE_NAME = 'faww-workspace-v93';
 const urlsToCache = [
     './',
     './index.html',
