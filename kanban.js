@@ -292,8 +292,11 @@ async function saveDescription() {
 }
 
 document.getElementById('taskModal').addEventListener('keydown', (e) => {
-    if (e.isComposing) return;
-    if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA' && e.target.tagName !== 'BUTTON') { e.preventDefault(); saveDescription(); }
+    if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA' && e.target.tagName !== 'BUTTON') {
+        e.preventDefault();
+        if (e.isComposing) return;
+        saveDescription();
+    }
 });
 
 async function deleteCurrentTask() {
