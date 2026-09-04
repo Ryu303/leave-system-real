@@ -341,6 +341,35 @@ function openModal(taskId, title, description, dueDate, startDate, type = 'task'
         delBtn.style.display = (isAdmin || isAuthor || isExternal) ? 'inline-block' : 'none';
     }
 
+    // [신규] 설명에서 URL을 추출하여 클릭 가능한 링크 버튼 생성
+    let linksContainer = document.getElementById('modalLinksContainer');
+    if (!linksContainer) {
+        linksContainer = document.createElement('div');
+        linksContainer.id = 'modalLinksContainer';
+        linksContainer.style = 'display:none; margin-top:8px; gap:8px; flex-wrap:wrap;';
+        const descEl = document.getElementById('modalDescription');
+        descEl.parentNode.insertBefore(linksContainer, descEl.nextSibling);
+    }
+    
+    linksContainer.innerHTML = '';
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const urls = cleanDescription.match(urlRegex) || [];
+    if (urls.length > 0) {
+        linksContainer.style.display = 'flex';
+        urls.forEach((url, idx) => {
+            const btn = document.createElement('a');
+            btn.href = url;
+            btn.target = '_blank';
+            btn.rel = 'noopener noreferrer';
+            btn.className = 'primary-btn';
+            btn.style = 'padding: 4px 8px; font-size: 0.8rem; text-decoration: none; border-radius: 4px;';
+            btn.innerHTML = `🔗 링크 ${idx + 1}`;
+            linksContainer.appendChild(btn);
+        });
+    } else {
+        linksContainer.style.display = 'none';
+    }
+
     document.getElementById('taskModal').style.display = 'flex';
 }
 
@@ -2393,6 +2422,9 @@ async function generateAiBriefing() {
             if ((userNameLower === 'sungjin j' || userNameLower === '장성진') && (lowerStr.includes('성진') || lowerStr.includes('장성진') || lowerStr.includes('sungjin j'))) {
                 isMatch = true;
             }
+            if ((userNameLower === 'hong min' || userNameLower === '민홍') && (lowerStr.includes('홍') || lowerStr.includes('민홍') || lowerStr.includes('hong min'))) {
+                isMatch = true;
+            }
             return isMatch;
         };
 
@@ -2646,6 +2678,9 @@ window.showBriefingTrips = function(mode = 'my') {
                 if ((userNameLower === 'sungjin j' || userNameLower === '장성진') && (lowerStr.includes('성진') || lowerStr.includes('장성진') || lowerStr.includes('sungjin j'))) {
                     isMatch = true;
                 }
+                if ((userNameLower === 'hong min' || userNameLower === '민홍') && (lowerStr.includes('홍') || lowerStr.includes('민홍') || lowerStr.includes('hong min'))) {
+                    isMatch = true;
+                }
                 return isMatch;
             };
             
@@ -2731,6 +2766,11 @@ window.showBriefingTrips = function(mode = 'my') {
                 if (idxS === -1) idxS = searchStr.indexOf('장성진');
                 if (idxS === -1) idxS = searchStr.indexOf('성진');
                 if (idxS !== -1 && !foundAssigneesMap.find(x => x.name === '성진')) foundAssigneesMap.push({ name: '성진', index: idxS, fullName: '장성진' });
+                
+                let idxH = searchStr.indexOf('hong min');
+                if (idxH === -1) idxH = searchStr.indexOf('민홍');
+                if (idxH === -1) idxH = searchStr.indexOf('홍');
+                if (idxH !== -1 && !foundAssigneesMap.find(x => x.name === '민홍')) foundAssigneesMap.push({ name: '민홍', index: idxH, fullName: '민홍' });
                 
                 foundAssigneesMap.sort((a, b) => a.index - b.index);
                 let foundAssignees = foundAssigneesMap.map(x => x.name);
