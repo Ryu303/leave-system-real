@@ -1,0 +1,5718 @@
+﻿:root {
+    /* 硫붿씤 ?뚮쭏 ?됱긽 (Vibrant HSL) */
+    --primary: hsl(235, 86%, 65%);
+    --primary-hover: hsl(235, 86%, 60%);
+    --primary-glow: hsla(235, 86%, 65%, 0.4);
+    --danger: hsl(348, 83%, 55%);
+    --danger-hover: hsl(348, 83%, 45%);
+    
+    /* 諛곌꼍 諛??띿뒪??(Light Glass) */
+    --bg-color: #f0f2f5;
+    --bg-gradient: radial-gradient(at 0% 0%, hsla(253,16%,7%,0.05) 0, transparent 50%), 
+                   radial-gradient(at 50% 0%, hsla(225,39%,30%,0.05) 0, transparent 50%), 
+                   radial-gradient(at 100% 0%, hsla(339,49%,30%,0.05) 0, transparent 50%);
+    --card-bg: rgba(255, 255, 255, 0.9);
+    --card-bg-hover: rgba(255, 255, 255, 1);
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --border-color: rgba(0, 0, 0, 0.08);
+    --col-bg: rgba(248, 250, 252, 0.8);
+    --glass-blur: blur(16px);
+    
+    /* 遺꾨━媛먯씠 媛뺥솕????꾩슦 */
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.08);
+    --shadow-md: 0 6px 12px rgba(0,0,0,0.08), 0 3px 6px rgba(0,0,0,0.06);
+    --shadow-lg: 0 20px 40px rgba(0,0,0,0.12), 0 8px 16px rgba(0,0,0,0.08);
+    --shadow-glow: 0 0 20px var(--primary-glow);
+}
+
+/* ?ㅽ겕 紐⑤뱶 ?됱긽 (Midnight Glass Theme) */
+[data-theme="dark"] {
+    --bg-color: #0B0F19; /* Deep Space Navy */
+    --bg-gradient: radial-gradient(circle at 15% 50%, rgba(79, 70, 229, 0.12), transparent 40%),
+                   radial-gradient(circle at 85% 30%, rgba(236, 72, 153, 0.08), transparent 40%),
+                   radial-gradient(circle at 50% 80%, rgba(14, 165, 233, 0.1), transparent 40%);
+    --card-bg: rgba(30, 41, 59, 0.8);
+    --card-bg-hover: rgba(30, 41, 59, 0.95);
+    --col-bg: rgba(15, 23, 42, 0.7); 
+    --text-main: #F8FAFC;
+    --text-muted: #94A3B8;
+    --border-color: rgba(255, 255, 255, 0.15); 
+    
+    /* ?ㅽ겕 紐⑤뱶 ?꾩슜 媛뺣젰 洹몃┝??*/
+    --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.6);
+    --shadow-md: 0 10px 20px rgba(0, 0, 0, 0.7);
+    --shadow-lg: 0 25px 50px rgba(0, 0, 0, 0.8);
+}
+
+body {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    margin: 0;
+    padding: 0;
+    font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+    background-color: var(--bg-color);
+    background-image: var(--bg-gradient);
+    background-attachment: fixed;
+    background-size: 100vw 100vh;
+    color: var(--text-main);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: -0.02em; /* Slightly tighter for premium look */
+    line-height: 1.6;
+    word-break: keep-all;
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+h1, h2, h3, h4, h5, h6 {
+    letter-spacing: -0.03em;
+    font-weight: 700;
+}
+
+
+/* Material Symbols (筌뤴뫀???袁⑹뵠?? ?⑤벏????쇱젟 */
+.material-symbols-rounded {
+    font-family: 'Material Symbols Rounded' !important;
+    font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+    vertical-align: middle;
+    line-height: 1;
+    display: inline-block;
+}
+
+/* ==================== 
+   ??삳쐭 (Header) 
+==================== */
+.header {
+    background: var(--card-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    padding: 1.2rem 2.5rem;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-titles {
+    display: flex;
+    align-items: center;
+    gap: 1rem; /* 嚥≪뮄??????용뮞??????揶쏄쑨爰?*/
+}
+
+.header-logo {
+    height: 48px; /* 嚥≪뮄???誘れ뵠 (?癒곕릭????由경에?鈺곌퀣??揶쎻궗?? */
+    width: auto;
+    object-fit: contain;
+}
+
+.header-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.header-titles h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: var(--text-main);
+}
+
+.header-titles p {
+    margin: 0.4rem 0 0 0;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+#auth-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+#user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+}
+
+#user-info {
+    font-weight: 600;
+    color: var(--primary);
+}
+
+/* ==================== 
+   ?⑤벏???遺용꺖 & ??됱뵠?袁⑹뜍 
+==================== */
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.section {
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-md);
+}
+
+h2 {
+    font-size: 1.25rem;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--bg-color);
+}
+
+button {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: var(--primary-hover);
+}
+
+button:disabled {
+    background-color: #D1D5DB; /* 獄쏆빘? ???퉳 */
+    color: #6B7280;
+    cursor: not-allowed;
+}
+
+.bottom-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+/* ==================== 
+   ??Tab) 筌롫뗀??
+==================== */
+
+.tab-menu {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+    gap: 0.8rem;
+    border: none;
+    padding: 0.5rem;
+    background: var(--card-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-radius: 20px;
+    box-shadow: var(--shadow-sm);
+    width: fit-content;
+}
+.tab-btn {
+    background-color: transparent;
+    color: var(--text-muted);
+    border: none;
+    border-radius: 16px;
+    padding: 0.7rem 1.2rem;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: none;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.tab-btn:hover {
+    color: var(--text-main);
+    transform: translateY(-2px);
+}
+.tab-btn.active {
+    background-color: var(--primary);
+    color: #ffffff;
+    box-shadow: 0 4px 12px var(--primary-glow);
+}
+.tab-content {
+    animation: fadeIn 0.3s ease-in-out;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+[data-theme="dark"] .tab-btn.active {
+    border-bottom-color: var(--card-bg);
+}
+
+/* 紐⑤컮??諛섏쓳??*/
+@media (max-width: 768px) {
+    .bottom-grid { grid-template-columns: 1fr; }
+    
+    /* ??삳쐭 ??됱뵠?袁⑹뜍 筌ㅼ뮇???*/
+    .header { 
+        flex-direction: column; 
+        gap: 0.8rem; 
+        align-items: stretch !important; 
+        padding: 1rem 1.2rem;
+    }
+    .header-titles {
+        justify-content: center;
+        text-align: center;
+    }
+    
+    /* ?쇱쭅?섍퀬 ???댁슱由щ뒗 ?고듃 ?ш린 諛섏쓳??異뺤냼 */
+    .header-titles h1 { font-size: 1.15rem !important; }
+    h2 { font-size: 1.05rem !important; margin-bottom: 1rem !important; }
+    h3 { font-size: 1rem !important; }
+    .kanban-header h2 { font-size: 1.1rem !important; }
+    .stat-card h3 { font-size: 1rem !important; }
+    .section-header h2 { font-size: 1.05rem !important; }
+    .trip-title { font-size: 0.95rem !important; }
+    .org-column h3 { font-size: 1rem !important; padding: 0.6rem !important; }
+
+    /* 釉뚮━??紐⑤떖 ??珥덇꼍??理쒖쟻??(媛濡??ㅽ겕濡?X, 移대뱶 X) */
+    .briefing-table {
+        font-size: 0.75rem !important;
+    }
+    .briefing-table th, .briefing-table td {
+        padding: 4px 2px !important;
+        word-break: keep-all !important;
+        line-height: 1.3 !important;
+    }
+    
+    #auth-section {
+        justify-content: flex-end !important;
+        width: 100% !important;
+        gap: 0.5rem !important;
+        flex-wrap: wrap !important;
+    }
+    #user-info {
+        font-size: 0.82rem !important;
+        max-width: 110px !important;
+        white-space: normal !important; word-break: keep-all !important; line-height: 1.3 !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        display: inline-block !important;
+        vertical-align: middle !important;
+    }
+    .container {
+        padding: 1rem 0.5rem !important;
+    }
+    .section {
+        padding: 1.2rem !important;
+        border-radius: 12px !important;
+    }
+
+    /* 筌뤴뫀而????筌롫뗀??3???袁ⓥ봺沃섎챷毓?域밸챶?????됱뵠?袁⑹뜍 揶쏆뮉??(揶쎛嚥??????꾨늄 ?얜챷??嚥▲끇媛?獄?癰귣똻?? */
+    .tab-menu {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 8px !important;
+        border-bottom: none !important;
+        padding-bottom: 0.8rem !important;
+        flex-wrap: wrap !important;
+        overflow-x: visible !important;
+    }
+    .tab-btn {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 0.6rem 0.2rem !important;
+        font-size: 0.76rem !important;
+        font-weight: 700 !important;
+        border: 1px solid var(--border-color) !important;
+        border-radius: 12px !important;
+        background-color: var(--card-bg) !important;
+        color: var(--text-muted) !important;
+        gap: 4px !important;
+        white-space: normal !important;
+        word-break: keep-all !important;
+        word-wrap: break-word !important;
+        line-height: 1.25 !important;
+        text-align: center !important;
+        width: 100% !important;
+        box-shadow: var(--shadow-sm) !important;
+        transition: all 0.2s ease !important;
+        flex-shrink: 1 !important;
+    }
+    .tab-btn span.material-symbols-rounded {
+        margin-right: 0 !important;
+        font-size: 1.25rem !important;
+    }
+    .tab-btn.active {
+        background: linear-gradient(135deg, var(--primary), #6366f1) !important;
+        color: #FFFFFF !important;
+        border-color: transparent !important;
+        margin-bottom: 0 !important;
+        box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.3), 0 2px 4px -1px rgba(79, 70, 229, 0.15) !important;
+    }
+    .tab-btn.active span.material-symbols-rounded {
+        color: #FFFFFF !important;
+    }
+
+    /* 紐⑤컮?쇱뿉?쒖쓽 移몃컲 蹂대뱶 ?ㅼ??댄봽(?ㅻ깄) 理쒖쟻??????몃줈 ?ㅽ겕濡ㅻ줈 蹂寃?*/
+    .kanban-board {
+        flex-direction: column !important;
+        overflow-x: hidden !important;
+        padding-bottom: 1rem !important;
+        gap: 1.5rem !important;
+    }
+    .column {
+        box-sizing: border-box;
+        width: 100% !important;
+        min-width: 100% !important;
+    }
+}
+
+    /* [PC ?怨쀫뮞?????袁⑸열 域뱀뮇?? 筌뤴뫀而???袁⑹뒠 筌╈돦??(+3) ?얜똻?쒎쳞?100% ????*/
+    .task-mobile-capsule,
+    .calendar-task .task-mobile-capsule,
+    .task-more-badge .task-mobile-capsule,
+    span.task-mobile-capsule,
+    .task-tablet-title,
+    span.task-tablet-title {
+        display: none !important;
+    }
+
+    .task-desktop-title,
+    .task-more-badge .task-desktop-title {
+        display: inline-flex !important;
+        align-items: center !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        color: #1E293B !important;
+        font-weight: 800 !important;
+        font-size: 0.72rem !important;
+    }
+
+    /* [?⑤벏??+N揶??遺얜궖疫?獄?퍔? 疫꿸퀡??CSS ????? */
+    .task-more-badge,
+    .calendar-task.task-more-badge {
+        background-color: #FFFFFF !important;
+        border: 1px solid #CBD5E1 !important;
+        border-radius: 6px !important;
+        box-shadow: 0 2px 6px rgba(15, 23, 42, 0.16) !important;
+        transition: all 0.2s ease !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    .task-more-badge:hover {
+        background-color: #F8FAFC !important;
+        border-color: #94A3B8 !important;
+        box-shadow: 0 4px 10px rgba(15, 23, 42, 0.18) !important;
+    }
+
+    .task-time-badge {
+        display: inline-block;
+        background: #334155;
+        color: #FFFFFF;
+        border-radius: 3.5px;
+        padding: 0px 4px;
+        font-size: 0.65rem;
+        font-weight: 700;
+        margin-right: 4px;
+        line-height: 1.4;
+        vertical-align: middle;
+    }
+
+    /* [筌뤴뫀而??獄쏆꼷???域뱀뮇?? @media max-width: 768px */
+    @media (max-width: 768px) {
+        .header-text p { display: none !important; }
+        .calendar-grid {
+            gap: 1px !important;
+            min-height: auto !important;
+        }
+        .calendar-week-row {
+            height: auto !important;
+            min-height: 40px !important;
+            box-sizing: border-box !important;
+            border-bottom: 1px solid var(--border-color) !important;
+            overflow: hidden !important;
+        }
+        /* 筌뤴뫀而?? ??삳뮎 ?? - 獄쏄퀗瑗???볤탢嚥?燁삘뫀苡?獄쎻뫗?, overflow??week-row揶쎛 ????*/
+        .calendar-week-row .calendar-day.today {
+            background-color: transparent !important;
+        }
+        .calendar-day.today .calendar-date::after,
+        .mypage-calendar-day.today .calendar-date::after {
+            display: none !important;
+        }
+        .calendar-week-row .calendar-day,
+        .calendar-day {
+            position: relative !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-content: flex-start !important;
+            justify-content: flex-start !important;
+            padding: 2px 1px !important;
+            min-height: 40px !important;
+            height: 100% !important;
+            box-sizing: border-box !important;
+            border-radius: 0 !important;
+        }
+        .calendar-day .calendar-date {
+            font-size: 0.75rem !important;
+            margin-bottom: 2px !important;
+            font-weight: 800 !important;
+            float: none !important;
+            text-align: center !important;
+            width: 100% !important;
+        }
+        .calendar-day-header {
+            font-size: 0.75rem !important;
+            padding: 0.3rem 0 !important;
+        }
+        .calendar-day-header.sun { color: #EF4444 !important; font-weight: 800 !important; }
+        .calendar-day-header.sat { color: #3B82F6 !important; font-weight: 800 !important; }
+        .calendar-date.sun, .calendar-date.holiday { color: #EF4444 !important; font-weight: 800 !important; }
+        .calendar-date.sat { color: #3B82F6 !important; font-weight: 800 !important; }
+
+        /* 筌뤴뫀而??깆뒠 ?遺용뮞???쟿??獄쏆꼷?? PC ??뺛걠 ???? 筌뤴뫀而??沃섎챶??筌╈돦???紐꾪뀱 */
+        .task-time-badge,
+        .task-desktop-title,
+        .task-more-badge .task-desktop-title {
+            display: none !important;
+        }
+        .task-mobile-capsule,
+        .calendar-task .task-mobile-capsule,
+        .task-more-badge .task-mobile-capsule,
+        span.task-mobile-capsule {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-size: 0.68rem !important;
+            font-weight: 800 !important;
+            color: #1E293B !important;
+            letter-spacing: -0.3px !important;
+            white-space: normal !important; word-break: keep-all !important; line-height: 1.3 !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            text-align: center !important;
+        }
+
+        /* ?⑥씪 ?쇱옄 ?쇱젙 (Single-day Dot) */
+        .calendar-week-row .calendar-task:not([class*="task-span-"]):not(.task-more-badge),
+        .calendar-day .calendar-task:not([class*="task-span-"]):not(.task-more-badge),
+        .calendar-grid .calendar-task:not([class*="task-span-"]):not(.task-more-badge) {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 8px !important;
+            height: 8px !important;
+            min-height: 8px !important;
+            max-height: 8px !important;
+            border-radius: 50% !important;
+            margin: 2px auto !important;
+            padding: 0 !important;
+            border: none !important;
+            box-shadow: none !important;
+            cursor: pointer !important;
+            pointer-events: auto !important;
+            color: transparent !important;
+        }
+
+        /* ?κ린 ?곗냽 ?쇱젙 (Multi-day Ribbon) */
+        .calendar-week-row .calendar-task[class*="task-span-"] {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 100% !important;
+            height: 5px !important;
+            min-height: 5px !important;
+            max-height: 5px !important;
+            margin: 2px 0 !important;
+            padding: 0 !important;
+            border-radius: 0 !important;
+            border: none !important;
+            box-sizing: border-box !important;
+            overflow: hidden !important;
+            z-index: 2 !important;
+            box-shadow: none !important;
+            color: transparent !important;
+        }
+        
+        /* ?댁쟾/?ㅼ쓬 二쇰줈 ?섏뼱媛??瑗щ━ 泥섎━ */
+        .calendar-week-row .calendar-task[class*="task-span-"].task-span-prev { border-top-left-radius: 0 !important; border-bottom-left-radius: 0 !important; }
+        .calendar-week-row .calendar-task[class*="task-span-"].task-span-next { border-top-right-radius: 0 !important; border-bottom-right-radius: 0 !important; }
+
+        /* ?띿뒪???꾨꼍 ?④? */
+        .calendar-task:not(.task-more-badge) .task-title-text,
+        .calendar-task:not(.task-more-badge) .task-mobile-capsule,
+        .calendar-task:not(.task-more-badge) .task-time-badge,
+        .calendar-task:not(.task-more-badge) .task-full-text,
+        .calendar-task:not(.task-more-badge) .task-short-text {
+            display: none !important;
+        }
+    }
+
+    /* 紐⑤컮???섍꼍 ?꾩슜 ?붾━??而щ윭 (?꾪듃 諛?由щ낯?? - !important濡?紐⑤뱺 ?④낵 ??뼱?곌린 */
+    @media (max-width: 768px) {
+        .calendar-day .calendar-task.task-coupang { background-color: #84CC16 !important; border: none !important; }
+        .calendar-day .calendar-task.task-lecture { background-color: #EAB308 !important; border: none !important; }
+        .calendar-day .calendar-task.task-easyen { background-color: #3B82F6 !important; border: none !important; }
+        .calendar-day .calendar-task.task-huno { background-color: #A855F7 !important; border: none !important; }
+        .calendar-day .calendar-task.task-telus { background-color: #14B8A6 !important; border: none !important; }
+        .calendar-day .calendar-task.task-self { background-color: #EF4444 !important; border: none !important; }
+        .calendar-day .calendar-task.task-leave { background-color: #10B981 !important; border: none !important; }
+        .calendar-day .calendar-task.task-trip { background-color: #8B5CF6 !important; border: none !important; }
+        .calendar-day .calendar-task.task-external { background-color: #06B6D4 !important; border: none !important; }
+        .calendar-day .calendar-task.task-schedule { background-color: #F43F5E !important; border: none !important; }
+        .calendar-day .calendar-task.task-high { background-color: #EF4444 !important; border: none !important; }
+        .calendar-day .calendar-task.task-medium { background-color: #F59E0B !important; border: none !important; }
+        .calendar-day .calendar-task.task-low { background-color: #6B7280 !important; border: none !important; }
+        .calendar-day .calendar-task.task-done-style { background-color: #9CA3AF !important; border: none !important; opacity: 0.5 !important; }
+
+        /* ?ㅽ겕 紐⑤뱶 紐⑤컮???섍꼍 ?꾩슜 ?붾━??而щ윭 */
+        [data-theme='dark'] .calendar-day .calendar-task.task-coupang { background-color: #a3e635 !important; }
+        [data-theme='dark'] .calendar-day .calendar-task.task-lecture { background-color: #fde047 !important; }
+        [data-theme='dark'] .calendar-day .calendar-task.task-easyen { background-color: #93c5fd !important; }
+        [data-theme='dark'] .calendar-day .calendar-task.task-huno { background-color: #c084fc !important; }
+        [data-theme='dark'] .calendar-day .calendar-task.task-telus { background-color: #2dd4bf !important; }
+        [data-theme='dark'] .calendar-day .calendar-task.task-self { background-color: #fca5a5 !important; }
+        [data-theme='dark'] .calendar-day .calendar-task.task-leave { background-color: #34d399 !important; }
+        [data-theme='dark'] .calendar-day .calendar-task.task-trip { background-color: #a78bfa !important; }
+        [data-theme='dark'] .calendar-day .calendar-task.task-external { background-color: #22d3ee !important; }
+        [data-theme='dark'] .calendar-day .calendar-task.task-schedule { background-color: #fb7185 !important; }
+        [data-theme='dark'] .calendar-day .calendar-task.task-high { background-color: #fca5a5 !important; }
+        [data-theme='dark'] .calendar-day .calendar-task.task-medium { background-color: #fcd34d !important; }
+        [data-theme='dark'] .calendar-day .calendar-task.task-low { background-color: #9ca3af !important; }
+        [data-theme='dark'] .calendar-day .calendar-task.task-done-style { background-color: #6B7280 !important; }
+    }
+    [data-theme='dark'] .calendar-day .calendar-task.task-high { background-color: rgba(239, 68, 68, 0.28) !important; color: #fca5a5 !important; }
+    [data-theme='dark'] .calendar-day .calendar-task.task-medium { background-color: rgba(245, 158, 11, 0.28) !important; color: #fcd34d !important; }
+    [data-theme='dark'] .calendar-day .calendar-task.task-low { background-color: rgba(107, 114, 128, 0.28) !important; color: #9ca3af !important; }
+    [data-theme='dark'] .calendar-day .calendar-task.task-done-style { background-color: rgba(75, 85, 99, 0.25) !important; color: #6B7280 !important; }
+
+    /* ?袁ⓥ봺沃섎챷毓??????怨룸뼊 獄?獄쏆꼷???揶쏆뮉??*/
+    .calendar-section-full {
+        padding: 1rem !important;
+        gap: 1rem !important;
+        border-radius: 16px !important;
+    }
+    .premium-top-bar {
+        flex-direction: column !important;
+        gap: 12px !important;
+        padding: 1rem !important;
+        align-items: stretch !important;
+    }
+    .calendar-sub-menu-container {
+        width: 100% !important;
+        overflow-x: auto !important;
+        white-space: normal !important; word-break: keep-all !important; line-height: 1.3 !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+    .calendar-sub-menu {
+        display: inline-flex !important;
+        width: max-content !important;
+    }
+    .calendar-sub-menu button {
+        padding: 0.45rem 0.85rem !important;
+        font-size: 0.82rem !important;
+        flex-shrink: 0 !important;
+    }
+    .calendar-navigation-controls {
+        flex-wrap: nowrap !important;
+        justify-content: flex-start !important;
+        width: 100% !important;
+        gap: 10px !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+    .calendar-navigation-controls::-webkit-scrollbar,
+    .calendar-sub-menu-container::-webkit-scrollbar {
+        display: none;
+    }
+    .calendar-navigation-controls .divider-v {
+        display: none !important;
+    }
+    .google-sync-premium {
+        width: 100% !important;
+        justify-content: center !important;
+        padding: 0.6rem 1rem !important;
+    }
+    .mypage-calendar-grid {
+        min-height: auto !important;
+    }
+
+    /* ??삳쐭 ??る?甕곌쑵??揶쎛嚥??????獄쏆꼷???*/
+    .header-action-group {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+    .header-action-group button {
+        flex: 0 0 auto;
+        justify-content: center;
+        font-size: 0.85rem !important;
+        padding: 0.5rem 0.8rem !important;
+        white-space: normal !important; word-break: keep-all !important; line-height: 1.3 !important;
+    }
+
+    /* ??끦??源낆쨯 ?怨몃열 筌뤴뫀而??????*/
+    .task-input-area {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 10px !important;
+    }
+    .task-input-area > div, 
+    .task-input-area select, 
+    .task-input-area button {
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    /* 筌?꼶????뚢뫂?껅에?筌뤴뫀而??????*/
+    .calendar-controls {
+        flex-wrap: wrap !important;
+        gap: 12px !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+    .calendar-controls h3 {
+        font-size: 1.05rem !important;
+        margin: 0 !important;
+    }
+    .calendar-controls button {
+        padding: 0.4rem 0.6rem !important;
+        font-size: 0.8rem !important;
+    }
+    #board-calendar .calendar-controls {
+        flex-direction: column !important;
+        gap: 12px !important;
+        align-items: center !important;
+    }
+    #board-calendar .calendar-controls > div {
+        order: 2 !important;
+    }
+    #board-calendar .calendar-controls h3 {
+        order: 1 !important;
+        font-size: 1.2rem !important;
+    }
+    #board-calendar .calendar-controls #btn-google-sync {
+        order: 3 !important;
+        width: 100% !important;
+        justify-content: center !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    /* 筌뤴뫀而??깆뒠 獄쏅?? ??쀫뱜 ??됱뵠?袁⑹뜍 揶쏆뮉??*/
+    #day-detail-overlay {
+        align-items: flex-end !important;
+        background-color: rgba(0, 0, 0, 0.4) !important;
+    }
+    
+    .day-detail-panel {
+        width: 100% !important;
+        max-width: 100% !important;
+        max-height: 80vh !important;
+        border-radius: 24px 24px 0 0 !important;
+        margin: 0 !important;
+        border: none !important;
+        border-top: 1px solid var(--border-color) !important;
+        will-change: transform;
+        touch-action: pan-y;
+    }
+    
+    .bottom-sheet-handle-container {
+        width: 100%;
+        padding: 12px 0 6px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: grab;
+        touch-action: none;
+    }
+
+    .bottom-sheet-handle {
+        display: block !important;
+        width: 44px !important;
+        height: 5px !important;
+        background-color: var(--border-color) !important;
+        border-radius: 3px !important;
+        margin: 0 auto !important;
+        flex-shrink: 0 !important;
+        opacity: 0.8;
+    }
+    
+    .day-detail-header {
+        padding: 16px 20px 8px 20px !important;
+        background: transparent !important;
+        color: var(--text-main) !important;
+        border-bottom: 1px solid var(--border-color) !important;
+    }
+    
+    .day-detail-title {
+        flex-direction: row !important;
+        align-items: baseline !important;
+        gap: 8px !important;
+    }
+    
+    #selected-date-text {
+        font-size: 1.2rem !important;
+        font-weight: 800 !important;
+    }
+    
+    #selected-day-label {
+        font-size: 0.9rem !important;
+        color: var(--text-muted) !important;
+        font-weight: 600 !important;
+    }
+    
+    .day-detail-header .close-btn {
+        color: var(--text-muted) !important;
+    }
+    
+    .day-detail-list {
+        padding: 16px 20px !important;
+        background-color: var(--card-bg) !important;
+    }
+    
+    .day-item {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        padding: 12px 0 !important;
+        background-color: transparent !important;
+        border: none !important;
+        border-bottom: 1px solid var(--border-color) !important;
+        border-radius: 0 !important;
+        transition: background-color 0.2s ease !important;
+        gap: 16px !important;
+    }
+    
+    .day-item:last-child {
+        border-bottom: none !important;
+    }
+    
+    .day-item:hover {
+        transform: none !important;
+        background-color: rgba(99, 102, 241, 0.04) !important;
+    }
+    
+    .day-item-time-col {
+        display: flex !important;
+        width: 70px !important;
+        flex-shrink: 0 !important;
+        text-align: right !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        gap: 2px !important;
+    }
+    
+    .time-primary {
+        font-size: 0.85rem !important;
+        font-weight: 700 !important;
+        color: var(--text-main) !important;
+    }
+    
+    .time-secondary {
+        font-size: 0.75rem !important;
+        color: var(--text-muted) !important;
+    }
+    
+    .day-item-bar {
+        display: block !important;
+        width: 3px !important;
+        height: 36px !important;
+        border-radius: 1.5px !important;
+        flex-shrink: 0 !important;
+    }
+    
+    .day-item-info {
+        flex: 1 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 4px !important;
+    }
+    
+    .day-item-title {
+        font-weight: 600 !important;
+        font-size: 0.95rem !important;
+        color: var(--text-main) !important;
+    }
+    
+    .day-item-meta {
+        font-size: 0.8rem !important;
+        color: var(--text-muted) !important;
+    }
+    
+    .day-item-icon {
+        display: none !important;
+    }
+    
+    .day-detail-footer {
+        padding: 12px 20px !important;
+        background-color: var(--col-bg) !important;
+        font-size: 0.8rem !important;
+        border-top: 1px solid var(--border-color) !important;
+    }
+}
+
+/* ==================== 
+   燁삳챶而?癰귣?諭?
+==================== */
+.kanban-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.8rem;
+}
+
+.kanban-header h2 {
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+.filter-group {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.search-input {
+    padding: 0.5rem 1rem;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    outline: none;
+    background-color: var(--col-bg);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search-input:focus {
+    border-color: var(--primary);
+    background-color: var(--card-bg);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+}
+
+.progress-section {
+    margin-bottom: 1.5rem;
+    padding: 1.2rem;
+    background-color: var(--col-bg);
+    border-radius: 12px;
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.8rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.progress-track {
+    width: 100%; height: 8px;
+    background-color: var(--border-color);
+    border-radius: 4px; overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%; width: 0%;
+    background-color: var(--primary);
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.task-input-area {
+    display: flex;
+    gap: 0.8rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    box-shadow: var(--shadow-sm);
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.task-input-area input {
+    padding: 0.8rem 1.2rem;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    font-size: 0.95rem;
+    outline: none;
+    background-color: var(--col-bg);
+    transition: all 0.2s ease;
+}
+
+#priorityInput {
+    padding: 0.8rem 1.2rem;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    font-size: 0.95rem;
+    outline: none;
+    background-color: var(--col-bg);
+    color: var(--text-main);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.task-input-area input:focus, #priorityInput:focus {
+    border-color: var(--primary);
+    background-color: var(--card-bg);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+}
+
+.task-input-area input:disabled {
+    background-color: var(--col-bg);
+    cursor: not-allowed;
+}
+
+#priorityInput:disabled {
+    background-color: var(--col-bg);
+    cursor: not-allowed;
+}
+
+/* ==================== 
+   ?뚣끉??? ??뺚댘??쇱뒲(?醫뤾문筌? ?遺욧땀???遺우쁽??==================== */
+select.search-input, #priorityInput {
+    appearance: none; /* OS 疫꿸퀡???遺욧땀??? ??而???遺우쁽????볤탢 */
+    -webkit-appearance: none;
+    /* ?紐껋졃??沃섎챶?뀐쭖? ?遺욧땀??SVG ??뚯뿯 */
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.8rem center; /* ?遺욧땀???袁⑺뒄 */
+    background-size: 1rem;
+    padding-right: 2.2rem !important; /* 疫꼲??? ?遺욧땀??? 燁삘뫀苡??? ??꾩쓺 ??媛??類ｋ궖 */
+}
+#viewMode { /* ?????甕곌쑵???袁⑸퓠????????遺욧땀???怨몄뒠 */
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") !important;
+}
+[data-theme="dark"] select.search-input:not(#viewMode), [data-theme="dark"] #priorityInput {
+    /* ??쎄쾿 筌뤴뫀諭?癒?퐣???遺욧땀??? 獄쏆빘? ???퉳??곗쨮 ?癒?짗 獄쏆꼷??*/
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239CA3AF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+}
+
+/* ??뺚댘??쇱뒲 ??륁맄 筌롫뗀??Option) ?怨좊뱜 獄????춳 ??깃맒 ?怨몄뒠 */
+select option {
+    background-color: var(--card-bg);
+    color: var(--text-main);
+    font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 0.5rem;
+}
+
+.kanban-board {
+    display: flex;
+    gap: 1.2rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    -webkit-overflow-scrolling: touch; /* iOS ?源녿퓠???봔??뺤쑎???온????쎄쾿嚥?筌왖??*/
+    scroll-behavior: smooth;
+}
+
+.column {
+    box-sizing: border-box;
+    flex: 1;
+    min-width: 280px;
+    background-color: var(--col-bg);
+    border-radius: 16px;
+    padding: 1.2rem;
+    border: 1px solid rgba(226, 232, 240, 0.5);
+    transition: background-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.column h3 {
+    margin: 0 0 1.2rem 0;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    font-weight: 700;
+}
+
+.task-count {
+    display: inline-block;
+    background-color: var(--border-color);
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    padding: 0.1rem 0.6rem;
+    border-radius: 20px;
+    margin-left: 0.4rem;
+    font-weight: 600;
+    vertical-align: middle;
+}
+
+.task-list {
+    min-height: 150px; /* ??뺚댘 ?怨몃열???袁る립 筌ㅼ뮇???誘れ뵠 */
+    max-height: 400px; /* 燁삳?諭뜹첎? 3-4揶쏆뮆? ??뤿선揶쎛筌???쎄쾿嚥▲끇由?袁⑥쨯 ??쇱젟 */
+    overflow-y: auto; /* 燁삳?諭뜹첎? 筌띾‘釉섓쭪?筌??紐껋쨮 ??쎄쾿嚥??癒?짗 ??뽯뻻 */
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-right: 4px; /* ??쎄쾿嚥▲끇而?? 燁삳?諭????????媛?*/
+}
+
+.task-card {
+    box-sizing: border-box;
+    background: var(--card-bg-hover); /* slightly more solid background for better contrast against column */
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    padding: 1.2rem;
+    border-radius: 16px;
+    box-shadow: var(--shadow-md); /* stronger shadow for more depth */
+    border: 1px solid rgba(148, 163, 184, 0.2); /* slightly visible outline */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: grab;
+    /* removed border-left */
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* ??뺤삋域?餓λ쵐??燁삳?諭?(?⑥쥙??硫? ?袁⑤빒 筌띾뜆????袁⑥삋 ?癒?궚 ?遺용꺖) */
+.task-card.is-dragging {
+    opacity: 0.4;
+    transform: scale(0.95) rotate(2deg);
+    box-shadow: var(--shadow-lg);
+    cursor: grabbing;
+}
+
+/* 筌띾뜆???? ???ゅ첎?筌욊쑴??? ?뚎됱쓥 ??륁뵠??깆뵠??*/
+.column.drag-over {
+    background-color: rgba(99, 102, 241, 0.05); /* Primary ??깃맒??5% ??梨??*/
+    box-shadow: inset 0 0 0 2px var(--primary);
+    transform: scale(1.01);
+}
+
+.task-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+}
+
+.delete-btn {
+    background-color: #FEE2E2;
+    color: var(--danger);
+    padding: 0.4rem 0.6rem;
+    font-size: 0.8rem;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.delete-btn:hover {
+    background-color: var(--danger);
+}
+
+/* ??? ?띯뫁??甕곌쑵??(癰귣떯由??ル뿪苡?癰궰野? */
+.cancel-btn {
+    background-color: var(--card-bg);
+    color: var(--text-muted);
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+    border-radius: 6px;
+    font-weight: 600;
+    border: 1px solid var(--border-color);
+    transition: all 0.2s;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+}
+.cancel-btn:hover {
+    background-color: #FEE2E2;
+    color: var(--danger);
+    border-color: #FCA5A5;
+}
+
+/* ==================== 
+   ??筌뤴뫀諭?甕곕뗀? (Legend) & ??볦퍟???????==================== */
+.view-legend {
+    display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem;
+    padding: 0.8rem 1.2rem; background-color: var(--col-bg); border-radius: 8px; border: 1px solid rgba(226, 232, 240, 0.6);
+}
+.legend-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; font-weight: 600; color: var(--text-main); white-space: nowrap; }
+.legend-color { width: 14px; height: 14px; border-radius: 4px; display: inline-block; box-shadow: var(--shadow-sm); }
+.task-done-style {
+    background-color: #F3F4F6 !important; /* 筌△뫀???랁?獄쏆빘? ???퉳 */
+    color: #6B7280 !important; /* 筌욊쑵釉????퉳 ??용뮞?紐껋쨮 揶쎛??녾쉐 ?類ｋ궖 */
+    text-decoration: line-through;
+    border: 1px solid #D1D5DB !important;
+}
+
+/* ==================== 
+   筌?꼶?????
+==================== */
+.calendar-controls {
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem;
+}
+.calendar-controls h3 { margin: 0; font-size: 1.2rem; font-weight: 700; color: var(--text-main); }
+.calendar-controls button {
+    background-color: var(--col-bg); color: var(--text-main); border: 1px solid var(--border-color); box-shadow: none; font-weight: 600;
+}
+.calendar-controls button:hover { background-color: var(--border-color); transform: none; }
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 12px; /* 揶쏄쑨爰??類ㅼ삢 */
+    background-color: transparent;
+    border: none;
+    min-height: 850px; /* ??由????類? */
+}
+
+/* --- ?醫됲뇣: 筌?꼶???雅뚯눊而???疫꿸퀡而???됱뵠?袁⑹뜍 --- */
+.weekly-layout-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0 !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 16px !important;
+    overflow: hidden !important;
+    background-color: var(--card-bg) !important;
+    min-height: auto !important;
+}
+
+.calendar-header-row {
+    display: grid !important;
+    grid-template-columns: repeat(7, 1fr) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    background-color: var(--bg-color) !important;
+}
+
+.calendar-header-row .calendar-day-header {
+    border-bottom: none !important;
+    padding: 12px 0 !important;
+    margin: 0 !important;
+}
+
+.calendar-week-row {
+    position: relative !important;
+    display: grid !important;
+    grid-template-columns: repeat(7, 1fr) !important;
+    /* ??깆젟????뤿선??롢늺 ??깆뵠 ?醫롫염??띿쓺 ??룸┛筌??誘れ뵠揶쎛 ?癒?짗 鈺곌퀣???*/
+    grid-auto-rows: minmax(32px, auto) !important;
+    gap: 6px 0 !important; /* 揶쎛嚥?揶?? 0 (獄??怨뚭퍙???袁る퉸), ?紐껋쨮 揶?? 6px */
+    border-bottom: 1px solid var(--border-color) !important;
+    padding-bottom: 0 !important;
+    min-height: 140px !important;
+    overflow: hidden !important;
+}
+
+.calendar-week-row:last-child {
+    border-bottom: none !important;
+}
+
+.calendar-week-row .calendar-day {
+    grid-row: 1 / span 4; /* 獄쏄퀗瑗??? 疫꿸퀡????쎈솴 */
+    border: none !important;
+    border-right: 1px solid var(--border-color) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    min-height: 100% !important;
+    padding: 8px 8px 30px 8px !important;
+    z-index: 1 !important;
+    overflow: visible !important;
+    margin: 0 !important;
+    transition: background-color 0.2s ease !important;
+    position: relative !important;
+}
+
+/* 雅뚯눊而???됱뵠?袁⑹뜍: hover ??transform ??獄쎻뫗? */
+.calendar-week-row .calendar-day:hover {
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* ?遺우뵬癰?獄쏄퀗瑗??怨쀫? ???あ????볤탢 */
+.calendar-week-row .calendar-day:nth-child(7) {
+    border-right: none !important;
+}
+
+/* ??삳뮎 ?醫롮? ??? Google Calendar 獄쎻뫗??- ?ル슣瑜???り쉽??獄?+ ??륁뵠??뽯툡??獄쏄퀗瑗?(4筌????あ????곸벉) */
+.calendar-week-row .calendar-day.today {
+    border: none !important;
+outline: none !important;
+    box-shadow: none !important;
+    background: linear-gradient(to bottom,
+        rgba(249, 115, 22, 0.12) 0%,
+        rgba(249, 115, 22, 0.06) 60%,
+        transparent 100%) !important;
+    z-index: 2 !important;
+}
+
+.calendar-week-row .calendar-day.today::before {
+    content: none !important;
+}
+
+[data-theme='dark'] .calendar-week-row .calendar-day.today {
+background: linear-gradient(to bottom,
+        rgba(249, 115, 22, 0.18) 0%,
+        rgba(249, 115, 22, 0.08) 60%,
+        transparent 100%) !important;
+}
+
+/* ??살쒔??몃┷????깆젟 ?????*/
+.calendar-week-row .calendar-task {
+    margin: 2px 4px !important;
+    z-index: 2 !important;
+    align-self: center !important;
+    height: 24px !important;
+    line-height: 24px !important;
+}
+
+/* ?怨쀫꺗????깆젟 ?臾먭국 筌띾뜆彛?獄???ㅻ뎃 癰귣똻??*/
+.calendar-week-row .calendar-task.task-span-prev {
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    border-left: none !important;
+    margin-left: 0 !important;
+    padding-left: 8px !important;
+}
+
+.calendar-week-row .calendar-task.task-span-next {
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+/* 筌띾뜆???륁뵠筌왿궗 沃섎챶??筌?꼶??遺우뒠 域밸챶???(?誘れ뵠 ?곕벡?? */
+.mypage-calendar-grid {
+    min-height: 400px !important;
+}
+
+.calendar-day {
+    background-color: var(--card-bg);
+    padding: 16px 12px;
+    min-height: 140px;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    position: relative;
+    overflow-y: auto;
+}
+
+/* 筌띾뜆???륁뵠筌왿궗??沃섎챶?????*/
+.mypage-calendar-day {
+    min-height: 60px !important;
+    height: 60px !important;
+    padding: 4px 6px !important;
+    border-radius: 8px !important;
+}
+
+.mypage-calendar-day .calendar-date {
+    font-size: 0.8rem !important;
+    margin-bottom: 2px !important;
+}
+
+.calendar-day:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+}
+
+[data-theme='dark'] .calendar-day:hover {
+    background-color: #1e293b;
+}
+
+.calendar-day.today,
+.mypage-calendar-day.today {
+    background-color: rgba(99, 102, 241, 0.06) !important;
+    border: 2px solid #6366F1 !important;
+    box-shadow: 0 0 16px rgba(99, 102, 241, 0.25) !important;
+    position: relative;
+    z-index: 1;
+}
+
+[data-theme='dark'] .calendar-day.today,
+[data-theme='dark'] .mypage-calendar-day.today {
+    background-color: rgba(99, 102, 241, 0.15) !important;
+    border: 2px solid #818CF8 !important;
+    box-shadow: 0 0 16px rgba(129, 140, 248, 0.3) !important;
+}
+
+.calendar-day.today .calendar-date,
+.mypage-calendar-day.today .calendar-date {
+    background: linear-gradient(135deg, #F97316 0%, #EA580C 100%) !important;
+    color: white !important;
+    padding: 0px 6px !important;
+    border-radius: 8px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    box-shadow: 0 2px 4px rgba(249, 115, 22, 0.3) !important;
+    margin-bottom: 6px !important;
+    line-height: 1.4 !important;
+}
+
+.calendar-day.today .calendar-date::after,
+.mypage-calendar-day.today .calendar-date::after {
+    content: "?ㅻ뒛";
+    font-size: 0.6rem;
+    font-weight: 800;
+    margin-left: 4px;
+    background-color: rgba(255, 255, 255, 0.25);
+    padding: 0px 4px;
+    border-radius: 4px;
+    color: white;
+}
+
+.btn-today-premium {
+    background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%);
+    color: white !important;
+    border: none;
+    padding: 0.35rem 0.8rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(99, 102, 241, 0.3);
+    transition: all 0.2s ease;
+    margin-left: 6px;
+    display: inline-flex;
+    align-items: center;
+}
+.btn-today-premium:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(99, 102, 241, 0.45);
+}
+
+.calendar-date {
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+    color: var(--text-main);
+}
+
+.calendar-day.other-month {
+    background-color: #f1f5f9;
+    color: #94a3b8;
+}
+
+[data-theme='dark'] .calendar-day.other-month {
+    background-color: #0f172a;
+    color: #475569;
+}
+
+.calendar-date {
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    color: var(--text-main);
+}
+
+.calendar-task {
+    font-size: 0.75rem;
+    padding: 2px 6px; /* ?깅슧??以꾩씠湲?(湲곗〈 4px 8px) */
+    border-radius: 6px;
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 500;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    animation: fadeIn 0.3s ease;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* [議곗쑉以? ?쇱젙 ?쒓컖??遺꾨━ (?щ챸??諛??먯꽑) */
+.calendar-task.task-tentative, .task-card.task-tentative {
+    opacity: 0.5 !important;
+    border: 1px dashed currentColor !important;
+    background-image: repeating-linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.1),
+        rgba(255, 255, 255, 0.1) 10px,
+        transparent 10px,
+        transparent 20px
+    );
+}
+
+/* --- ??고??怨멸쉭 ??깆젟 ??ㅺ섯 ?遺우쁽??--- */
+.day-detail-panel {
+    background-color: var(--card-bg);
+    width: 100%;
+    max-width: 450px;
+    height: auto;
+    max-height: 80vh;
+    border-radius: 20px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    border: 1px solid var(--border-color);
+}
+
+@keyframes slideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.day-detail-header {
+    padding: 24px;
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.day-detail-actions {
+    display: flex;
+    gap: 12px;
+    padding: 16px 20px;
+    background-color: var(--card-bg);
+    border-bottom: 1px solid var(--border-color);
+    justify-content: flex-end;
+}
+
+.cal-add-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 12px;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cal-add-btn span {
+    font-size: 1.15rem;
+}
+
+.cal-add-btn.task-btn {
+    background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+}
+
+.cal-add-btn.task-btn:hover {
+    background: linear-gradient(135deg, #4338ca 0%, #2563eb 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3), 0 4px 6px -2px rgba(79, 70, 229, 0.1);
+}
+
+.cal-add-btn.trip-btn {
+    background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+}
+
+.cal-add-btn.trip-btn:hover {
+    background: linear-gradient(135deg, #7c3aed 0%, #9333ea 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(139, 92, 246, 0.3), 0 4px 6px -2px rgba(139, 92, 246, 0.1);
+}
+
+.cal-add-btn:active {
+    transform: translateY(0);
+}
+
+.day-detail-title {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+#selected-date-text {
+    font-size: 1.4rem;
+    font-weight: 800;
+}
+
+#selected-day-label {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    font-weight: 500;
+}
+
+.day-detail-list {
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background-color: var(--col-bg);
+}
+
+.day-item {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    transition: all 0.2s ease;
+    cursor: pointer;
+    gap: 12px;
+}
+
+.day-item:hover {
+    transform: translateX(4px);
+    border-color: #4f46e5;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.day-item-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.day-item-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.day-item-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text-main);
+}
+
+.day-item-meta {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.bottom-sheet-handle {
+    display: none;
+}
+.day-item-time-col {
+    display: none;
+}
+.day-item-bar {
+    display: none;
+}
+
+.day-detail-footer {
+    padding: 16px;
+    background-color: var(--card-bg);
+    border-top: 1px solid var(--border-color);
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+    .day-detail-panel {
+        max-width: 90%;
+    }
+}
+
+.clickable-date { cursor: pointer; display: inline-block; transition: color 0.2s; }
+.clickable-date:hover { color: var(--primary) !important; text-decoration: underline; }
+
+/* --- ?袁ⓥ봺沃섎챷毓???깆젟 ?????袁⑹뒠 ???遺우쁽??--- */
+.calendar-section-full {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    background-color: #f8fafc; /* 獄쏆빓??繹먥뫀嫄??獄쏄퀗瑗?*/
+    border-radius: 24px;
+}
+
+[data-theme='dark'] .calendar-section-full {
+    background-color: #0f172a;
+}
+
+.premium-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--card-bg);
+    padding: 1rem 1.5rem;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.calendar-sub-menu-container {
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    max-width: 100%;
+}
+
+.calendar-sub-menu-container::-webkit-scrollbar {
+    display: none;
+}
+
+.calendar-sub-menu {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background-color: var(--col-bg);
+    padding: 5px;
+    border-radius: 14px;
+    border: 1px solid var(--border-color);
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.04);
+}
+
+.calendar-navigation-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.date-picker-group {
+    display: flex;
+    align-items: center;
+    background-color: var(--col-bg);
+    padding: 4px 8px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    gap: 4px;
+}
+
+.calendar-select {
+    background: transparent;
+    border: none;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-main);
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+    outline: none;
+    transition: background 0.2s;
+}
+
+.calendar-select:hover {
+    background-color: var(--border-color);
+}
+
+.nav-arrow-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    background-color: var(--card-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--text-main);
+    box-shadow: var(--shadow-sm);
+}
+
+.nav-arrow-btn .material-symbols-rounded {
+    font-family: 'Material Symbols Rounded' !important;
+    color: var(--text-main) !important;
+    font-size: 1.35rem !important;
+    line-height: 1 !important;
+    display: inline-block !important;
+    transition: color 0.2s;
+}
+
+.nav-arrow-btn:hover {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+}
+
+.nav-arrow-btn:hover .material-symbols-rounded {
+    color: #ffffff !important;
+}
+
+.divider-v {
+    width: 1px;
+    height: 24px;
+    background-color: var(--border-color);
+    margin: 0 8px;
+}
+
+.google-sync-premium {
+    background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%);
+    color: #374151;
+    border: 1px solid #d1d5db;
+    padding: 0.6rem 1.2rem;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    transition: all 0.2s;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.google-sync-premium:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    background: white;
+}
+
+/* [揶쏆뮇苑? ??쎄쾿 筌뤴뫀諭?癒?퐣???닌? ?怨뺣짗 甕곌쑵????깃맒 獄쏆꼷??*/
+[data-theme='dark'] .google-sync-premium {
+    background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
+    color: #f3f4f6;
+    border: 1px solid #4b5563;
+}
+[data-theme='dark'] .google-sync-premium:hover {
+    background: #2d3748;
+}
+
+.cal-filter-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    border: none;
+    background-color: transparent;
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.cal-filter-btn:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+    color: var(--text-main);
+}
+
+[data-theme='dark'] .cal-filter-btn:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.cal-filter-btn.active {
+    background-color: var(--card-bg);
+    color: var(--primary);
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme='dark'] .cal-filter-btn.active {
+    background-color: #1e293b;
+    color: #818cf8;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* 筌?꼶?????? ??쎄쾿嚥▲끇而?沃섎챶?뀐쭖???????곗춦 */
+.calendar-day::-webkit-scrollbar, .mypage-calendar-day::-webkit-scrollbar { width: 4px; }
+.calendar-day::-webkit-scrollbar-thumb, .mypage-calendar-day::-webkit-scrollbar-thumb { background-color: var(--border-color); border-radius: 4px; }
+
+/* --- ?類ㅼ삢??筌?꼶????遺우쁽??--- */
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    background-color: transparent;
+    border: none;
+    min-height: 800px;
+}
+
+/* 筌띾뜆???륁뵠筌왿궗 沃섎챶??筌?꼶??遺우뒠 域밸챶???(?誘れ뵠 ?곕벡?? */
+.mypage-calendar-grid {
+    min-height: 400px !important;
+}
+
+.calendar-day-header {
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    padding: 8px 0;
+}
+.calendar-day-header.sun {
+    color: #EF4444;
+}
+.calendar-day-header.sat {
+    color: #3B82F6;
+}
+
+.calendar-day {
+    background-color: var(--card-bg);
+    padding: 16px 12px;
+    min-height: 140px;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    position: relative;
+    overflow-y: auto;
+}
+
+/* 筌띾뜆???륁뵠筌왿궗??沃섎챶?????*/
+.mypage-calendar-day {
+    min-height: 60px !important;
+    height: 60px !important;
+    padding: 4px 6px !important;
+    border-radius: 8px !important;
+}
+
+.mypage-calendar-day .calendar-date {
+    font-size: 0.8rem !important;
+    margin-bottom: 2px !important;
+}
+
+.calendar-day:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+}
+
+[data-theme='dark'] .calendar-day:hover {
+    background-color: #1e293b;
+}
+
+.calendar-day.today {
+    background-color: white;
+    border: 2px solid var(--primary);
+    box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.1);
+}
+
+[data-theme='dark'] .calendar-day.today {
+    background-color: #1e293b;
+    border: 2px solid #3b82f6;
+}
+
+.calendar-date {
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+    color: var(--text-main);
+}
+
+/* ==================== 
+   ??쇰뻻揶??얜챷苑?& ???뵬 ??뺤뵬????
+==================== */
+/* Quill ?癒?탵???뚣끉?????????(???춳 ?怨뺣짗) */
+.ql-toolbar.ql-snow {
+    border: 1px solid var(--border-color) !important;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    background-color: var(--col-bg);
+    font-family: inherit;
+}
+
+.ql-container.ql-snow {
+    border: 1px solid var(--border-color) !important;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    background-color: var(--card-bg);
+    font-family: inherit;
+    font-size: 1rem;
+    height: 200px;
+}
+
+.ql-editor { color: var(--text-main); line-height: 1.6; }
+
+/* ??쎄쾿 筌뤴뫀諭?????癒?탵????而??袁⑹뵠????깃맒 ?癒?짗 癰귘궗野?*/
+.ql-snow .ql-stroke { stroke: var(--text-main) !important; }
+.ql-snow .ql-fill { fill: var(--text-main) !important; }
+.ql-snow .ql-picker { color: var(--text-main) !important; }
+.ql-snow .ql-picker-options { background-color: var(--card-bg) !important; border-color: var(--border-color) !important; }
+
+.typing-indicator {
+    height: 20px;
+    font-size: 0.85rem;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.typing-indicator.active { opacity: 1; }
+
+.upload-area { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; }
+.file-input-hidden {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+.file-input-label {
+    background-color: var(--col-bg);
+    color: var(--text-muted);
+    border: 1px solid var(--border-color);
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-block;
+}
+.file-input-label:hover {
+    background-color: var(--border-color);
+    color: var(--primary);
+}
+.file-name-display {
+    flex: 1;
+    min-width: 0;
+    align-self: center;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-left: 0.5rem;
+}
+.status-msg { font-size: 0.85rem; color: var(--primary); min-height: 1.2rem; margin-bottom: 1rem; }
+.file-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+.file-list li { 
+    background-color: var(--col-bg); 
+    padding: 0.8rem 1rem; 
+    border-radius: 6px; 
+    border: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.file-list li a { text-decoration: none; color: var(--text-main); font-size: 0.95rem; display: flex; align-items: center; }
+
+/* ???뵬 ??뺤삋域?????뺚댘 ??ｋ궢 */
+#drive-drop-zone { position: relative; transition: background-color 0.2s, outline 0.2s; }
+#drive-drop-zone.dragover {
+    outline: 2px dashed var(--primary);
+    outline-offset: -4px;
+    background-color: rgba(99, 102, 241, 0.05);
+}
+
+.file-delete-btn {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.75rem;
+}
+
+/* ==================== 
+   筌뤴뫀??筌?(Modal) 
+==================== */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: var(--card-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    width: 90%;
+    max-width: 500px;
+    border-radius: 20px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border-color);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.modal-header h3 { margin: 0; font-size: 1.25rem; }
+
+.close-btn {
+    background: none; color: var(--text-muted);
+    padding: 0; font-size: 1.2rem; font-weight: bold;
+}
+.close-btn:hover { background: none; color: var(--text-main); }
+
+.modal-date-picker {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.date-input-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.date-input-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.date-select-btn {
+    background-color: var(--col-bg);
+    border: 1px dashed var(--primary);
+    color: var(--primary);
+    font-weight: 600;
+    text-align: center;
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    outline: none;
+    font-family: inherit;
+    font-size: 0.95rem;
+}
+.date-select-btn:hover, .date-select-btn:focus {
+    background-color: rgba(99, 102, 241, 0.05);
+    border-style: solid;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+}
+.date-select-btn::placeholder {
+    color: var(--primary);
+    opacity: 0.8;
+}
+
+/* Flatpickr ?????怨좊뱜 獄??遺우쁽???怨뺣짗 */
+.flatpickr-calendar { font-family: 'Pretendard Variable', Pretendard, sans-serif !important; box-shadow: var(--shadow-lg) !important; border: 1px solid var(--border-color) !important; }
+.flatpickr-day.selected, .flatpickr-day.startRange, .flatpickr-day.endRange, .flatpickr-day.selected.inRange, .flatpickr-day.startRange.inRange, .flatpickr-day.endRange.inRange, .flatpickr-day.selected:focus, .flatpickr-day.startRange:focus, .flatpickr-day.endRange:focus, .flatpickr-day.selected:hover, .flatpickr-day.startRange:hover, .flatpickr-day.endRange:hover, .flatpickr-day.selected.prevMonthDay, .flatpickr-day.startRange.prevMonthDay, .flatpickr-day.endRange.prevMonthDay, .flatpickr-day.selected.nextMonthDay, .flatpickr-day.startRange.nextMonthDay, .flatpickr-day.endRange.nextMonthDay {
+    background: var(--primary) !important; border-color: var(--primary) !important;
+}
+
+.modal-body textarea {
+    width: 100%; height: 150px; padding: 0.75rem;
+    border: 1px solid var(--border-color); border-radius: 6px;
+    resize: vertical; outline: none; font-family: inherit; box-sizing: border-box;
+}
+.modal-body textarea:focus { border-color: var(--primary); }
+.modal-footer { margin-top: 1rem; text-align: right; }
+
+/* ==================== 
+   ?뚣끉??? ??쎄쾿嚥▲끇而?
+==================== */
+.task-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.task-list::-webkit-scrollbar-track {
+    background: transparent; /* ?紐껋삌 獄쏄퀗瑗???梨?*/
+}
+
+.task-list::-webkit-scrollbar-thumb {
+    background-color: var(--border-color); /* ??쎄쾿嚥▲끇而???깃맒 */
+    border-radius: 4px;
+}
+
+/* ==================== 
+   ?온?귐딆쁽 ??ㅺ섯
+==================== */
+.user-list {
+    list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.75rem;
+}
+.user-list li {
+    background-color: var(--col-bg);
+    padding: 1rem 1.2rem;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.user-list li span { font-weight: 600; }
+.user-list li button { background-color: #10B981; } /* ?λ뜄以???諭??甕곌쑵??*/
+.user-list li button:hover { background-color: #059669; }
+.user-list li button.revoke-btn { background-color: #FEE2E2; color: var(--danger); }
+.user-list li button.revoke-btn:hover { background-color: var(--danger); color: white; }
+
+/* ==================== 
+   揶쏄쑵??筌△뫂????==================== */
+.gantt-container {
+    width: 100%;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1rem 0;
+}
+.gantt-scroll-area {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* iOS ?源녿퓠???봔??뺤쑎???온????쎄쾿嚥?筌왖??*/
+    scroll-behavior: smooth;
+}
+.gantt-header {
+    display: flex;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
+    width: max-content;
+}
+.gantt-day {
+    min-width: 40px;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    border-right: 1px dashed var(--border-color);
+    box-sizing: border-box;
+}
+.gantt-day.today { color: var(--primary); font-weight: bold; background-color: rgba(99, 102, 241, 0.05); }
+.gantt-body { position: relative; min-height: 150px; width: max-content; }
+.gantt-row {
+    display: flex; align-items: center; height: 44px;
+    border-bottom: 1px dashed var(--border-color); position: relative;
+}
+.gantt-row:hover { background-color: var(--col-bg); }
+.gantt-row-label {
+    position: sticky; left: 0; background-color: var(--card-bg); z-index: 10;
+    width: 180px; min-width: 180px; font-size: 0.85rem; font-weight: 600;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    padding: 0 1rem; border-right: 2px solid var(--border-color); display: flex; align-items: center;
+}
+.gantt-row:hover .gantt-row-label { background-color: var(--card-bg); }
+.gantt-bar-area { position: relative; flex: none; height: 100%; overflow: hidden; }
+.gantt-bar {
+    position: absolute; top: 8px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; padding: 0 0.5rem;
+    gap: 4px;
+    font-size: 0.75rem; color: white; font-weight: 600;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    box-shadow: var(--shadow-sm); cursor: pointer; transition: transform 0.1s, filter 0.1s;
+}
+.gantt-bar:hover { transform: translateY(-2px); filter: brightness(0.9); z-index: 5; }
+.gantt-bar-label {
+    position: absolute; top: 12px; font-size: 0.75rem; font-weight: bold; color: var(--text-muted);
+    white-space: nowrap;
+}
+
+/* ==================== 
+   ?곗뮇????끦??온??(Business Trips)
+==================== */
+.trip-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+.trip-card {
+    background-color: var(--card-bg);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    border-radius: 12px;
+    padding: 1rem 1.2rem;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+.trip-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+.trip-card.past-trip {
+    opacity: 0.5;
+    background-color: var(--col-bg);
+}
+.trip-header { display: flex; justify-content: space-between; align-items: flex-start; }
+.trip-title { font-weight: 700; font-size: 1.1rem; color: var(--text-main); margin-bottom: 0.2rem; }
+.trip-date { font-size: 0.8rem; color: var(--primary); font-weight: 600; }
+.trip-info-row { font-size: 0.85rem; color: var(--text-main); display: flex; gap: 0.5rem; align-items: flex-start; }
+.trip-info-icon { opacity: 0.7; }
+
+.trip-attachment-btns { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+.trip-attach-btn {
+    background-color: var(--col-bg); color: var(--text-main); border: 1px solid var(--border-color);
+    padding: 0.5rem 0.8rem; font-size: 0.8rem; border-radius: 8px; cursor: pointer; flex: 1;
+    display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+    box-shadow: none; font-weight: 600; transition: all 0.2s;
+}
+.trip-attach-btn:hover {
+    background-color: var(--border-color); transform: translateY(-1px);
+}
+
+/* ==================== 
+   ?醫롫뮞?????뵝 (Toast)
+==================== */
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 10000;
+    pointer-events: none; /* ????獄쎻뫚鍮?獄쎻뫗? */
+}
+.toast {
+    background-color: var(--card-bg);
+    color: var(--text-main);
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
+    /* removed border-left for cleaner look */
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: slideInRight 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    min-width: 260px;
+    pointer-events: auto; /* ?醫롫뮞???癒?퍥??????揶쎛?館釉?칰?*/
+}
+.toast.toast-warning { border-left-color: #F59E0B; }
+.toast.fade-out { animation: fadeOutRight 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+
+[data-theme="dark"] .toast { box-shadow: 0 10px 25px -5px rgba(0,0,0,0.6); border-color: var(--border-color); border-left-color: var(--primary); }
+[data-theme="dark"] .toast.toast-warning { border-left-color: #F59E0B; }
+
+@keyframes slideInRight {
+    from { transform: translateX(120%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+@keyframes fadeOutRight {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(120%); opacity: 0; }
+}
+
+/* ==================== 
+   ??쇰뻻揶???沅?筌?쑵??(Mini Messenger)
+==================== */
+.chat-toggle-btn {
+    position: fixed; bottom: 20px; right: 20px; z-index: 999;
+    width: 56px; height: 56px; border-radius: 50%;
+    background-color: var(--primary); color: white;
+    display: flex; justify-content: center; align-items: center;
+    box-shadow: var(--shadow-lg); cursor: pointer; border: none;
+    transition: transform 0.2s, background-color 0.2s;
+}
+.chat-toggle-btn:hover { transform: scale(1.1); background-color: var(--primary-hover); }
+.chat-toggle-btn .material-symbols-rounded { font-size: 28px; }
+
+.chat-window {
+    position: fixed; bottom: 90px; right: 20px; z-index: 999;
+    width: 340px; height: 500px; max-height: calc(100vh - 120px);
+    background-color: var(--card-bg); border-radius: 16px;
+    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.2);
+    display: none; flex-direction: column; overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+.chat-header {
+    background-color: var(--primary); color: white; padding: 1rem;
+    display: flex; justify-content: space-between; align-items: center;
+    user-select: none; /* ??뺤삋域?????용뮞???醫뤾문 獄쎻뫗? */
+    cursor: grab; /* 筌띾뜆????뚣끉苑뚨몴??癒?뺍??筌뤴뫁堉??곗쨮 */
+}
+.chat-header:active { cursor: grabbing; }
+.chat-header .close-btn { color: white; padding: 0; }
+.chat-header .close-btn:hover { color: #E5E7EB; }
+.chat-body {
+    flex: 1; padding: 1rem; overflow-y: auto; background-color: var(--bg-color);
+    display: flex; flex-direction: column; gap: 0.8rem;
+}
+.chat-message { display: flex; flex-direction: column; max-width: 80%; }
+.chat-message.mine { align-self: flex-end; align-items: flex-end; }
+.chat-message.others { align-self: flex-start; align-items: flex-start; }
+.chat-sender { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.2rem; margin-left: 4px; margin-right: 4px; }
+.chat-bubble { padding: 0.8rem 1.2rem; border-radius: 18px; font-size: 0.9rem; line-height: 1.4; word-break: break-word; box-shadow: var(--shadow-sm); }
+.chat-message.mine .chat-bubble { background-color: var(--primary); color: white; border-bottom-right-radius: 4px; }
+.chat-message.others .chat-bubble { background: var(--col-bg); color: var(--text-main); border: 1px solid var(--border-color); border-bottom-left-radius: 4px; }
+.chat-time { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.2rem; }
+.chat-footer {
+    padding: 0.8rem; background-color: var(--card-bg); border-top: 1px solid var(--border-color); display: flex; gap: 0.5rem; align-items: center;
+}
+.chat-footer input {
+    flex: 1; padding: 0.6rem 1rem; border: 1px solid var(--border-color);
+    border-radius: 20px; font-size: 0.9rem; outline: none; background: rgba(255, 255, 255, 0.05); color: var(--text-main);
+    transition: all 0.3s ease; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+}
+[data-theme="light"] .chat-footer input { background: rgba(0, 0, 0, 0.02); }
+.chat-footer input:focus { 
+    border-color: transparent; 
+    box-shadow: 0 4px 12px var(--primary-glow), 0 -1px 0px var(--primary) inset;
+    background: var(--card-bg);
+}
+.chat-footer button { width: 40px; height: 40px; border-radius: 50%; padding: 0; display: flex; justify-content: center; align-items: center; }
+
+.chat-list-item { display: flex; align-items: center; padding: 1.2rem 1rem; border-bottom: 1px solid var(--border-color); cursor: pointer; transition: background-color 0.2s; }
+.chat-list-item:hover { background-color: rgba(99, 102, 241, 0.05); }
+.chat-list-item:last-child { border-bottom: none; }
+
+@media (max-width: 768px) { 
+    .chat-window { width: calc(100vw - 40px); bottom: 80px; right: 20px; } 
+}
+
+/* ==================== 
+   ?袁⑷텢 ?⑤벊???鍮?(Notices)
+==================== */
+/* ?⑤벊???鍮?餓λ쵐????뽯뻻 ?????*/
+.notice-important {
+    background-color: #fff1f2 !important; /* 筌띲끉???怨좊립 ?브쑵????몿而?獄쏄퀗瑗?*/
+    border-left: 4px solid var(--danger) !important;
+}
+
+[data-theme='dark'] .notice-important {
+    background-color: rgba(225, 29, 72, 0.1) !important;
+    border-left: 4px solid #fb7185 !important;
+}
+
+.notice-badge-important {
+    display: inline-block;
+    background-color: var(--danger);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 6px;
+    margin-right: 8px;
+    vertical-align: middle;
+    box-shadow: 0 2px 4px rgba(225, 29, 72, 0.2);
+    flex-shrink: 0;
+}
+
+.notice-item {
+    display: flex;
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: background-color 0.2s;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+.notice-item:last-child { border-bottom: none; }
+.notice-item:hover { background-color: var(--col-bg); }
+.notice-item-title {
+    flex: 1;
+    min-width: 0;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 1rem;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+.notice-item-author { width: 100px; text-align: center; font-size: 0.85rem; color: var(--text-muted); }
+.notice-item-date { width: 100px; text-align: center; font-size: 0.85rem; color: var(--text-muted); }
+.notice-item-views { width: 60px; text-align: center; font-size: 0.85rem; color: var(--text-muted); }
+
+@media (max-width: 768px) {
+    .notice-list-header { display: none !important; }
+    .notice-item { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+    .notice-item-author, .notice-item-date, .notice-item-views { width: auto; text-align: left; display: inline-block; margin-right: 0.5rem; }
+    .notice-item-views::before { content: '鈺곌퀬??? '; }
+}
+
+/* ??筌롫뗄?놅쭪? 獄쏄퀣? (筌?쑵??筌뤴뫖以??怨쀫?) */
+.unread-badge {
+    background-color: var(--danger);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 12px;
+    margin-left: auto;
+    box-shadow: var(--shadow-sm);
+}
+/* ?觀??筌롫뗄??筌?쑵??甕곌쑵????븐늾????몿而???*/
+.chat-toggle-badge {
+    position: absolute;
+    top: 2px; right: 2px;
+    width: 12px; height: 12px;
+    background-color: var(--danger);
+    border-radius: 50%;
+    border: 2px solid var(--card-bg);
+}
+
+/* ==================== 
+   鈺곌퀣彛??(Organization Chart)
+==================== */
+.org-board { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; padding-bottom: 2rem; }
+.org-column { background: var(--col-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); border-radius: 20px; padding: 1.5rem; border: 1px solid var(--border-color); display: flex; flex-direction: column; min-height: 320px; box-shadow: var(--shadow-md); }
+.org-col-ceo { grid-column: 1 / -1; max-width: 500px; margin: 0 auto; width: 100%; position: relative; }
+.org-col-ceo::before { content: ''; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px; background: linear-gradient(45deg, var(--primary), var(--danger)); border-radius: 22px; z-index: -1; opacity: 0.5; filter: blur(8px); animation: pulse 3s infinite; }
+.org-col-unassigned { grid-column: 1 / -1; }
+.org-column h3 { margin: 0 0 1.5rem 0; font-size: 1.1rem; color: var(--text-main); text-align: center; font-weight: 800; background: var(--card-bg); backdrop-filter: var(--glass-blur); padding: 0.8rem; border-radius: 12px; box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); }
+.org-list { flex: 1; min-height: 200px; display: flex; flex-direction: column; gap: 1rem; padding-right: 4px; }
+.org-card { background: var(--card-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); padding: 1.2rem; border-radius: 16px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); display: flex; align-items: center; gap: 1rem; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+.org-card.draggable { cursor: grab; }
+.org-card.draggable:active { cursor: grabbing; transform: scale(0.98); }
+.org-card:hover { transform: translateY(-4px) scale(1.02); box-shadow: var(--shadow-lg); border-color: var(--primary-glow); }
+
+/* ==================== 
+   ??살춳????덇퐨 筌왖??獄??귐딅뮞??
+==================== */
+.map-container-grid { 
+    display: grid; grid-template-columns: 1fr; gap: 1rem; margin-top: 1rem; 
+}
+@media (min-width: 768px) { 
+    .map-container-grid { grid-template-columns: 3fr 2fr; } 
+}
+.trip-map-area { 
+    width: 100%; height: 400px; min-height: 400px; 
+    background-color: var(--card-bg); border-radius: 12px; 
+    border: 1px solid var(--border-color); overflow: hidden; 
+    display: flex; justify-content: center; align-items: center; text-align: center; 
+}
+.trip-route-list { 
+    display: flex; flex-direction: column; gap: 0.8rem; 
+    max-height: 400px; overflow-y: auto; padding-right: 4px; 
+}
+.route-item { 
+    display: flex; gap: 1rem; padding: 1rem; 
+    background: var(--card-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); border-radius: 16px; 
+    border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); align-items: flex-start; 
+    transition: all 0.3s ease;
+}
+.route-item:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--primary-glow); }
+.route-item-number { 
+    background-color: #3B82F6; color: white; width: 28px; height: 28px; 
+    border-radius: 50%; display: flex; justify-content: center; align-items: center; 
+    font-weight: bold; flex-shrink: 0; font-size: 0.9rem; margin-top: 0.2rem; 
+}
+.route-item-info { flex: 1; display: flex; flex-direction: column; gap: 0.2rem; }
+.route-item-title { font-weight: 700; font-size: 1rem; color: var(--text-main); }
+.route-item-address { font-size: 0.85rem; color: var(--text-muted); }
+.route-item-dist { font-size: 0.8rem; color: var(--primary); font-weight: 600; margin-top: 0.2rem; }
+
+.route-team-header {
+    margin-top: 1.5rem;
+    padding: 0.6rem 1rem;
+    border-left: 5px solid; /* ??깃맒?? JS?癒?퐣 ??덉읅??곗쨮 ??쇱젟 */
+    font-weight: 700;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--col-bg);
+    border-radius: 8px;
+}
+
+/* ==================== 
+   沃섎챶?꿨칰??뿫 (?癒?쐭筌왖 ??붾┛) ?????==================== */
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    padding: 15px;
+    background-color: var(--col-bg);
+    border-radius: 12px;
+    border: 2px solid var(--border-color);
+}
+.game-hole {
+    width: 100%; aspect-ratio: 1;
+    background-color: #374151;
+    border-radius: 50%; position: relative; overflow: hidden;
+    box-shadow: inset 0 5px 10px rgba(0,0,0,0.5);
+}
+.game-hole-inner {
+    width: 100%; height: 100%; position: relative; overflow: hidden;
+}
+.game-mole {
+    width: 80%; height: 80%; background-color: #FCD34D;
+    border-radius: 50%; position: absolute;
+    bottom: -100%; left: 10%;
+    display: flex; justify-content: center; align-items: center;
+    transition: bottom 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.1s;
+    cursor: pointer; box-shadow: 0 -2px 5px rgba(0,0,0,0.2); user-select: none;
+}
+.game-mole.up { bottom: 5%; }
+.game-mole.whacked { background-color: var(--danger) !important; transform: scale(0.9); }
+.game-mole .material-symbols-rounded {
+    font-size: 2.5rem;
+    color: #B45309;
+    pointer-events: none;
+}
+
+/* ==================== 
+   ?怨쀬뵬???룐뫂??(Daily Tasks)
+ ==================== */
+.daily-item {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-sm);
+}
+
+.daily-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.daily-item.completed {
+    background-color: var(--col-bg);
+    opacity: 0.7;
+}
+
+.daily-item.completed .daily-title {
+    text-decoration: line-through;
+    color: var(--text-muted);
+}
+
+.daily-checkbox {
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--primary);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    background-color: transparent;
+    color: white;
+    flex-shrink: 0;
+}
+
+.daily-item.completed .daily-checkbox {
+    background-color: var(--primary);
+}
+
+.daily-title {
+    flex: 1;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-main);
+    word-break: break-all;
+}
+
+.daily-delete-btn {
+    opacity: 0;
+    color: var(--text-muted);
+    transition: opacity 0.2s;
+    background: none !important;
+    padding: 2px !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.daily-item:hover .daily-delete-btn {
+    opacity: 1;
+}
+
+.daily-delete-btn:hover {
+    color: var(--danger) !important;
+}
+
+/* ==================== 
+   ?????燁?(Assignee Chips)
+ ==================== */
+.assignee-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background-color: #F0F7FF;
+    color: var(--primary);
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    border: 1px solid rgba(37, 99, 235, 0.12);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    transition: all 0.2s ease;
+    margin-right: 4px;
+    margin-bottom: 4px;
+}
+
+.assignee-chip:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.15);
+    background-color: white;
+}
+
+.assignee-chip .material-symbols-rounded {
+    font-size: 0.85rem;
+    opacity: 0.7;
+}
+
+/* ==================== 
+   ???뵝 ??뽯뮞??(Notification System)
+ ==================== */
+.icon-btn {
+    position: relative;
+    background: transparent;
+    border: none;
+    padding: 8px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    color: var(--text-muted);
+}
+
+.icon-btn:hover {
+    background: var(--col-bg);
+    color: var(--primary);
+}
+
+.notification-container {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.noti-badge {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 10px;
+    height: 10px;
+    background-color: #EF4444;
+    border-radius: 50%;
+    border: 2px solid white;
+    z-index: 10;
+}
+
+.noti-panel {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    width: 320px;
+    max-height: 480px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+.noti-header {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.noti-header h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.noti-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.5rem;
+}
+
+.noti-item {
+    padding: 0.8rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-bottom: 4px;
+    border-left: 3px solid transparent;
+}
+
+.noti-item:hover {
+    background: var(--col-bg);
+}
+
+.noti-item.unread {
+    background: var(--primary-light, #EFF6FF);
+    border-left-color: var(--primary);
+}
+
+.noti-item-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 2px;
+}
+
+.noti-item-msg {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+.noti-item-time {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+    display: block;
+}
+
+.noti-empty {
+    padding: 2rem;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.text-btn {
+    background: transparent;
+    border: none;
+    color: var(--primary);
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.text-btn:hover {
+    background: var(--primary-light);
+}
+
+/* =========================================
+   [PDF TOOL STYLES] - Non-destructive Extension
+   ========================================= */
+.pdf-tool-container {
+    display: flex;
+    gap: 1.5rem;
+    margin: 1.5rem auto;
+    max-width: 850px;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.pdf-settings-panel {
+    flex: 1.2;
+    min-width: 380px;
+    background: #ffffff;
+    padding: 1.8rem;
+    border-radius: 24px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+}
+
+.pdf-upload-panel {
+    flex: 1;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.upload-zone {
+    width: 100%;
+    min-height: 260px;
+    border: 2px dashed #cbd5e1;
+    background: #f8fafc;
+    border-radius: 24px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.upload-zone:hover {
+    border-color: #6366f1;
+    background: #f1f5ff;
+    transform: translateY(-2px);
+}
+
+.upload-icon-wrapper {
+    width: 64px;
+    height: 64px;
+    background: #eff6ff;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6366f1;
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.process-btn {
+    width: 100%;
+    padding: 1.2rem;
+    background: #6366f1;
+    color: white;
+    border: none;
+    border-radius: 18px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 10px 20px rgba(99, 102, 241, 0.2);
+    transition: all 0.2s;
+}
+
+.process-btn:hover:not(:disabled) {
+    background: #4f46e5;
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px rgba(99, 102, 241, 0.3);
+}
+
+.process-btn:disabled {
+    background: #cbd5e1;
+    box-shadow: none;
+    cursor: not-allowed;
+}
+
+.form-group label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #475569;
+    margin-bottom: 0.6rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.settings-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+}
+
+input[type="range"].premium-slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 6px;
+    background: #f1f5f9;
+    border-radius: 10px;
+    outline: none;
+}
+
+input[type="range"].premium-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #ffffff;
+    border: 2px solid #6366f1;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.spinner-small {
+    width: 22px;
+    height: 22px;
+    border: 3px solid rgba(99, 102, 241, 0.1);
+    border-top-color: #6366f1;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Premium PDF Watermark Tool Responsive Styles */
+@media (max-width: 768px) {
+    .pdf-tool-container {
+        flex-direction: column;
+        flex-wrap: wrap;
+        padding: 0 0.5rem;
+    }
+    
+    .pdf-settings-panel {
+        min-width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .pdf-upload-panel {
+        min-width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+/* 筌띾뜃而?袁⑥뺏 (2????沅? 燁삳?諭?野껋럡???醫딅빍筌롫뗄???*/
+.task-card.deadline-warning {
+    animation: blink-red-neon 0.8s infinite alternate;
+}
+
+@keyframes blink-red-neon {
+    0% {
+        border-color: rgba(239, 68, 68, 0.3);
+        box-shadow: 0 0 4px rgba(239, 68, 68, 0.1);
+    }
+    100% {
+        border-color: rgba(239, 68, 68, 1);
+        box-shadow: 0 0 12px rgba(239, 68, 68, 0.5), inset 0 0 6px rgba(239, 68, 68, 0.1);
+        background-color: rgba(254, 226, 226, 0.15); /* ??곸? ?븍맩???獄쏄퀗瑗?*/
+    }
+}
+
+/* ??쇰뻻揶???沅???끦?筌롫뗄????곕꽰 ?遺용튋 Feed ?????*/
+.communication-feed-container {
+    max-height: 450px;
+    overflow-y: auto;
+    padding-right: 6px;
+    margin-top: 1rem;
+}
+
+.communication-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.comm-empty {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 3rem 1rem;
+    font-size: 0.95rem;
+    background-color: var(--col-bg);
+    border-radius: 16px;
+    border: 1px dashed var(--border-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.comm-empty span {
+    font-size: 2.2rem;
+    color: var(--border-color);
+}
+
+.comm-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 18px;
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.comm-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    border-color: var(--primary);
+}
+
+.comm-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+
+.comm-meta-left {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.comm-meta-right {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.comm-badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+/* 燁삳똾?믤⑥쥓?곮퉪???쎄쾿筌뤴뫀諭??????袁ⓥ봺沃섎챷毓?獄쏄퀣? ?????*/
+.comm-badge.reporting { background-color: #E0F2FE; color: #0284C7; border: 1px solid #BAE6FD; }      /* ??끦?퉪?욱?*/
+.comm-badge.announcement { background-color: #FCE7F3; color: #DB2777; border: 1px solid #FBCFE8; }   /* ?⑤벊???鍮?*/
+.comm-badge.schedule { background-color: #ECFDF5; color: #059669; border: 1px solid #A7F3D0; }       /* ??깆젟?⑤벊? */
+.comm-badge.inquiry { background-color: #F3F4F6; color: #4B5563; border: 1px solid #E5E7EB; }        /* ??곗뺘?얜챷??*/
+
+.comm-category-label {
+    font-size: 0.75rem;
+    background-color: var(--col-bg);
+    color: var(--text-main);
+    padding: 3px 6px;
+    border-radius: 6px;
+    font-weight: 600;
+    border: 1px solid var(--border-color);
+}
+
+.comm-sender-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 0.75rem;
+    background-color: var(--col-bg);
+    color: var(--primary);
+    padding: 3px 8px;
+    border-radius: 20px;
+    font-weight: bold;
+    border: 1px solid rgba(79, 70, 229, 0.1);
+}
+
+.comm-sender-chip span {
+    font-size: 0.95rem;
+}
+
+.comm-body {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--text-main);
+    font-weight: 500;
+    background: var(--col-bg);
+    padding: 0.8rem 1rem;
+    border-radius: 12px;
+    /* removed border-left for cleaner look */
+}
+
+.comm-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.2rem;
+}
+
+.comm-subject-title {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    word-break: break-all;
+    max-width: 75%;
+}
+
+.comm-gmail-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.78rem;
+    color: var(--primary);
+    font-weight: 700;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.comm-gmail-link:hover {
+    color: #4f46e5;
+    text-decoration: underline;
+}
+
+.comm-gmail-link span {
+    font-size: 1rem;
+}
+
+/* ==================== 
+   筌?꼶?????깆젟 ??븐퍟???????(Premium Schedule Differentiation)
+==================== */
+/* 1. ??? (Leaves): ?怨뺣걙?????뮞??獄쏄퀗瑗?+ ??볥젃??됱퓗 ?癒?컭?袁⑤굡 癰귣???*/
+.calendar-task.task-leave {
+    background-color: rgba(16, 185, 129, 0.18) !important;
+    border: 1px solid rgba(16, 185, 129, 0.4) !important;
+color: #047857 !important;
+}
+[data-theme='dark'] .calendar-task.task-leave {
+    background-color: rgba(16, 185, 129, 0.22) !important;
+    color: #34d399 !important;
+}
+
+/* 2. ?곗뮇??(Trips): ?怨뺣궖?????뮞??獄쏄퀗瑗?+ ??볥젃??됱퓗 獄쏅뗄?????癰귣???*/
+.calendar-task.task-trip {
+    background-color: rgba(139, 92, 246, 0.18) !important;
+    border: 1px solid rgba(139, 92, 246, 0.4) !important;
+color: #6D28D9 !important;
+}
+[data-theme='dark'] .calendar-task.task-trip {
+    background-color: rgba(139, 92, 246, 0.22) !important;
+    color: #a78bfa !important;
+}
+
+/* 3. ?紐? ?怨뺣짗 ??깆젟 (Google): ?怨쀪퍕嚥????뮞??獄쏄퀗瑗?+ ??볥젃??됱퓗 ??뽯툧 癰귣???*/
+.calendar-task.task-external {
+    background-color: rgba(6, 182, 212, 0.18) !important;
+    border: 1px solid rgba(6, 182, 212, 0.4) !important;
+color: #0E7490 !important;
+}
+[data-theme='dark'] .calendar-task.task-external {
+    background-color: rgba(6, 182, 212, 0.18) !important;
+    border: 1px solid rgba(6, 182, 212, 0.4) !important;
+    color: #22d3ee !important;
+}
+
+/* 3.5. ??곗뺘 ??깆젟 (Schedules): ?怨뺥뀋?????뮞??獄쏄퀗瑗?+ 嚥≪뮇已?癰귣???*/
+.calendar-task.task-schedule {
+    background-color: rgba(244, 63, 94, 0.18) !important;
+    border: 1px solid rgba(244, 63, 94, 0.4) !important;
+color: #BE123C !important;
+}
+[data-theme='dark'] .calendar-task.task-schedule {
+    background-color: rgba(244, 63, 94, 0.18) !important;
+    border: 1px solid rgba(244, 63, 94, 0.4) !important;
+    color: #fb7185 !important;
+}
+
+/* 4. 餓λ쵐????끦?(High Priority): ?怨좎냹?????뮞??獄쏄퀗瑗?+ ??볥젃??됱퓗 ??덈굡 癰귣???*/
+.calendar-task.task-high {
+    background-color: rgba(239, 68, 68, 0.18) !important;
+    border: 1px solid rgba(239, 68, 68, 0.4) !important;
+color: #B91C1C !important;
+}
+[data-theme='dark'] .calendar-task.task-high {
+    background-color: rgba(239, 68, 68, 0.18) !important;
+    border: 1px solid rgba(239, 68, 68, 0.4) !important;
+    color: #fca5a5 !important;
+}
+
+/* 5. 癰귣똾????끦?(Medium Priority): ?怨좎넺?????뮞??獄쏄퀗瑗?+ ??볥젃??됱퓗 ?怨뺤쒔 癰귣???*/
+.calendar-task.task-medium {
+    background-color: rgba(245, 158, 11, 0.18) !important;
+    border: 1px solid rgba(245, 158, 11, 0.4) !important;
+color: #B45309 !important;
+}
+[data-theme='dark'] .calendar-task.task-medium {
+    background-color: rgba(245, 158, 11, 0.18) !important;
+    border: 1px solid rgba(245, 158, 11, 0.4) !important;
+    color: #fcd34d !important;
+}
+
+/* 6. ??????끦?(Low Priority): ?怨좎돳?????뮞??獄쏄퀗瑗?+ ??볥젃??됱퓗 ?????꾨뱜 癰귣???*/
+.calendar-task.task-low {
+    background-color: rgba(107, 114, 128, 0.18) !important;
+    border: 1px solid rgba(107, 114, 128, 0.4) !important;
+color: #4B5563 !important;
+}
+[data-theme='dark'] .calendar-task.task-low {
+    background-color: rgba(107, 114, 128, 0.18) !important;
+    border: 1px solid rgba(107, 114, 128, 0.4) !important;
+    color: #9ca3af !important;
+}
+
+/* ==================== 
+   ???꺗/椰꾧퀡?믭㎗?롰??袁⑹뒠 ??깆젟 ??????깃맒 ??뽯뮞??   - ?묒쥚?? ?怨뺣あ (Lime Green)
+   - 揶쏅벡?? ?紐껋삂 (Soft Yellow)
+   - ????? ???삂 (Soft Blue)
+   - ???? 癰귣???(Soft Purple)
+   - ?遺얠쑎??쎈연?? 筌?以??癒?컭?袁⑤굡 (Teal Emerald)
+   - ?癒?퍥/???: ??몿而?(Soft Red)
+==================== */
+/* 1. ?묒쥚??(?怨뺣あ??- Lime) */
+.calendar-task.task-coupang {
+    background-color: rgba(132, 204, 22, 0.18) !important;
+    border: 1px solid rgba(132, 204, 22, 0.4) !important;
+    border-left: 3.5px solid #84CC16 !important;
+    color: #365314 !important;
+    font-weight: 600 !important;
+}
+[data-theme='dark'] .calendar-task.task-coupang {
+    background-color: rgba(132, 204, 22, 0.25) !important;
+    color: #a3e635 !important;
+}
+
+/* 2. 揶쏅벡??(?紐껋삂??- Yellow) */
+.calendar-task.task-lecture {
+    background-color: rgba(234, 179, 8, 0.18) !important;
+    border: 1px solid rgba(234, 179, 8, 0.4) !important;
+    border-left: 3.5px solid #EAB308 !important;
+    color: #713F12 !important;
+    font-weight: 600 !important;
+}
+[data-theme='dark'] .calendar-task.task-lecture {
+    background-color: rgba(234, 179, 8, 0.25) !important;
+    color: #fde047 !important;
+}
+
+/* 3. ?????(???삂??- Blue) */
+.calendar-task.task-easyen {
+    background-color: rgba(59, 130, 246, 0.18) !important;
+    border: 1px solid rgba(59, 130, 246, 0.4) !important;
+    border-left: 3.5px solid #3B82F6 !important;
+    color: #1E3A8A !important;
+    font-weight: 600 !important;
+}
+[data-theme='dark'] .calendar-task.task-easyen {
+    background-color: rgba(59, 130, 246, 0.25) !important;
+    color: #93c5fd !important;
+}
+
+/* 4. ????(癰귣????- Purple) */
+.calendar-task.task-huno {
+    background-color: rgba(168, 85, 247, 0.18) !important;
+    border: 1px solid rgba(168, 85, 247, 0.4) !important;
+    border-left: 3.5px solid #A855F7 !important;
+    color: #581C87 !important;
+    font-weight: 600 !important;
+}
+[data-theme='dark'] .calendar-task.task-huno {
+    background-color: rgba(168, 85, 247, 0.25) !important;
+    color: #c084fc !important;
+}
+
+/* 5. ?遺얠쑎??쎈연??(筌?以??癒?컭?袁⑤굡 - Teal) */
+.calendar-task.task-telus {
+    background-color: rgba(20, 184, 166, 0.18) !important;
+    border: 1px solid rgba(20, 184, 166, 0.4) !important;
+    border-left: 3.5px solid #14B8A6 !important;
+    color: #0F766E !important;
+    font-weight: 600 !important;
+}
+[data-theme='dark'] .calendar-task.task-telus {
+    background-color: rgba(20, 184, 166, 0.25) !important;
+    color: #2dd4bf !important;
+}
+
+/* 6. ?癒?퍥/??? (??몿而??- Red) */
+.calendar-task.task-self {
+    background-color: rgba(239, 68, 68, 0.18) !important;
+    border: 1px solid rgba(239, 68, 68, 0.4) !important;
+    border-left: 3.5px solid #EF4444 !important;
+    color: #991B1B !important;
+    font-weight: 600 !important;
+}
+[data-theme='dark'] .calendar-task.task-self {
+    background-color: rgba(239, 68, 68, 0.25) !important;
+    color: #fca5a5 !important;
+}
+
+
+/* 7. ?袁⑥┷????깆젟 (Done Tasks): ????癰귣???+ 餓λ쵐釉??+ ??梨??鈺곌퀣??*/
+.calendar-task.task-done-style {
+    background-color: rgba(243, 244, 246, 0.4) !important;
+    border-left: 3px dashed #9CA3AF !important;
+    color: #9CA3AF !important;
+    text-decoration: line-through;
+    opacity: 0.65;
+    box-shadow: none !important;
+}
+[data-theme='dark'] .calendar-task.task-done-style {
+    background-color: rgba(75, 85, 99, 0.18) !important;
+    border: 1px solid rgba(75, 85, 99, 0.4) !important;
+    color: #6B7280 !important;
+    border-left-color: #4B5563 !important;
+}
+
+/* 筌띾뜆???以??怨뱀깈?臾믪뒠: 筌띾뜆????紐껋쒔 ???봔??뺤쑎????삘뵝 獄?獄쏆뮄????ｋ궢 */
+.calendar-task {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+.calendar-task:hover {
+    transform: translateY(-1px) scale(1.015);
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -1px rgba(0,0,0,0.04) !important;
+    filter: brightness(1.03);
+}
+
+/* ==================== 
+   AI Daily Briefing Card Styles
+==================== */
+#ai-briefing-container {
+    padding: 0 1.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+.briefing-card {
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(79, 70, 229, 0.15);
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+[data-theme='dark'] .briefing-card {
+    background: rgba(30, 41, 59, 0.45);
+    border-color: rgba(251, 113, 133, 0.15);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+.briefing-card:hover {
+    border-color: var(--primary);
+    box-shadow: 0 10px 35px rgba(79, 70, 229, 0.08);
+}
+[data-theme='dark'] .briefing-card:hover {
+    border-color: #fb7185;
+    box-shadow: 0 10px 35px rgba(251, 113, 133, 0.08);
+}
+.briefing-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.1rem 1.4rem;
+    cursor: pointer;
+    user-select: none;
+}
+.briefing-title-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.briefing-spark-icon {
+    font-size: 1.5rem;
+    color: var(--primary);
+    animation: pulseGlow 2s infinite ease-in-out;
+}
+[data-theme='dark'] .briefing-spark-icon {
+    color: #fb7185;
+}
+.briefing-header h3 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-main);
+    letter-spacing: -0.02em;
+}
+.briefing-toggle-icon {
+    font-size: 1.4rem;
+    color: var(--text-muted);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.briefing-card.collapsed .briefing-toggle-icon {
+    transform: rotate(-90deg);
+}
+.briefing-body {
+    padding: 0 1.4rem 1.4rem 1.4rem;
+    transition: all 0.3s ease-out;
+    max-height: 500px;
+    opacity: 1;
+}
+.briefing-card.collapsed .briefing-body {
+    max-height: 0;
+    opacity: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    pointer-events: none;
+}
+#briefing-text {
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.65;
+    color: var(--text-main);
+    font-weight: 500;
+    word-break: keep-all;
+}
+
+@keyframes pulseGlow {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.12); opacity: 0.8; filter: drop-shadow(0 0 4px var(--primary)); }
+}
+
+/* ==================== 
+   ??쇰뻻揶????뵝 ??녠숲 (Notification Center Drawer)
+==================== */
+.nav-icon-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.4rem;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 50%;
+    transition: all 0.2s;
+}
+.nav-icon-btn:hover {
+    background: var(--col-bg);
+    color: var(--text-main);
+}
+.notification-badge {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    background-color: var(--danger);
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 800;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--card-bg);
+    animation: scalePulse 2.5s infinite;
+}
+.notification-drawer {
+    position: fixed;
+    top: 0;
+    right: -420px;
+    width: 380px;
+    max-width: calc(100vw - 20px);
+    height: 100%;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border-left: 1px solid rgba(226, 232, 240, 0.8);
+    box-shadow: -10px 0 35px rgba(0, 0, 0, 0.08);
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+[data-theme='dark'] .notification-drawer {
+    background: rgba(15, 23, 42, 0.92);
+    border-left-color: rgba(51, 65, 85, 0.5);
+    box-shadow: -10px 0 35px rgba(0, 0, 0, 0.35);
+}
+.notification-drawer.open {
+    right: 0;
+}
+.drawer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 1.4rem;
+    border-bottom: 1px solid var(--border-color);
+}
+.drawer-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.drawer-close-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 1.3rem;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+.drawer-close-btn:hover {
+    color: var(--text-main);
+    background: var(--col-bg);
+}
+.drawer-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-sizing: border-box;
+}
+.drawer-body::-webkit-scrollbar {
+    width: 5px;
+}
+.drawer-body::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+.drawer-empty {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 3rem 1rem;
+    font-size: 0.88rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+.drawer-empty span {
+    font-size: 2.2rem;
+    opacity: 0.6;
+}
+.notification-item {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 0.9rem 1.1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    position: relative;
+    box-shadow: var(--shadow-sm);
+    box-sizing: border-box;
+    width: 100%;
+}
+.notification-item:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+.notification-item.unread {
+    /* removed border-left for cleaner look */
+    background-color: rgba(79, 70, 229, 0.04);
+}
+[data-theme='dark'] .notification-item.unread {
+    border-left-color: #fb7185;
+    background-color: rgba(251, 113, 133, 0.06);
+}
+.notif-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: var(--primary);
+    width: 100%;
+}
+.notif-title-row > span:first-child {
+    flex: 1;
+    min-width: 0;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    line-height: 1.35;
+}
+[data-theme='dark'] .notif-title-row {
+    color: #fb7185;
+}
+.notif-date {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    flex-shrink: 0;
+    white-space: nowrap;
+    margin-top: 1px;
+}
+.notif-message {
+    font-size: 0.84rem;
+    color: var(--text-main);
+    line-height: 1.45;
+    font-weight: 500;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+}
+
+@keyframes scalePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.18); }
+}
+
+/* ==================== 
+   筌ㅼ뮇?揶쎛 雅뚯눘???獄??醫딆첒????덇땀 燁??????==================== */
+.smart-fuel-cost-container {
+    margin-top: 0.8rem;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(10px);
+    border: 1px dashed rgba(59, 130, 246, 0.25);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    animation: fadeIn 0.4s ease-out;
+}
+[data-theme='dark'] .smart-fuel-cost-container {
+    background: rgba(15, 23, 42, 0.3);
+    border-color: rgba(59, 130, 246, 0.15);
+}
+.fuel-station-tag {
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-right: 4px;
+    text-transform: uppercase;
+}
+.fuel-station-tag.sk { background-color: #FFF1F2; color: #E11D48; border: 1px solid #FECDD3; }
+.fuel-station-tag.gs { background-color: #ECFDF5; color: #059669; border: 1px solid #A7F3D0; }
+.fuel-station-tag.s-oil { background-color: #FEF3C7; color: #D97706; border: 1px solid #FDE68A; }
+.fuel-station-tag.oilbank { background-color: #EFF6FF; color: #2563EB; border: 1px solid #BFDBFE; }
+.fuel-station-tag.altteul { background-color: #F3E8FF; color: #9333EA; border: 1px solid #E9D5FF; }
+
+/* ==================== 
+   ??살춳??AI ???벥嚥?疫꿸퀬????쑴苑?筌뤴뫀而?????遺우쁽??==================== */
+.proposal-mobile-tabs-container {
+    display: none;
+    background-color: var(--col-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 4px;
+    margin-bottom: 1.2rem;
+    gap: 4px;
+}
+.proposal-mobile-tabs-container .mobile-tab-btn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 0.6rem;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.2s;
+    outline: none;
+    box-shadow: none;
+}
+.proposal-mobile-tabs-container .mobile-tab-btn.active {
+    background-color: var(--card-bg);
+    color: var(--primary);
+    box-shadow: var(--shadow-sm);
+}
+
+@media (max-width: 768px) {
+    .proposal-mobile-tabs-container {
+        display: flex !important;
+    }
+    
+    /* 疫꿸퀬?룬뜮袁⑷퐣 ??ㅺ섯 ??륁춦 ??곸젫 獄???μ뵬 ????*/
+    .pdf-tool-container {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+    }
+    
+    /* 疫꿸퀡??怨몄몵嚥?野껉퀗????ㅺ섯 ??? (JS嚥?input/result ?대Ŋ媛???뽯선) */
+    #proposal-result-panel {
+        display: none !important;
+    }
+    
+    /* 筌뤴뫀而???紐낅샒 域밸챶?????곗졊 獄쏄퀣??*/
+    .settings-grid {
+        grid-template-columns: 1fr !important;
+        gap: 0.8rem !important;
+    }
+}
+
+/* ==================== 
+   筌왖???怨쀭뒄 癰귣똾????살쒔??됱뵠 (Scroll Trap Prevention)
+==================== */
+.map-scroll-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+.map-scroll-overlay:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+/* ?怨쀫뮞??源??遺얇늺?癒?퐣??癰귣똾?뉛쭕?깆뱽 癰귣똻?좑쭪? ??놁벉 */
+@media (min-width: 768px) {
+    .map-scroll-overlay {
+        display: none !important;
+    }
+}
+
+/* ==================== 
+   筌왖??& ???벥 ??곕굡 (Directions & Meeting Feed) 
+==================== */
+.feed-card {
+    background-color: var(--card-bg);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-color);
+    border-left: 5px solid var(--primary);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.feed-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.feed-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px dashed var(--border-color);
+    padding-bottom: 0.8rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.feed-author-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--text-main);
+}
+
+.feed-author-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1.5px solid var(--border-color);
+}
+
+.feed-date {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.feed-card-body {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-main);
+    word-break: break-all;
+    white-space: pre-wrap;
+}
+
+.feed-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border-color);
+    padding-top: 0.8rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+    background-color: var(--col-bg);
+    margin: 0 -1.5rem -1.5rem -1.5rem;
+    padding: 0.8rem 1.5rem;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+}
+
+.feed-ack-section {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    flex: 1;
+}
+
+.feed-ack-label {
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: var(--text-muted);
+}
+
+.feed-ack-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.feed-ack-badge {
+    background-color: var(--border-color);
+    color: var(--text-main);
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+.feed-ack-badge.confirmed {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: #10B981;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.feed-btn-group {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+    align-items: center;
+}
+
+.feed-ack-btn {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.4rem 1rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    box-shadow: var(--shadow-sm);
+}
+
+.feed-ack-btn:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+.feed-ack-btn.done {
+    background-color: #10B981;
+    cursor: default;
+}
+
+.feed-ack-btn.done:hover {
+    background-color: #10B981;
+    transform: none;
+}
+
+.feed-kanban-btn {
+    background-color: var(--col-bg);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    padding: 0.4rem 1rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    box-shadow: var(--shadow-sm);
+}
+
+.feed-kanban-btn:hover {
+    background-color: var(--border-color);
+    transform: translateY(-1px);
+}
+
+.feed-kanban-linked {
+    background-color: rgba(99, 102, 241, 0.1);
+    color: var(--primary);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.feed-kanban-linked:hover {
+    background-color: rgba(99, 102, 241, 0.2);
+}
+
+/* 筌뤴뫀而???됯퀬猷??筌ㅼ뮇???*/
+@media (max-width: 768px) {
+    .feed-card-footer {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.8rem;
+    }
+    .feed-btn-group {
+        justify-content: flex-end;
+    }
+}
+
+.feed-date-header {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--primary);
+    padding: 0.6rem 1rem;
+    background-color: var(--col-bg);
+    border: 1px solid var(--border-color);
+    /* removed border-left for cleaner look */
+    border-radius: 8px;
+    margin-top: 1.8rem;
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: var(--shadow-sm);
+}
+[data-theme="dark"] .feed-date-header {
+    background-color: #1e293b;
+    border-color: var(--border-color);
+}
+
+.feed-filter-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+@media (max-width: 768px) {
+    .feed-filter-bar > div:last-child {
+        width: 100% !important;
+        max-width: none !important;
+        min-width: 0 !important;
+    }
+}
+
+/* ?⑤벊? ??뺤뵬?????됰슢???쀪쾿??獄??怨몄맄 甕곌쑵????뺤삋域???곕굡獄?*/
+.breadcrumb-item {
+    transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+.breadcrumb-item:hover {
+    color: var(--primary) !important;
+    text-decoration: underline;
+}
+.breadcrumb-item.drag-hover {
+    color: var(--primary-hover) !important;
+    text-decoration: underline;
+    background-color: rgba(99, 102, 241, 0.1);
+    border-radius: 4px;
+    padding: 0 4px;
+}
+#btn-go-up {
+    transition: transform 0.2s ease, color 0.2s ease !important;
+}
+#btn-go-up.drag-hover {
+    transform: scale(1.25) !important;
+    color: var(--primary) !important;
+}
+
+/* ==================== 
+   ?곕떽? 筌뤴뫀而??獄쏆꼷???UI ?⑥쥓猷??
+==================== */
+@media (max-width: 768px) {
+    /* 1. ??고??怨멸쉭 ??깆젟 ??밸씜筌≪럩??筌뤴뫀而??깆뒠 ??쇱뵠?怨뺥닏 獄쏅?? ??쀫뱜嚥?癰궰野?*/
+    #day-detail-overlay {
+        align-items: flex-end !important;
+    }
+    
+    #day-detail-overlay .day-detail-panel {
+        max-width: 100% !important;
+        width: 100% !important;
+        border-radius: 24px 24px 0 0 !important;
+        max-height: 85vh !important;
+        animation: slideUpMobile 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        border-bottom: none !important;
+        border-left: none !important;
+        border-right: none !important;
+    }
+    
+    @keyframes slideUpMobile {
+        from { transform: translateY(100%); }
+        to { transform: translateY(0); }
+    }
+    
+    /* 2. ??뺤삋域??????꾨늄 ?紐껊굶 ?紐꾪뀱 */
+    .bottom-sheet-handle {
+        display: block !important;
+        width: 40px !important;
+        height: 5px !important;
+        background-color: var(--border-color) !important;
+        border-radius: 3px !important;
+        margin: 10px auto 0 auto !important;
+        flex-shrink: 0 !important;
+    }
+
+    /* 3. ?怨멸쉭 ??깆젟 ??る?甕곌쑵??筌뤴뫀而??깅퓠??50/50 ?類ｌ졊 */
+    .day-detail-actions {
+        padding: 12px 16px !important;
+        gap: 8px !important;
+    }
+    .day-detail-actions .cal-add-btn {
+        flex: 1 !important;
+        padding: 10px 10px !important;
+        font-size: 0.82rem !important;
+        gap: 4px !important;
+    }
+
+    /* 4. 筌뤴뫀????? ?怨쀬뵠????깅묽 & ?곗뮇???類ｋ궖 flex ????쎄문 筌ｌ꼶??*/
+    .modal-date-picker {
+        flex-direction: column !important;
+        gap: 0.5rem !important;
+    }
+    .modal-date-picker .date-input-group {
+        width: 100% !important;
+    }
+    
+    #tripModal .modal-body > div {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 0.8rem !important;
+    }
+    #tripModal .modal-body > div > input,
+    #tripModal .modal-body > div > select,
+    #tripModal .modal-body > div > button {
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    /* 5. ????뺣뻷 筌왖??뽮텢????곕굡 ?袁り숲獄?& 甕곌쑵??筌뤴뫀而???類ｌ졊 */
+    .feed-filter-bar {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 0.8rem !important;
+    }
+    .feed-btn-group {
+        width: 100% !important;
+        display: flex !important;
+        gap: 8px !important;
+    }
+    .feed-btn-group button {
+        flex: 1 !important;
+        justify-content: center !important;
+    }
+    
+    /* 6. 鈺곌퀣彛???뚎됱쓥 ??쎄문 */
+    .org-board {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+    }
+    .org-column {
+        padding: 1rem !important;
+        min-height: auto !important;
+    }
+}
+
+/* ==================== 
+   ???걟?????ф꽴???(Consumables Inventory)
+   ==================== */
+.consumables-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.consumable-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 1.2rem;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    position: relative;
+}
+
+.consumable-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary);
+}
+
+.consumable-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.consumable-name {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--text-main);
+}
+
+.consumable-badge {
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 6px;
+}
+
+.consumable-badge.stock-high {
+    background-color: #DEF7EC;
+    color: #03543F;
+}
+
+.consumable-badge.stock-medium {
+    background-color: #FEF3C7;
+    color: #92400E;
+}
+
+.consumable-badge.stock-low {
+    background-color: #FDE8E8;
+    color: #9B1C1C;
+    animation: pulse-red 2s infinite;
+}
+
+@keyframes pulse-red {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.consumable-stock-section {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    margin: 0.4rem 0;
+}
+
+.consumable-stock-num {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--text-main);
+    line-height: 1;
+}
+
+.consumable-stock-unit {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.consumable-progress-bar {
+    width: 100%;
+    height: 8px;
+    background-color: var(--col-bg);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.consumable-progress-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.consumable-progress-fill.stock-high {
+    background: linear-gradient(90deg, #10B981, #34D399);
+}
+
+.consumable-progress-fill.stock-medium {
+    background: linear-gradient(90deg, #F59E0B, #FBBF24);
+}
+
+.consumable-progress-fill.stock-low {
+    background: linear-gradient(90deg, #EF4444, #F87171);
+}
+
+.consumable-actions {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    margin-top: 0.4rem;
+}
+
+.stock-btn {
+    flex: 1;
+    padding: 0.4rem 0.6rem !important;
+    font-size: 0.8rem !important;
+    font-weight: 700 !important;
+    border-radius: 8px !important;
+    background-color: var(--col-bg) !important;
+    color: var(--text-main) !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: none !important;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.stock-btn:hover {
+    background-color: var(--border-color) !important;
+    transform: translateY(-1px);
+}
+
+.stock-settings-btn {
+    background: none !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-muted) !important;
+    padding: 0.4rem !important;
+    border-radius: 8px !important;
+    cursor: pointer;
+    box-shadow: none !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+}
+
+.stock-settings-btn:hover {
+    color: var(--text-main) !important;
+    border-color: var(--text-muted) !important;
+    background-color: var(--col-bg) !important;
+}
+
+/* ==================== 
+   Material Symbols ?諭곷？??嚥≪뮆逾?筌ㅼ뮇???   ==================== */
+.material-symbols-rounded {
+    font-family: 'Material Symbols Rounded' !important;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* ==================== 
+   筌?꼶?????롫뼊 ?袁⑷퍥 ??깆젟 ??깊뒄疫??臾롫┛ 甕곌쑵??(Expand Toggle)
+   ==================== */
+.calendar-expand-toggle-btn {
+    background: #FFFFFF !important;
+    color: var(--primary, #4F46E5) !important;
+    border: 1.5px solid var(--primary-light, #C7D2FE) !important;
+    padding: 10px 24px !important;
+    border-radius: 30px !important;
+    font-size: 0.88rem !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.12) !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.calendar-expand-toggle-btn:hover {
+    background: var(--primary, #4F46E5) !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 6px 18px rgba(79, 70, 229, 0.3) !important;
+    transform: translateY(-2px) !important;
+}
+
+.calendar-expand-toggle-btn.expanded {
+    background: #1E293B !important;
+    color: #FFFFFF !important;
+    border-color: #334155 !important;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2) !important;
+}
+
+.calendar-expand-toggle-btn.expanded:hover {
+    background: #0F172A !important;
+}
+
+/* ?怨몃뻻 ??깆젟 ??낅쑓??꾨뱜 ?袁ⓥ봺沃섎챷毓?甕곌쑵???????*/
+.calendar-refresh-premium {
+    background: #FFFFFF !important;
+    color: #10B981 !important;
+    border: 1.5px solid #A7F3D0 !important;
+    padding: 8px 16px !important;
+    border-radius: 20px !important;
+    font-size: 0.85rem !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.12) !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.calendar-refresh-premium:hover {
+    background: #10B981 !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.28) !important;
+    transform: translateY(-1px) !important;
+}
+
+@keyframes spinRotation {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.spin-animation {
+    animation: spinRotation 0.75s linear infinite !important;
+}
+
+/* ===== 筌뤴뫀而????삳뮎 ?醫롮? ??살쒔??깆뵠??(筌ㅼ뮇????怨몄뒠) ===== */
+@media (max-width: 768px) {
+    /* ??삳뮎 ?? 獄쏄퀗瑗??袁⑹읈 ??볤탢 - 燁삘뫀苡?獄쎻뫗? */
+    .calendar-week-row .calendar-day.today {
+        background-color: transparent !important;
+    }
+
+    /* ?醫롮? 獄쏄퀣?: width:auto嚥??類ㅽ뀧, ?臾믡걹 ?觀??筌╈돦???醫? */
+    .calendar-day.today .calendar-date,
+    .mypage-calendar-day.today .calendar-date {
+        width: auto !important;
+        max-width: fit-content !important;
+        padding: 1px 6px !important;
+        font-size: 0.72rem !important;
+        border-radius: 10px !important;
+        display: inline-flex !important;
+        margin: 0 auto !important;
+    }
+
+    /* "??삳뮎" ??용뮞????? (?リ낯? ???癒?퐣 ??롡뵝 獄쎻뫗?) */
+    .calendar-day.today .calendar-date::after,
+    .mypage-calendar-day.today .calendar-date::after {
+        display: none !important;
+    }
+}
+
+/* ==================== 
+   Calendar Search UI
+==================== */
+#calendar-search-input {
+    padding: 8px 12px 8px 36px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    background: var(--card-bg);
+    color: var(--text-main);
+    font-size: 0.9rem;
+    width: 180px;
+    outline: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);
+}
+
+#calendar-search-input:focus {
+    width: 260px;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+.search-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    width: 100%;
+    max-height: 300px;
+    overflow-y: auto;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    padding: 6px 0;
+}
+
+.search-dropdown-item {
+    padding: 10px 16px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    transition: background-color 0.2s, padding-left 0.2s;
+    border-left: 3px solid transparent;
+}
+
+.search-dropdown-item:hover {
+    background: var(--col-bg);
+    padding-left: 20px;
+    border-left-color: var(--primary);
+}
+
+.search-dropdown-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-main);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.search-dropdown-detail {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    background: none !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-muted) !important;
+    padding: 0.4rem !important;
+    border-radius: 8px !important;
+    cursor: pointer;
+    box-shadow: none !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+}
+
+.stock-settings-btn:hover {
+    color: var(--text-main) !important;
+    border-color: var(--text-muted) !important;
+    background-color: var(--col-bg) !important;
+}
+
+/* ==================== 
+   Material Symbols ?諭곷？??嚥≪뮆逾?筌ㅼ뮇???   ==================== */
+.material-symbols-rounded {
+    font-family: 'Material Symbols Rounded' !important;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* ==================== 
+   筌?꼶?????롫뼊 ?袁⑷퍥 ??깆젟 ??깊뒄疫??臾롫┛ 甕곌쑵??(Expand Toggle)
+   ==================== */
+.calendar-expand-toggle-btn {
+    background: #FFFFFF !important;
+    color: var(--primary, #4F46E5) !important;
+    border: 1.5px solid var(--primary-light, #C7D2FE) !important;
+    padding: 10px 24px !important;
+    border-radius: 30px !important;
+    font-size: 0.88rem !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.12) !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.calendar-expand-toggle-btn:hover {
+    background: var(--primary, #4F46E5) !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 6px 18px rgba(79, 70, 229, 0.3) !important;
+    transform: translateY(-2px) !important;
+}
+
+.calendar-expand-toggle-btn.expanded {
+    background: #1E293B !important;
+    color: #FFFFFF !important;
+    border-color: #334155 !important;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2) !important;
+}
+
+.calendar-expand-toggle-btn.expanded:hover {
+    background: #0F172A !important;
+}
+
+/* ?怨몃뻻 ??깆젟 ??낅쑓??꾨뱜 ?袁ⓥ봺沃섎챷毓?甕곌쑵???????*/
+.calendar-refresh-premium {
+    background: #FFFFFF !important;
+    color: #10B981 !important;
+    border: 1.5px solid #A7F3D0 !important;
+    padding: 8px 16px !important;
+    border-radius: 20px !important;
+    font-size: 0.85rem !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.12) !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.calendar-refresh-premium:hover {
+    background: #10B981 !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.28) !important;
+    transform: translateY(-1px) !important;
+}
+
+@keyframes spinRotation {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.spin-animation {
+    animation: spinRotation 0.75s linear infinite !important;
+}
+
+/* ===== 筌뤴뫀而????삳뮎 ?醫롮? ??살쒔??깆뵠??(筌ㅼ뮇????怨몄?) ===== */
+@media (max-width: 768px) {
+    /* ??삳뮎 ???獄쏄퀗瑗??袁⑹읈 ??볤탢 - 燁삘뫀苡?獄쎻뫗? */
+    .calendar-week-row .calendar-day.today {
+        background-color: transparent !important;
+    }
+
+    /* ?醫롮? 獄쏄퀣?: width:auto嚥??類ㅽ뀧, ?臾믡걹 ?觀??筌╈돦???醫? */
+    .calendar-day.today .calendar-date,
+    .mypage-calendar-day.today .calendar-date {
+        width: auto !important;
+        max-width: fit-content !important;
+        padding: 1px 6px !important;
+        font-size: 0.72rem !important;
+        border-radius: 10px !important;
+        display: inline-flex !important;
+        margin: 0 auto !important;
+    }
+
+    /* "??삳뮎" ??용뮞????? (?リ낯? ???癒?퐣 ??롡뵝 獄쎻뫗?) */
+    .calendar-day.today .calendar-date::after,
+    .mypage-calendar-day.today .calendar-date::after {
+        display: none !important;
+    }
+}
+
+/* ==================== 
+   Calendar Search UI
+==================== */
+#calendar-search-input {
+    padding: 8px 12px 8px 36px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    background: var(--card-bg);
+    color: var(--text-main);
+    font-size: 0.9rem;
+    width: 180px;
+    outline: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);
+}
+
+#calendar-search-input:focus {
+    width: 260px;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+.search-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    width: 100%;
+    max-height: 300px;
+    overflow-y: auto;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    padding: 6px 0;
+}
+
+.search-dropdown-item {
+    padding: 10px 16px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    transition: background-color 0.2s, padding-left 0.2s;
+    border-left: 3px solid transparent;
+}
+
+.search-dropdown-item:hover {
+    background: var(--col-bg);
+    padding-left: 20px;
+    border-left-color: var(--primary);
+}
+
+.search-dropdown-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-main);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.search-dropdown-detail {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Highlight match */
+.search-highlight {
+    color: var(--primary);
+    font-weight: 800;
+    background-color: rgba(79, 70, 229, 0.1);
+    border-radius: 2px;
+    padding: 0 2px;
+}
+
+/* Mobile Responsive: Team Status */
+@media (max-width: 768px) {
+    .team-status-sidebar {
+        display: none !important;
+    }
+    .mobile-only-btn {
+        display: inline-flex !important;
+    }
+}
+.mobile-only-btn {
+    display: none;
+}
+
+/* Vertical Menu for Main Navigation */
+.nav-sidebar {
+    width: clamp(140px, 15vw, 200px);
+    flex-shrink: 0;
+    position: sticky;
+    top: 20px;
+}
+.vertical-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+.vertical-menu .tab-btn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: clamp(6px, 1vw, 12px);
+    border-radius: 12px;
+    padding: clamp(10px, 1.2vw, 14px) clamp(10px, 1.5vw, 18px);
+    font-size: clamp(0.85rem, 1vw, 0.98rem);
+    font-weight: 600;
+    width: 100%;
+    color: var(--text-muted);
+    background-color: transparent;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+    box-shadow: none;
+}
+.vertical-menu .tab-btn:hover {
+    background-color: rgba(0,0,0,0.04);
+}
+.vertical-menu .tab-btn.active {
+    background-color: var(--card-bg);
+    color: var(--primary);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    border: 1px solid var(--border-color);
+    position: relative;
+    z-index: 10;
+}
+.vertical-menu .tab-btn.active::after {
+    content: '';
+    position: absolute;
+    right: -7px;
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+    width: 12px;
+    height: 12px;
+    background: var(--card-bg);
+    border-top: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+    border-bottom: 1px solid transparent;
+    border-left: 1px solid transparent;
+    border-radius: 2px;
+}
+.vertical-menu .tab-btn.active .material-symbols-rounded {
+    color: var(--primary);
+    font-variation-settings: 'FILL' 1;
+}
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 768px) {
+    .main-layout {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        padding-bottom: 85px !important; /* space for bottom nav */
+    }
+    .nav-sidebar {
+        position: fixed !important;
+        top: auto !important; /* CRITICAL: Override top:20px from desktop */
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        background: var(--col-bg) !important;
+        border-top: 1px solid var(--border-color) !important;
+        z-index: 9999 !important;
+        padding: 8px 0 20px 0 !important; /* Edge-to-edge layout, bottom padding for iPhone */
+        box-shadow: 0 -4px 20px rgba(0,0,0,0.1) !important;
+        border-radius: 0 !important;
+    }
+    .vertical-menu {
+        display: flex !important; /* Enforce flex */
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        gap: 8px !important;
+        width: 100% !important;
+        padding: 0 15px 5px 15px !important; /* Side padding so items don't stick to edges */
+        margin: 0 !important;
+        -webkit-overflow-scrolling: touch !important;
+        scroll-snap-type: x mandatory !important;
+        /* CRITICAL: reset .tab-menu base styles */
+        background: transparent !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        border: none !important;
+    }
+    /* Make scrollbar visible so users know they can swipe */
+    .vertical-menu::-webkit-scrollbar { 
+        height: 3px !important; 
+        display: block !important;
+    }
+    .vertical-menu::-webkit-scrollbar-thumb {
+        background-color: rgba(0,0,0,0.15) !important;
+        border-radius: 3px !important;
+    }
+    .vertical-menu::-webkit-scrollbar-track {
+        background: transparent !important;
+    }
+    .vertical-menu .tab-btn {
+        display: flex !important;
+        width: auto !important;
+        flex: 0 0 auto !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 5px 10px !important;
+        font-size: 0.72rem !important;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        color: var(--text-muted) !important;
+        scroll-snap-align: center !important;
+        min-width: 75px !important;
+        white-space: nowrap !important;
+    }
+    .vertical-menu .tab-btn span.material-symbols-rounded {
+        font-size: 1.5rem !important;
+        margin-bottom: 4px !important;
+        margin-right: 0 !important;
+    }
+    .vertical-menu .tab-btn.active {
+        background: transparent !important;
+        color: var(--primary) !important;
+        font-weight: 800 !important;
+        box-shadow: none !important;
+    }
+    .vertical-menu .tab-btn.active span.material-symbols-rounded {
+        color: var(--primary) !important;
+        font-variation-settings: 'FILL' 1 !important;
+    }
+    .vertical-menu .tab-btn.active::after {
+        display: none !important;
+    }
+    .team-status-sidebar {
+        width: 100% !important;
+        position: static !important;
+    }
+}
+
+/* ??쒕떂 ?먮━(而щ읆) - 紐⑤뜕 ?꾨━誘몄뾼 ?곗븘???붿옄??(Modern Royal) */
+.org-col-ceo {
+    background: linear-gradient(180deg, #FFFCF5 0%, #FFFFFF 100%) !important;
+    border: 1px solid rgba(212, 175, 55, 0.3) !important;
+    border-top: 4px solid #D4AF37 !important;
+    border-radius: 16px !important;
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.08), 0 1px 3px rgba(0,0,0,0.03) !important;
+    transform: translateY(-2px);
+    position: relative;
+    z-index: 10;
+}
+/* ?????곷떒 ?꾧킅 ?④낵 */
+.org-col-ceo::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 120px;
+    background: radial-gradient(ellipse at top, rgba(212,175,55,0.12) 0%, transparent 70%);
+    pointer-events: none;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+}
+.org-col-ceo h3 {
+    /* ?곗븘??湲덉냽 吏덇컧 ?띿뒪??*/
+    background: linear-gradient(90deg, #9C711A, #D4AF37, #9C711A);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 1.15rem !important;
+    font-weight: 800 !important;
+    text-align: center;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2) !important;
+    padding-bottom: 12px !important;
+    margin-bottom: 16px !important;
+    letter-spacing: 1px;
+    text-shadow: none !important; /* 珥뚯뒪?ъ슫 洹몃┝???쒓굅 */
+}
+/* CEO 而щ읆 ?대???移대뱶 ?붿옄??(源붾걫?섍퀬 怨좉툒?ㅻ읇寃? */
+.org-col-ceo .org-card {
+    background: #FFFFFF !important;
+    border: 1px solid rgba(212, 175, 55, 0.4) !important;
+    color: var(--text-main) !important; /* ?뺤긽?곸씤 ?띿뒪???됱긽 */
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.08) !important;
+    transition: all 0.2s ease !important;
+}
+.org-col-ceo .org-card:hover {
+    box-shadow: 0 6px 16px rgba(212, 175, 55, 0.15) !important;
+    border-color: #D4AF37 !important;
+    transform: translateY(-2px);
+}
+.org-col-ceo .org-card img {
+    border: 2px solid #D4AF37 !important;
+    padding: 2px; /* 怨좉툒?ㅻ윭???щ갚 */
+    background: #FFF;
+}
+.org-col-ceo .org-card .delete-btn {
+    background: rgba(212, 175, 55, 0.1) !important;
+    color: #9C711A !important;
+}
+
+/* ==========================================================================
+   諛섏쓳???덉씠?꾩썐 湲곕낯 (Zoom ?쒖슜???ㅼ??쇰쭅) - 1350px 罹붾쾭???좎?
+========================================================================== */
+@media screen and (max-width: 1350px) {
+    .main-layout {
+        zoom: calc(100vw / 1350);
+        margin: 0 auto;
+    }
+}
+
+/* ==========================================================================
+   異쒖옣 愿由??붾㈃ 媛?쒖꽦 媛쒖꽑 (2-Column Dashboard Layout)
+   ========================================================================== */
+.trip-planner-dashboard {
+    display: flex;
+    gap: 1.5rem;
+    align-items: stretch;
+    margin-bottom: 2rem;
+}
+.trip-planner-map-section {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    min-width: 0;
+    background: var(--card-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-md);
+    padding: 1.2rem;
+}
+.trip-planner-map-container {
+    position: relative;
+    width: 100%;
+    flex: 1;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+}
+.trip-planner-controls-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    min-width: 380px;
+}
+@media (max-width: 1100px) {
+    .trip-planner-dashboard {
+        flex-direction: column;
+    }
+    .trip-planner-controls-section {
+        width: 100%;
+        min-width: unset;
+    }
+    .trip-planner-map-container {
+        height: 450px;
+    }
+}
+
+/* ==========================================================================
+   Premium Control Panel Styles
+   ========================================================================== */
+.premium-panel {
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+.control-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.control-section-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.control-section-title span {
+    font-size: 1.2rem;
+}
+.control-grid-1 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+}
+.control-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+    align-items: center;
+}
+.control-divider {
+    border: none;
+    border-top: 1px dashed var(--border-color);
+    margin: 0;
+}
+.premium-input, .premium-select {
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 0.85rem;
+    background-color: var(--col-bg);
+    color: var(--text-main);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+}
+.premium-input:focus, .premium-select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    outline: none;
+}
+.date-separator {
+    font-weight: 700;
+    color: var(--text-muted);
+    text-align: center;
+}
+.text-center {
+    text-align: center;
+}
+.premium-input-group {
+    display: flex;
+    align-items: center;
+    background-color: var(--col-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.3rem;
+    height: 40px;
+    box-sizing: border-box;
+}
+.group-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    padding: 0 0.6rem;
+    white-space: nowrap;
+}
+.group-input, .group-select {
+    flex: 1;
+    width: 100%;
+    border: none;
+    background: var(--card-bg);
+    border-radius: 4px;
+    padding: 0.4rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-align: center;
+    outline: none;
+}
+.group-select {
+    padding: 0.4rem 0.2rem;
+    cursor: pointer;
+}
+.group-suffix {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    padding: 0 0.6rem 0 0.2rem;
+}
+.gas-price-badge {
+    background-color: rgba(79, 70, 229, 0.1);
+    color: var(--primary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.4rem 0.6rem;
+    border-radius: 4px;
+    white-space: nowrap;
+    margin-left: 0.3rem;
+    margin-right: 0.2rem;
+}
+.premium-checkbox-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0.8rem;
+    background-color: var(--col-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-main);
+    transition: background-color 0.2s;
+}
+.premium-checkbox-label:hover {
+    background-color: var(--card-bg);
+}
+.premium-checkbox {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+.premium-action-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 1rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.premium-action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(139, 92, 246, 0.4);
+}
+.premium-action-btn:active {
+    transform: translateY(0);
+}
+.mt-3 {
+    margin-top: 1rem;
+}
+
+/* ==========================================================================
+   Slim Control Panel Styles
+   ========================================================================== */
+.slim-panel {
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.slim-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+.slim-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.slim-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+.slim-label {
+    font-size: 0.8rem;
+    color: #475569;
+    font-weight: 500;
+}
+.slim-input, .slim-select {
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 0.4rem 0.6rem;
+    font-size: 0.8rem;
+    color: #334155;
+    background: #f8fafc;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+    box-sizing: border-box;
+}
+.slim-input:focus, .slim-select:focus {
+    border-color: #8b5cf6;
+    background: #ffffff;
+}
+.slim-divider {
+    height: 1px;
+    background-color: #f1f5f9;
+    margin: 0.2rem 0;
+}
+.slim-gas-badge {
+    font-size: 0.7rem;
+    color: #8b5cf6;
+    font-weight: 600;
+    background: #f3e8ff;
+    padding: 2px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+.slim-checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    color: #475569;
+    cursor: pointer;
+    margin-top: 4px;
+}
+.slim-action-btn {
+    width: 100%;
+    background-color: #334155;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 0.8rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 0.5rem;
+}
+.slim-action-btn:hover {
+    background-color: #1e293b;
+}
+
+/* ==========================================================================
+   Sleek Trip Cards (Clickable List)
+   ========================================================================== */
+.trip-list-container {
+    max-height: 600px;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+.trip-list-container::-webkit-scrollbar {
+    width: 6px;
+}
+.trip-list-container::-webkit-scrollbar-thumb {
+    background-color: #cbd5e1;
+    border-radius: 4px;
+}
+.sleek-trip-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+.sleek-trip-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transform: translateY(-1px);
+    border-color: #cbd5e1;
+}
+.sleek-trip-card.selected {
+    background-color: #f0fdf4;
+    border-color: #22c55e;
+}
+.sleek-trip-card.selected::before {
+    content: \'\';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: #22c55e;
+}
+.sleek-trip-card.cat-telus::before {
+    content: \'\';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: #3b82f6;
+}
+.sleek-trip-card.cat-huno::before {
+    content: \'\';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: #10b981;
+}
+.sleek-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.sleek-card-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1e293b;
+    line-height: 1.3;
+}
+.sleek-card-subtitle {
+    font-size: 0.75rem;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.sleek-card-address {
+    font-size: 0.8rem;
+    color: #475569;
+    display: flex;
+    align-items: flex-start;
+    gap: 4px;
+    margin-top: 0.2rem;
+}
+.sleek-checkbox {
+    position: absolute;
+    right: 1.2rem;
+    top: 1.2rem;
+    width: 18px;
+    height: 18px;
+    accent-color: #22c55e;
+    pointer-events: none;
+}
+
+/* ==========================================================================
+   Trip Cards V3 (Safe Layout without cutoff)
+   ========================================================================== */
+.trip-card-v3 {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    height: auto !important;
+    min-height: min-content;
+}
+.trip-card-v3:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transform: translateY(-1px);
+    border-color: #cbd5e1;
+}
+.trip-card-v3.selected {
+    background-color: #f0fdf4;
+    border-color: #22c55e;
+}
+.trip-card-v3.selected::before {
+    content: \'\';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: #22c55e;
+    border-radius: 4px 0 0 4px;
+}
+.trip-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+}
+.trip-card-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1e293b;
+    line-height: 1.4;
+    word-break: keep-all;
+}
+.trip-card-meta {
+    font-size: 0.75rem;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+.trip-card-address {
+    font-size: 0.8rem;
+    color: #475569;
+    display: flex;
+    align-items: flex-start;
+    gap: 4px;
+    background: #f8fafc;
+    padding: 0.6rem;
+    border-radius: 6px;
+    margin-top: 0.2rem;
+    border: 1px solid #f1f5f9;
+    line-height: 1.3;
+}
+.trip-card-checkbox {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    accent-color: #22c55e;
+    pointer-events: none;
+    margin-top: 2px;
+}
+
+/* ==========================================================================
+   Trip Cards - Horizontal Layout (Idea 2)
+   ========================================================================== */
+.trip-list-horizontal {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 1.2rem;
+    padding-bottom: 1rem;
+    padding-top: 0.5rem;
+    padding-left: 0.2rem;
+    padding-right: 0.2rem;
+    scroll-behavior: smooth;
+    /* Hide scrollbar for cleaner look on webkit */
+}
+.trip-list-horizontal::-webkit-scrollbar {
+    height: 8px;
+}
+.trip-list-horizontal::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 4px;
+}
+.trip-list-horizontal::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+.trip-list-horizontal::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+.trip-list-horizontal .trip-card-v3 {
+    min-width: 280px;
+    max-width: 300px;
+    flex-shrink: 0;
+    /* Ensure they don\'t grow infinitely in height, but fit content */
+    height: max-content !important;
+}
+
+/* ==========================================================================
+   Drag and Drop Layout Styles
+   ========================================================================== */
+.dropzone.dragover {
+    background: #eef2ff !important;
+    border-color: #6366f1 !important;
+}
+.trip-card-v3.dragging {
+    opacity: 0.5;
+    transform: scale(0.98);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+.trip-card-v3[draggable="true"] {
+    cursor: grab;
+}
+.trip-card-v3[draggable="true"]:active {
+    cursor: grabbing;
+}
+
+/* ==========================================================================
+   Minimal Trip Card Design (Vertical layout optimized)
+   ========================================================================== */
+.trip-card-v3 {
+    background: var(--card-bg) !important;
+    backdrop-filter: var(--glass-blur) !important;
+    -webkit-backdrop-filter: var(--glass-blur) !important;
+    border-radius: 16px !important;
+    border: 1px solid var(--border-color) !important;
+    padding: 0.8rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    box-shadow: var(--shadow-sm) !important;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+    cursor: grab !important;
+    margin-bottom: 0;
+    height: auto !important;
+}
+.trip-card-v3:hover {
+    box-shadow: var(--shadow-lg) !important;
+    transform: translateY(-4px) scale(1.01) !important;
+    border-color: var(--primary-glow) !important;
+}
+.trip-card-v3.selected {
+    background-color: #f0fdf4 !important;
+    border-color: #86efac !important;
+}
+.trip-card-v3 .trip-card-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+.trip-card-v3 .trip-card-title {
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    color: var(--text-color) !important;
+    white-space: normal !important; word-break: keep-all !important; line-height: 1.3 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+.trip-card-v3 .trip-checkbox {
+    width: 16px !important;
+    height: 16px !important;
+    cursor: pointer !important;
+    flex-shrink: 0 !important;
+    margin: 0 !important;
+}
+.trip-card-v3 .trip-card-meta {
+    font-size: 0.75rem !important;
+    color: var(--text-muted) !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+}
+.trip-card-v3 .trip-card-address {
+    font-size: 0.75rem !important;
+    color: #64748b !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    white-space: normal !important; word-break: keep-all !important; line-height: 1.3 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    background: #f8fafc !important;
+    padding: 4px 6px !important;
+    border-radius: 4px !important;
+}
+.trip-card-v3 .trip-card-address span:last-child {
+    white-space: normal !important; word-break: keep-all !important; line-height: 1.3 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+/* Dark mode map filter for Kakao Maps */
+[data-theme="dark"] #tripMap {
+    filter: invert(90%) hue-rotate(180deg) brightness(95%) contrast(85%);
+    transition: filter 0.4s ease;
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(var(--team-color), 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(var(--team-color), 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(var(--team-color), 0); }
+}
+
+[data-theme="dark"] .task-card {
+    box-sizing: border-box; border: 1px solid rgba(255, 255, 255, 0.1); }
+
+/* 援ш? 罹섎┛???됱긽 ?곕룞 (Red) */
+.calendar-task.task-red {
+    background-color: #E53935 !important;
+    color: white !important;
+}
+[data-theme='dark'] .calendar-task.task-red {
+    background-color: #D32F2F !important;
+    color: white !important;
+}
+
+
+/* View Transitions API (Dark mode toggle animation) */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+/* Ensure the animating element is on top */
+::view-transition-old(root) {
+  z-index: 1;
+}
+::view-transition-new(root) {
+  z-index: 2;
+}
+[data-theme="dark"]::view-transition-old(root) {
+  z-index: 2;
+}
+[data-theme="dark"]::view-transition-new(root) {
+  z-index: 1;
+}
+
+
+/* ==================== 
+   Skeleton Loading UI 
+==================== */
+.skeleton-card {
+    background: var(--card-bg) !important;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 10px;
+    position: relative;
+    overflow: hidden;
+}
+.skeleton-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    animation: shimmer 1.5s infinite;
+}
+[data-theme='dark'] .skeleton-card::after {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+}
+.skeleton-title {
+    height: 16px;
+    width: 60%;
+    background: rgba(150, 150, 150, 0.2);
+    border-radius: 4px;
+    margin-bottom: 12px;
+}
+.skeleton-meta {
+    height: 12px;
+    width: 80%;
+    background: rgba(150, 150, 150, 0.2);
+    border-radius: 4px;
+    margin-bottom: 12px;
+}
+.skeleton-avatars {
+    display: flex;
+    gap: -4px;
+}
+.skeleton-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(150, 150, 150, 0.2);
+}
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+
+/* SortableJS Ghost Element */
+.sortable-ghost {
+    opacity: 0.4;
+    background: var(--card-bg-hover) !important;
+    border: 2px dashed var(--primary) !important;
+}
+
+/* ==========================================================================
+   Tablet Responsive Calendar Task Display (769px ~ 1100px)
+   ========================================================================== */
+@media (min-width: 769px) and (max-width: 1100px) {
+    .task-desktop-title,
+    .task-more-badge .task-desktop-title,
+    .task-time-badge {
+        display: none !important;
+    }
+    .task-tablet-title,
+    span.task-tablet-title {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 0.72rem !important;
+        font-weight: 800 !important;
+        color: #1E293B !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        letter-spacing: -0.2px !important;
+    }
+    .calendar-task {
+        text-align: center !important;
+        padding: 2px 2px !important;
+        justify-content: center !important;
+    }
+}
+
+
+/* Re-enable text selection for input fields */
+input, select, textarea, [contenteditable] {
+    -webkit-user-select: auto;
+    user-select: auto;
+}
+
+/* Vehicle Selection Reaction Buttons */
+.vehicle-reaction-container {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    align-items: center;
+}
+.vehicle-reaction-btn {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+    border: 1px solid #d1d5db;
+    background-color: #f9fafb;
+    color: #9ca3af;
+    transition: all 0.2s ease;
+    user-select: none;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+.vehicle-reaction-btn:hover {
+    background-color: #f3f4f6;
+    border-color: #9ca3af;
+    transform: translateY(-1px);
+}
+.vehicle-reaction-btn.active {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: white;
+    box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2);
+}
+
+/* Responsive Vehicle Toggle */
+.vehicle-desktop-view {
+    display: block;
+}
+.vehicle-mobile-view {
+    display: none;
+}
+@media screen and (max-width: 768px) {
+    .vehicle-desktop-view {
+        display: none !important;
+    }
+    .vehicle-mobile-view {
+        display: block !important;
+    }
+}
+
+/* ========================================================
+   조직도 추가 프리미엄 스타일 (새로운 부서)
+   ======================================================== */
+.org-col-exec-director { border-top-color: #1E3A8A !important; background: linear-gradient(180deg, rgba(30,58,138,0.03) 0%, rgba(255,255,255,0) 100%) !important; }
+.org-col-director { border-top-color: #3B82F6 !important; background: linear-gradient(180deg, rgba(59,130,246,0.03) 0%, rgba(255,255,255,0) 100%) !important; }
+.org-col-team1 { border-top-color: #10B981 !important; background: linear-gradient(180deg, rgba(16,185,129,0.03) 0%, rgba(255,255,255,0) 100%) !important; }
+.org-col-team2 { border-top-color: #8B5CF6 !important; background: linear-gradient(180deg, rgba(139,92,246,0.03) 0%, rgba(255,255,255,0) 100%) !important; }
+
+.org-col-exec-director h3 { color: #1E3A8A !important; }
+.org-col-director h3 { color: #3B82F6 !important; }
+.org-col-team1 h3 { color: #10B981 !important; }
+.org-col-team2 h3 { color: #8B5CF6 !important; }
+
