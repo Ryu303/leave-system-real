@@ -3016,7 +3016,7 @@ window.renderTeamStatusSidebar = function() {
         let statusIcon = 'domain'; // Building icon for office
         
         // 휴가 체크
-        const isLeave = leaves.some(l => l.uid === member.uid && l.status === 'approved' && l.startDate <= todayStr && l.endDate >= todayStr);
+        const isLeave = leaves.some(l => l.uid === member.uid && l.status === 'approved' && (l.date === todayStr || (l.startDate <= todayStr && l.endDate >= todayStr)));
         if (isLeave) {
             status = '휴가 중';
             statusColor = '#3B82F6'; // Blue
@@ -3039,10 +3039,13 @@ window.renderTeamStatusSidebar = function() {
             const allTodayEvents = [...myTrips, ...myExtEvents];
             
             if (allTodayEvents.length > 0) {
-                const hasLeave = allTodayEvents.some(e => (e.title || e.name || e.project || '').includes('휴가'));
+                const hasLeave = allTodayEvents.some(e => {
+                    const t = e.title || e.name || e.project || '';
+                    return t.includes('휴가') || t.includes('반차') || t.includes('조퇴') || t.includes('연차') || t.includes('병가');
+                });
                 const hasNonCoupang = allTodayEvents.some(e => {
                     const t = e.title || e.name || e.project || '';
-                    return !t.includes('쿠팡') && !t.includes('휴가');
+                    return !t.includes('쿠팡') && !t.includes('휴가') && !t.includes('반차') && !t.includes('조퇴') && !t.includes('연차') && !t.includes('병가');
                 });
                 const hasCoupang = allTodayEvents.some(e => (e.title || e.name || e.project || '').includes('쿠팡'));
                 

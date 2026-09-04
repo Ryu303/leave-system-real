@@ -130,8 +130,11 @@ const AppStore = {
                 if (u && u.displayName && u.displayName.toLowerCase() === 'sungjin j') {
                     u.displayName = '장성진';
                 }
-                if (u && u.displayName && u.displayName.toLowerCase() === 'hong min') {
-                    u.displayName = '민홍';
+                if (u && u.displayName) {
+                    const lowName = u.displayName.toLowerCase();
+                    if (lowName === 'hong min' || lowName === 'hong' || lowName === '홍') {
+                        u.displayName = '민홍';
+                    }
                 }
             });
         }
