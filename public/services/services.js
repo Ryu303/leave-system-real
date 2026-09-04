@@ -1972,6 +1972,7 @@ async function linkGoogleCalendar() {
 function htmlToPlainText(html) {
     if (!html) return '';
     let text = html
+        .replace(/<a\s+(?:[^>]*?\s+)?href=["']([^"']+)["'][^>]*>(.*?)<\/a>/gi, '$2 $1')
         .replace(/<br\s*\/?>/gi, '\n')
         .replace(/<\/p>/gi, '\n')
         .replace(/<\/div>/gi, '\n')
