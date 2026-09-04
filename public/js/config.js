@@ -130,6 +130,9 @@ const AppStore = {
                 if (u && u.displayName && u.displayName.toLowerCase() === 'sungjin j') {
                     u.displayName = '장성진';
                 }
+                if (u && u.displayName && u.displayName.toLowerCase() === 'hong min') {
+                    u.displayName = '민홍';
+                }
             });
         }
         this.state.users = newData;
@@ -242,7 +245,7 @@ const parseTripDateRange = (dateStr) => {
 // 주의: GitHub Pages(ryu303.github.io) 호스팅 환경은 /__/auth/* 경로를 처리할 수 없으므로,
 // authDomain은 반드시 원래의 firebaseapp.com 도메인으로 고정해야 합니다.
 const firebaseConfig = {
-    apiKey: window.ENV ? window.ENV.FIREBASE_API_KEY : "",
+    apiKey: "AIzaSyBOIugED48GlLzHytc6p4XDbrJVzouA4Q8",
     authDomain: "coworking-tool.firebaseapp.com",
     projectId: "coworking-tool",
     storageBucket: "coworking-tool.firebasestorage.app",
