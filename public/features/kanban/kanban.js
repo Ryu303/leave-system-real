@@ -2393,9 +2393,6 @@ async function generateAiBriefing() {
             if ((userNameLower === 'sungjin j' || userNameLower === '장성진') && (lowerStr.includes('성진') || lowerStr.includes('장성진') || lowerStr.includes('sungjin j'))) {
                 isMatch = true;
             }
-            if ((userNameLower === 'hong min' || userNameLower === '민홍') && (lowerStr.includes('홍') || lowerStr.includes('민홍') || lowerStr.includes('hong min'))) {
-                isMatch = true;
-            }
             return isMatch;
         };
 
@@ -2649,9 +2646,6 @@ window.showBriefingTrips = function(mode = 'my') {
                 if ((userNameLower === 'sungjin j' || userNameLower === '장성진') && (lowerStr.includes('성진') || lowerStr.includes('장성진') || lowerStr.includes('sungjin j'))) {
                     isMatch = true;
                 }
-                if ((userNameLower === 'hong min' || userNameLower === '민홍') && (lowerStr.includes('홍') || lowerStr.includes('민홍') || lowerStr.includes('hong min'))) {
-                    isMatch = true;
-                }
                 return isMatch;
             };
             
@@ -2737,11 +2731,6 @@ window.showBriefingTrips = function(mode = 'my') {
                 if (idxS === -1) idxS = searchStr.indexOf('장성진');
                 if (idxS === -1) idxS = searchStr.indexOf('성진');
                 if (idxS !== -1 && !foundAssigneesMap.find(x => x.name === '성진')) foundAssigneesMap.push({ name: '성진', index: idxS, fullName: '장성진' });
-                
-                let idxH = searchStr.indexOf('hong min');
-                if (idxH === -1) idxH = searchStr.indexOf('민홍');
-                if (idxH === -1) idxH = searchStr.indexOf('홍');
-                if (idxH !== -1 && !foundAssigneesMap.find(x => x.name === '민홍')) foundAssigneesMap.push({ name: '민홍', index: idxH, fullName: '민홍' });
                 
                 foundAssigneesMap.sort((a, b) => a.index - b.index);
                 let foundAssignees = foundAssigneesMap.map(x => x.name);
