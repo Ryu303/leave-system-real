@@ -25,12 +25,22 @@ exports.getKakaoRoute = functions.region('asia-northeast3').https.onCall(async (
     const url = `https://apis-navi.kakaomobility.com/v1/directions?origin=${origin.lng},${origin.lat}&destination=${destination.lng},${destination.lat}`;
 
     try {
-        const response = await fetch(url, {
-            headers: { 'Authorization': `KakaoAK ${KAKAO_REST_API_KEY}` }
+        const https = require('https');
+        const resultData = await new Promise((resolve, reject) => {
+            https.get(url, {
+                headers: { 'Authorization': `KakaoAK ${KAKAO_REST_API_KEY}` }
+            }, (res) => {
+                let data = '';
+                res.on('data', chunk => data += chunk);
+                res.on('end', () => {
+                    if (res.statusCode >= 200 && res.statusCode < 300) {
+                        resolve(JSON.parse(data));
+                    } else {
+                        reject(new Error(`HTTP Error: ${res.statusCode}`));
+                    }
+                });
+            }).on('error', err => reject(err));
         });
-        
-        if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
-        const resultData = await response.json();
         return resultData;
     } catch (error) {
         console.error("Kakao API Error:", error);
